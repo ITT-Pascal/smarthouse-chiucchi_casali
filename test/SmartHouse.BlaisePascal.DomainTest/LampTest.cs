@@ -39,5 +39,33 @@ namespace SmartHouse.BlaisePascal.DomainTest
             newLamp.TurnOff();
             Assert.False(newLamp.IsOn);
         }
+        [Fact]
+        public void LampChangeBrightness_WhenBrightnessIsOutOfRangePositive_ThrowNewArgumentOutOfRangeException()
+        {
+            Lamp newLamp = new Lamp();
+            newLamp.TurnOn();
+            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(300));
+        }
+        [Fact]
+        public void LampChangeBrightness_WhenBrightnessIsOutOfRangeNegative_ThrowNewArgumentOutOfRangeException()
+        {
+            Lamp newLamp = new Lamp();
+            newLamp.TurnOn();
+            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(-1));
+        }
+        [Fact]
+        public void LampChangeBrightness_WhenLampIsOff_BrightnessDoesNotChange()
+        {
+            Lamp newLamp = new Lamp();
+            Assert.Equal(0, newLamp.Brightness);
+        }
+        [Fact]
+        public void LampChangeBrightness_WhenLampIsOn_SetNewBrightness()
+        {
+            Lamp newLamp = new Lamp();
+            newLamp.TurnOn();
+            newLamp.ChangeBrightness(50);
+            Assert.Equal(50, newLamp.Brightness);
+        }
     }
 }
