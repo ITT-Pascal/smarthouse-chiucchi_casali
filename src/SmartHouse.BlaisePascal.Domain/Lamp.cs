@@ -11,6 +11,12 @@
             IsOn = false;
         }
 
+        public Lamp(int brightness)
+        {
+            Brightness = brightness;
+            IsOn = true;
+        }
+
         public void TurnOff()
         {
             if (!IsOn)
@@ -25,11 +31,12 @@
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
             IsOn = true;
             Brightness = 100;
+
         }
 
         public void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness > 0 && newBrightness < 101)
+            if (newBrightness >= 0 && newBrightness <= 100)
             {
                 if (IsOn)
                 {
