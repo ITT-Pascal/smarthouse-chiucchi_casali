@@ -2,6 +2,7 @@
 {
     public class Lamp
     {
+        private const int MaxBrightness = 100;
         public bool IsOn { get; private set; }
         public int Brightness { get; private set; }
 
@@ -30,13 +31,13 @@
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
             IsOn = true;
-            Brightness = 100;
+            Brightness = MaxBrightness;
 
         }
 
         public void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness >= 0 && newBrightness <= 100)
+            if (newBrightness >= 0 && newBrightness <= MaxBrightness)
             {
                 if (IsOn)
                 {
