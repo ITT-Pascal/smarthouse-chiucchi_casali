@@ -24,6 +24,7 @@ namespace SmartHouse.BlaisePascal.Domain
         {
             Brightness = brightness;
             IsOn = true;
+            
         }
 
         public void TurnOff()
@@ -33,14 +34,14 @@ namespace SmartHouse.BlaisePascal.Domain
             IsOn = false;
             Brightness = MinBrightness;
         }
-
+        
         public void TurnOn()
         {
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
             IsOn = true;
             Brightness = MaxBrightness;
-
+            
         }
 
         public void ChangeBrightness(int newBrightness)
@@ -58,28 +59,56 @@ namespace SmartHouse.BlaisePascal.Domain
             }
         }
 
-        /*public void AdjustBrightnessByAmbientLight(int ambientBrightness)
+        public void AdjustBrightnessByAmbientLight(int ambientBrightness)
         {
-            if (ambientBrightness == 0)
+            if(ambientBrightness>= MinBrightness && ambientBrightness<= MaxBrightness)
             {
-                Brightness = MaxBrightness;
-
-            }else if (ambientBrightness <= 25)
-            {
-                Brightness = 50;
-
-            }else if (ambientBrightness <= 50)
-            {
-                Brightness = 25;
-            }else if(ambientBrightness >=50)
-            {
-                Brightness = 0;
+                if (IsOn)
+                    Brightness = Math.Max(MinBrightness, Math.Min(MaxBrightness, MaxBrightness - ambientBrightness));
             }
 
-            //TODO
-//Crea un metodo con datetime per generare un timer di tempo accesso.
-//Crea un metodo con datetime per settare la actualBrighness(if ambient brightness && dateTime.Now...) => Se è notte setta la brightness ad un 20% in meno.
-//(dateTime e timeSpan)
-        }*/
+            //ALTERNATIVE METHOD
+            //if (ambientBrightness == MinBrightness)
+            //{
+            //    Brightness = MaxBrightness;
+
+            //}else if (ambientBrightness <= 25)
+            //{
+            //    Brightness = 50;
+
+            //}else if (ambientBrightness >= 25 && ambientBrightness <= 50)
+            //{
+            //    Brightness = 25;
+
+            //}else if(ambientBrightness >=50)
+            //{
+            //    Brightness = MinBrightness;
+            //}
+        }
+
+
+        public void IsNight()
+        {
+            if(IsOn)
+            {
+                int hour = DateTime.Now.Hour;
+                
+                if(hour>=22 || hour < 6)
+                {
+                    UltraEcoMode();
+                }
+
+            }
+
+        }
+
+
+        public void UltraEcoMode()
+        {
+            if (IsOn)
+            {
+                Brightness = (int)(Brightness * 0.8);
+            }
+        }
     }
 }

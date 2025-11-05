@@ -3,12 +3,14 @@
     public class Lamp
     {
         private const int MaxBrightness = 100;
+
+        private const int MinBrightness = 0;
         public bool IsOn { get; private set; }
         public int Brightness { get; private set; }
 
         public Lamp()
         {
-            Brightness = 0;
+            Brightness = MinBrightness;
             IsOn = false;
         }
 
@@ -23,7 +25,7 @@
             if (!IsOn)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
             IsOn = false;
-            Brightness = 0;
+            Brightness = MinBrightness;
         }
 
         public void TurnOn()
@@ -37,7 +39,7 @@
 
         public void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness >= 0 && newBrightness <= MaxBrightness)
+            if (newBrightness >= MinBrightness && newBrightness <= MaxBrightness)
             {
                 if (IsOn)
                 {
@@ -45,7 +47,7 @@
                 }
             } else
             {
-                throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));
+                throw new ArgumentOutOfRangeException("Brightness must be between MinBrightness and MaxBrightness", nameof(Brightness));
             }
         }
     }
