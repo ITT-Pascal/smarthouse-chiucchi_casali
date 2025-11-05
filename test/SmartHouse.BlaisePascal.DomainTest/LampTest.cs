@@ -5,12 +5,14 @@ namespace SmartHouse.BlaisePascal.DomainTest
 {
     public class LampTest
     {
+        //Constructor Test
         [Fact]
         public void LampIsOn_WhenLampIsCreated_LampStatusMustBeOff()
         {
             Lamp newLamp = new Lamp();
             Assert.False(newLamp.IsOn);
         }
+        //TurnOn Tests
         [Fact]
         public void LampTurnOn_WhenLampIsOff_LampStatusIsTurnedToOn()
         {
@@ -25,6 +27,7 @@ namespace SmartHouse.BlaisePascal.DomainTest
             newLamp.TurnOn();
             Assert.Throws<ArgumentException>(() => newLamp.TurnOn());
         }
+        //TurnOff Tests
         [Fact]
         public void LampTurnOff_WhenLampIsOff_ShouldThrowArgumentException()
         {
@@ -39,12 +42,13 @@ namespace SmartHouse.BlaisePascal.DomainTest
             newLamp.TurnOff();
             Assert.False(newLamp.IsOn);
         }
+        //ChangeBrightness Tests
         [Fact]
-        public void LampChangeBrightness_WhenBrightnessIsOutOfRangePositive_ThrowNewArgumentOutOfRangeException()
+        public void LampChangeBrightness_WhenBrightnessIsOutOfRangeMaxBrightness_ThrowNewArgumentOutOfRangeException()
         {
             Lamp newLamp = new Lamp();
             newLamp.TurnOn();
-            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(300));
+            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(101));
         }
         [Fact]
         public void LampChangeBrightness_WhenBrightnessIsOutOfRangeNegative_ThrowNewArgumentOutOfRangeException()
@@ -54,10 +58,10 @@ namespace SmartHouse.BlaisePascal.DomainTest
             Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(-1));
         }
         [Fact]
-        public void LampChangeBrightness_WhenLampIsOff_BrightnessDoesNotChange()
+        public void LampChangeBrightness_WhenLampIsOff_ThrowArgumentException()
         {
             Lamp newLamp = new Lamp();
-            Assert.Equal(0, newLamp.Brightness);
+            Assert.Throws<ArgumentException>(() => newLamp.ChangeBrightness(40));
         }
         [Fact]
         public void LampChangeBrightness_WhenLampIsOn_SetNewBrightness()
@@ -66,6 +70,15 @@ namespace SmartHouse.BlaisePascal.DomainTest
             newLamp.TurnOn();
             newLamp.ChangeBrightness(50);
             Assert.Equal(50, newLamp.Brightness);
+        }
+        [Fact]
+        public void LampChangeBrightness_WhenNewBrightnessIs0_SetBrightnessAs0AndTurnOffLamp()
+        {
+            Lamp newLamp = new Lamp();
+            newLamp.TurnOn();
+            newLamp.ChangeBrightness(0);
+            Assert.Equal(0, newLamp.Brightness);
+            Assert.False(newLamp.IsOn);
         }
     }
 }

@@ -46,25 +46,34 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness >= MinBrightness && newBrightness <= MaxBrightness)
+            if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
+                throw new ArgumentOutOfRangeException("Brightness must be between 0 and 70", nameof(Brightness));
+
+            if (!IsOn)
+                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
+
+            if(newBrightness == MinBrightness)
             {
-                if (IsOn)
-                {
-                    Brightness = newBrightness;
-                }
-            }
-            else
+                TurnOff();
+            } else
             {
-                throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));
-            }
+                Brightness = newBrightness;
+            } 
         }
 
         public void AdjustBrightnessByAmbientLight(int ambientBrightness)
         {
-            if(ambientBrightness>= MinBrightness && ambientBrightness<= MaxBrightness)
+            if (ambientBrightness < MinBrightness || ambientBrightness > MaxBrightness)
+                throw new ArgumentOutOfRangeException("Ambient brightness must be between MinBrightness and MaxBrightness", nameof(ambientBrightness));
+
+            if (!IsOn)
+                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
+
+            Brightness = Math.Max(MinBrightness, Math.Min(MaxBrightness, MaxBrightness - ambientBrightness));
+
+            if(Brightness == MinBrightness)
             {
-                if (IsOn)
-                    Brightness = Math.Max(MinBrightness, Math.Min(MaxBrightness, MaxBrightness - ambientBrightness));
+                TurnOff();
             }
 
             //ALTERNATIVE METHOD
@@ -89,26 +98,24 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public void IsNight()
         {
-            if(IsOn)
+            if (!IsOn)
+                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(IsOn));
+
+            int hour = DateTime.Now.Hour;
+
+            if (hour >= 22 || hour < 6) //Orari convenzionali per la notte
             {
-                int hour = DateTime.Now.Hour;
-                
-                if(hour>=22 || hour < 6)
-                {
-                    UltraEcoMode();
-                }
-
+                UltraEcoMode();
             }
-
         }
 
 
         public void UltraEcoMode()
         {
-            if (IsOn)
-            {
-                Brightness = (int)(Brightness * 0.8);
-            }
+            if (!IsOn)
+                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(IsOn));
+
+            Brightness = (int)(Brightness * 0.8); //Diminuisce del 20% la luminosità attuale
         }
     }
 }

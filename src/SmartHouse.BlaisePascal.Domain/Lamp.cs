@@ -39,15 +39,19 @@
 
         public void ChangeBrightness(int newBrightness)
         {
-            if (newBrightness >= MinBrightness && newBrightness <= MaxBrightness)
+            if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
+                throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));
+
+            if (!IsOn)
+                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
+
+            if (newBrightness == MinBrightness)
             {
-                if (IsOn)
-                {
-                    Brightness = newBrightness;
-                }
-            } else
+                TurnOff();
+            }
+            else
             {
-                throw new ArgumentOutOfRangeException("Brightness must be between MinBrightness and MaxBrightness", nameof(Brightness));
+                Brightness = newBrightness;
             }
         }
     }
