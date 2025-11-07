@@ -139,10 +139,18 @@ namespace SmartHouse.BlaisePascal.DomainTest
         }
         //UltraEcoMode Tests
         [Fact]
-        public void EcoUltraEcoMode_WhenEcoLampIsOff_ThrowArgumentException()
+        public void EcoLampUltraEcoMode_WhenEcoLampIsOff_ThrowArgumentException()
         {
             EcoLamp newLamp = new EcoLamp();
             Assert.Throws<ArgumentException>(() => newLamp.UltraEcoMode());
+        }
+        [Fact]
+        public void EcoLampUltraEcoMode_WhenEcoLampIsOnAndBightnessIs70_ReduceBrightnessBy20Percent()
+        {
+            EcoLamp newLamp = new EcoLamp();
+            newLamp.TurnOn();
+            newLamp.UltraEcoMode();
+            Assert.Equal(56, newLamp.Brightness);
         }
     }
 }
