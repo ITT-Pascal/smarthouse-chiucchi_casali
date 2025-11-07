@@ -1,17 +1,15 @@
 ﻿namespace SmartHouse.BlaisePascal.Domain
 {
-    public class Lamp
+    public class Lamp: AbstractLamp
     {
         private const int MaxBrightness = 100;
 
         private const int MinBrightness = 0;
-        public bool IsOn { get; private set; }
-        public int Brightness { get; private set; }
 
         public Lamp()
         {
-            Brightness = MinBrightness;
             IsOn = false;
+            Brightness = MinBrightness;
         }
 
         public Lamp(int brightness)
@@ -20,7 +18,7 @@
             IsOn = true;
         }
 
-        public void TurnOff()
+        public override void TurnOff()
         {
             if (!IsOn)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
@@ -28,7 +26,7 @@
             Brightness = MinBrightness;
         }
 
-        public void TurnOn()
+        public override void TurnOn()
         {
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
@@ -37,7 +35,7 @@
 
         }
 
-        public void ChangeBrightness(int newBrightness)
+        public override void ChangeBrightness(int newBrightness)
         {
             if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
                 throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));

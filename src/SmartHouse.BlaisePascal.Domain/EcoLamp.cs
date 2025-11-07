@@ -7,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.BlaisePascal.Domain
 {
-    public class EcoLamp
+    public class EcoLamp: AbstractLamp
     {
-        public bool IsOn { get; private set; }
-        public int Brightness { get; private set; }
-
         private const int MaxBrightness = 70;
         private const int MinBrightness = 0;
         public EcoLamp()
@@ -27,7 +24,7 @@ namespace SmartHouse.BlaisePascal.Domain
             
         }
 
-        public void TurnOff()
+        public override void TurnOff()
         {
             if (!IsOn)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
@@ -35,7 +32,7 @@ namespace SmartHouse.BlaisePascal.Domain
             Brightness = MinBrightness;
         }
         
-        public void TurnOn()
+        public override void TurnOn()
         {
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
@@ -44,7 +41,7 @@ namespace SmartHouse.BlaisePascal.Domain
             
         }
 
-        public void ChangeBrightness(int newBrightness)
+        public override void ChangeBrightness(int newBrightness)
         {
             if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
                 throw new ArgumentOutOfRangeException("Brightness must be between 0 and 70", nameof(Brightness));
