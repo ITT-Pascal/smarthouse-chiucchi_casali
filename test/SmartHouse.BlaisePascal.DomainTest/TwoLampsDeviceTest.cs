@@ -90,8 +90,8 @@ namespace SmartHouse.BlaisePascal.DomainTest
             AbstractLamp lamp1 = new Lamp();
             AbstractLamp lamp2 = new EcoLamp();
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
-            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeOneLampBrightness(lamp1.Id, 101));
-            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeOneLampBrightness(lamp2.Id, 101));
+            Assert.Throws<ArgumentException>(() => newLamp.ChangeOneLampBrightness(lamp1.Id, 20));
+            Assert.Throws<ArgumentException>(() => newLamp.ChangeOneLampBrightness(lamp2.Id, 10));
         }
         [Fact]
         public void TwoLampsDeviceChangeOneLampBrightness_WhenNewBrightnessIsOutOfRange_ThrowNewArgumentOutOfRangeException()
@@ -106,6 +106,41 @@ namespace SmartHouse.BlaisePascal.DomainTest
         }
         //ChangeBothLampsBrightness tests
         [Fact]
-        public void TwoLampsDeviceChangeBothLampsBrightness_
+        public void TwoLampsDeviceChangeBothLampsBrightness_ChangeGoesCorrectly_SetNewBrightnessForLamp1AndLamp2()
+        {
+            AbstractLamp lamp1 = new Lamp();
+            AbstractLamp lamp2 = new EcoLamp();
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.ChangeBothLampsBrightness(10, 20);
+            Assert.Equal(10, newLamp.Lamp1.Brightness);
+            Assert.Equal(20, newLamp.Lamp2.Brightness);
+        }
+        [Fact]
+        public void TwoLampsDeviceChangeBothLampsBrightness_NewBrightnessOutOfRange_ThrowArgumentOutOfRangeException()
+        {
+            AbstractLamp lamp1 = new Lamp();
+            AbstractLamp lamp2 = new EcoLamp();
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBothLampsBrightness(-1, 71));
+        }
+        [Fact]
+        public void TwoLampsDeviceChangeBothLampsBrightness_WhenBothLampsAreOff_ThrowArgumentException()
+        {
+            AbstractLamp lamp1 = new Lamp();
+            AbstractLamp lamp2 = new EcoLamp();
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            Assert.Throws<ArgumentException>(() => newLamp.ChangeBothLampsBrightness(20, 10));
+        }
+        [Fact]
+        public void TwoLampsDeviceChangeBothLampsBrightness_WhenOneLampIsOff_ThrowArgumentException()
+        {
+            AbstractLamp lamp1 = new Lamp();
+            AbstractLamp lamp2 = new EcoLamp();
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.ToggleOneLamp(lamp1.Id);
+            Assert.Throws<ArgumentException>(() => newLamp.ChangeBothLampsBrightness(20, 10));
+        }
     }
 }

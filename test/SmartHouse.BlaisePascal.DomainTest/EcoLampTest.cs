@@ -16,6 +16,22 @@ namespace SmartHouse.BlaisePascal.DomainTest
             EcoLamp newLamp = new EcoLamp();
             Assert.False(newLamp.IsOn);
         }
+        //ToggleOnOff Tests
+        [Fact]
+        public void EcoLampToggleOnOff_WhenLampIsOn_LampStatusIsTurnedToOff()
+        {
+            EcoLamp newLamp = new EcoLamp();
+            newLamp.ToggleOnOff();
+            Assert.True(newLamp.IsOn);
+        }
+        [Fact]
+        public void EcoLampToggleOnOff_WhenLampIsOff_LampStatusIsTurnedToOn()
+        {
+            EcoLamp newLamp = new EcoLamp();
+            newLamp.TurnOn();
+            newLamp.ToggleOnOff();
+            Assert.False(newLamp.IsOn);
+        }
         //TurnOn Tests
         [Fact]
         public void EcoLampTurnOn_WhenLampIsOff_LampStatusIsTurnedToOn()
