@@ -17,47 +17,55 @@ namespace SmartHouse.BlaisePascal.Domain
             Lamp2 = lamp2;
         }
 
-        public void TurnOffOneLamp(bool lamp)
+        public void ToggleOneLamp(Guid id)
         {
-            if(lamp == true)
+            if(Lamp1.Id == id)
             {
-                Lamp1.TurnOff();
-            } else
+                Lamp1.ToggleOnOff();
+            } else if(Lamp2.Id == id)
             {
-                Lamp2.TurnOff();
+                Lamp2.ToggleOnOff();
             }
         }
-        public void TurnOnOneLamp(bool lamp)
+        /*public void TurnOnOneLamp(Guid id)
         {
-            if (lamp == true)
+            if (Lamp1.Id == id)
             {
-                Lamp1.TurnOn();
+                Lamp1.ToggleOnOff();
             }
-            else
+            else if(Lamp2.Id == id)
             {
-                Lamp2.TurnOn();
+                Lamp2.ToggleOnOff();
             }
-        }
+        }*/
+
         public void TurnOffBothLamps()
         {
-            Lamp1.TurnOff();
-            Lamp2.TurnOff();
+            if (Lamp1.IsOn)
+                Lamp1.ToggleOnOff();
+            if (Lamp2.IsOn)
+                Lamp2.ToggleOnOff();
         }
+
         public void TurnOnBothLamps()
         {
-            Lamp1.TurnOn();
-            Lamp2.TurnOn();
+            if (!Lamp1.IsOn)
+                Lamp1.ToggleOnOff();
+            if (!Lamp2.IsOn)
+                Lamp2.ToggleOnOff();
         }
-        public void ChangeOneLampBrightness(bool lamp, int brightness)
+
+        public void ChangeOneLampBrightness(Guid id, int brightness)
         {
-            if(lamp == false)
+            if(Lamp1.Id == id)
             {
                 Lamp1.ChangeBrightness(brightness);
-            } else
+            } else if(Lamp2.Id == id)
             {
                 Lamp2.ChangeBrightness(brightness);
             }
         }
+
         public void ChangeBothLampsBrightness(int firstBrightness, int secondBrightness)
         {
             Lamp1.ChangeBrightness(firstBrightness);

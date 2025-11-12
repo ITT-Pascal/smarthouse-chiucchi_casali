@@ -137,6 +137,21 @@ namespace SmartHouse.BlaisePascal.DomainTest
             EcoLamp newLamp = new EcoLamp();
             Assert.Throws<ArgumentException>(() => newLamp.IsNight());
         }
+        [Fact]
+        public void EcoLampIsNight_WhenIsNight_ReduceBrightnessBy20Percent()
+        {
+            EcoLamp newLamp = new EcoLamp();
+            newLamp.TurnOn();
+            newLamp.IsNight();
+            if (DateTime.Now.Hour >= 22 || DateTime.Now.Hour <= 6)
+            {
+                Assert.Equal(56, newLamp.Brightness);
+            }
+            else
+            {
+                Assert.Equal(70, newLamp.Brightness);
+            }
+        }
         //UltraEcoMode Tests
         [Fact]
         public void EcoLampUltraEcoMode_WhenEcoLampIsOff_ThrowArgumentException()

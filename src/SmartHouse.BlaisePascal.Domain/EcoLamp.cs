@@ -15,13 +15,19 @@ namespace SmartHouse.BlaisePascal.Domain
         {
             Brightness = MinBrightness;
             IsOn = false;
+            Id = Guid.NewGuid();
         }
 
         public EcoLamp(int brightness)
         {
             Brightness = brightness;
             IsOn = true;
-            
+            Id = Guid.NewGuid();
+        }
+
+        public override void ToggleOnOff()
+        {
+            IsOn = !IsOn;
         }
 
         public override void TurnOff()

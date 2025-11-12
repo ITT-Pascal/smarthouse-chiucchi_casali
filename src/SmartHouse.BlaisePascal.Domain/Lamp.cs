@@ -10,12 +10,19 @@
         {
             IsOn = false;
             Brightness = MinBrightness;
+            Id = Guid.NewGuid();
         }
 
         public Lamp(int brightness)
         {
             Brightness = brightness;
             IsOn = true;
+            Id = Guid.NewGuid();
+        }
+
+        public override void ToggleOnOff()
+        {
+            IsOn = !IsOn;
         }
 
         public override void TurnOff()
