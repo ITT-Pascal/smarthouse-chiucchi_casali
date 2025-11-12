@@ -8,16 +8,16 @@
 
         public Lamp()
         {
+            Id = Guid.NewGuid();
             IsOn = false;
             Brightness = MinBrightness;
-            Id = Guid.NewGuid();
         }
 
         public Lamp(int brightness)
         {
+            Id = Guid.NewGuid();
             Brightness = brightness;
             IsOn = true;
-            Id = Guid.NewGuid();
         }
 
         public override void ToggleOnOff()
@@ -51,13 +51,9 @@
                 throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
 
             if (newBrightness == MinBrightness)
-            {
                 TurnOff();
-            }
             else
-            {
                 Brightness = newBrightness;
-            }
         }
     }
 }

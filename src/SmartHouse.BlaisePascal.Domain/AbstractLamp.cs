@@ -8,9 +8,10 @@ namespace SmartHouse.BlaisePascal.Domain
 {
     public abstract class AbstractLamp
     {
+        public Guid Id { get; protected set; }
         public bool IsOn { get; protected set; }
         public int Brightness { get; protected set; }
-        public Guid Id { get; protected set; }
+        
 
         public abstract void ToggleOnOff();
         public abstract void TurnOff();

@@ -13,16 +13,16 @@ namespace SmartHouse.BlaisePascal.Domain
         private const int MinBrightness = 0;
         public EcoLamp()
         {
+            Id = Guid.NewGuid();
             Brightness = MinBrightness;
             IsOn = false;
-            Id = Guid.NewGuid();
         }
 
         public EcoLamp(int brightness)
         {
+            Id = Guid.NewGuid();
             Brightness = brightness;
             IsOn = true;
-            Id = Guid.NewGuid();
         }
 
         public override void ToggleOnOff()
@@ -56,12 +56,9 @@ namespace SmartHouse.BlaisePascal.Domain
                 throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
 
             if(newBrightness == MinBrightness)
-            {
                 TurnOff();
-            } else
-            {
+            else
                 Brightness = newBrightness;
-            } 
         }
 
         public void AdjustBrightnessByAmbientLight(int ambientBrightness)
@@ -75,9 +72,7 @@ namespace SmartHouse.BlaisePascal.Domain
             Brightness = Math.Max(MinBrightness, Math.Min(MaxBrightness, MaxBrightness - ambientBrightness));
 
             if(Brightness == MinBrightness)
-            {
                 TurnOff();
-            }
 
             //ALTERNATIVE METHOD
             //if (ambientBrightness == MinBrightness)
@@ -107,9 +102,7 @@ namespace SmartHouse.BlaisePascal.Domain
             int hour = DateTime.Now.Hour;
 
             if (hour >= 22 || hour < 6) //Orari convenzionali per la notte
-            {
                 UltraEcoMode();
-            }
         }
 
 
