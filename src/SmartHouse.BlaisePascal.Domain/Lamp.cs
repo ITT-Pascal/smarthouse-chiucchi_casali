@@ -23,7 +23,7 @@
         public override void ToggleOnOff() => IsOn = !IsOn;
 
 
-        public override void TurnOff()
+        public override void SwitchOff()
         {
             if (!IsOn)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
@@ -31,7 +31,7 @@
             Brightness = MinBrightness;
         }
 
-        public override void TurnOn()
+        public override void SwitchOn()
         {
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
@@ -49,9 +49,15 @@
                 throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
 
             if (newBrightness == MinBrightness)
-                TurnOff();
+                SwitchOff();
             else
                 Brightness = newBrightness;
+        }
+
+        public override void SetName(string name)
+        {
+            if (name != null)
+                Name = name;
         }
     }
 }

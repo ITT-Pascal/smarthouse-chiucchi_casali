@@ -25,47 +25,58 @@ namespace SmartHouse.BlaisePascal.Domain
 
 
 
-        public void TurnOff()
+        public void SwitchOff()
         {
             for (int i = 0; i < Quantity; i++)
-                Lamp[i].TurnOff();
+                Lamp[i].SwitchOff();
         }
 
-
-        public void TurnOn()
+        public void SwitchOff(Guid Id) //Switch Off by ID
         {
             for (int i = 0; i < Quantity; i++)
-                Lamp[i].TurnOn();
+            {
+                if (Id == Lamp[i].Id)
+                    Lamp[i].SwitchOff();
+            }
         }
 
-        public static void TurnOn(Guid Id)
+        public void SwitchOn() //Switch on all
         {
-
+            for (int i = 0; i < Quantity; i++)
+                Lamp[i].SwitchOn();
         }
-        
+
+        public void SwitchOn(Guid Id) //Switch on by ID
+        {
+            for(int i = 0; i < Quantity; i++)
+            {
+                if (Id == Lamp[i].Id)
+                    Lamp[i].SwitchOn();
+            }
+        }
+
+        public void SwitchOffOne(string name) 
+        {
+            if (name != null)
+                Lamp[name].SwitchOff();
+            else
+                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(name));
+        }
+
+
+        public void SwitchOnOne(int name)
+        {
+            if (name != null)
+                Lamp[name].SwitchOn();
+            else
+                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(name));
+        }
+
 
         public void ChangeBrightness(int brightness)
         {
             for (int i = 0; i < Quantity; i++)
                 Lamp[i].ChangeBrightness(brightness);
-        }
-
-
-        public void TurnOffOne(int position)
-        {
-            if (position >= 0 && position < Quantity)
-                Lamp[position].TurnOff();
-            else
-                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(position));
-        }
-        
-
-        public void TurnOnOne(int position)
-        {
-            if (position >= 0 && position < Quantity)
-                Lamp[position].TurnOn();
-            else
-                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(position));
         }
 
         public void ChangeOneBrightness(int brightness, int position)
@@ -77,4 +88,29 @@ namespace SmartHouse.BlaisePascal.Domain
         }
     }
 }
+
+
+
+
+
+
+
+
+
+//public void SwitchOffOne(int position)
+//{
+//    if (position >= 0 && position < Quantity)
+//        Lamp[position].TurnOff();
+//    else
+//        throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(position));
+//}
+
+
+//public void SwitchOnOne(int position)
+//{
+//    if (position >= 0 && position < Quantity)
+//        Lamp[position].TurnOn();
+//    else
+//        throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(position));
+//}
 

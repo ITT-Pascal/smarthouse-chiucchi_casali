@@ -25,10 +25,18 @@ namespace SmartHouse.BlaisePascal.Domain
             IsOn = true;
         }
 
+        public EcoLamp(int brightness, string name)
+        {
+            Id = Guid.NewGuid();
+            Brightness = brightness;
+            IsOn = false;
+            Name = name;
+        }
+
         public override void ToggleOnOff() => IsOn = !IsOn;
 
 
-        public override void TurnOff()
+        public override void SwitchOff()
         {
             if (!IsOn)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
@@ -36,7 +44,7 @@ namespace SmartHouse.BlaisePascal.Domain
             Brightness = MinBrightness;
         }
         
-        public override void TurnOn()
+        public override void SwitchOn()
         {
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
@@ -54,12 +62,12 @@ namespace SmartHouse.BlaisePascal.Domain
                 throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
 
             if(newBrightness == MinBrightness)
-                TurnOff();
+                SwitchOff();
             else
                 Brightness = newBrightness;
         }
 
-        public void AdjustBrightnessByAmbientLight(int ambientBrightness)
+        public void AdjustBrightnessByAmbientLight(int ambientBrightness) //cambia brightness in base alla luminosità dell'ambiente in modo inversamente proporzionale.
         {
             if (ambientBrightness < MinBrightness || ambientBrightness > MaxBrightness)
                 throw new ArgumentOutOfRangeException("Ambient brightness must be between MinBrightness and MaxBrightness", nameof(ambientBrightness));
@@ -70,7 +78,7 @@ namespace SmartHouse.BlaisePascal.Domain
             Brightness = Math.Max(MinBrightness, Math.Min(MaxBrightness, MaxBrightness - ambientBrightness));
 
             if(Brightness == MinBrightness)
-                TurnOff();
+                SwitchOff();
 
             //ALTERNATIVE METHOD
             //if (ambientBrightness == MinBrightness)
@@ -110,6 +118,12 @@ namespace SmartHouse.BlaisePascal.Domain
                 throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(IsOn));
 
             Brightness = (int)(Brightness * 0.8); //Diminuisce del 20% la luminosità attuale
+        }
+
+        public override void SetName(string name)
+        {
+            if (name != null)
+                Name = name;
         }
     }
 }
