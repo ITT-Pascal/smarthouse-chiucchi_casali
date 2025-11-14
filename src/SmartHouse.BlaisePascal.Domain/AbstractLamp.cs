@@ -15,9 +15,7 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public abstract void ToggleOnOff();
         public abstract void TurnOff();
-
         public abstract void TurnOn();
-
         public abstract void ChangeBrightness(int newBrightness);
     }
 }

@@ -25,10 +25,8 @@ namespace SmartHouse.BlaisePascal.Domain
             IsOn = true;
         }
 
-        public override void ToggleOnOff()
-        {
-            IsOn = !IsOn;
-        }
+        public override void ToggleOnOff() => IsOn = !IsOn;
+
 
         public override void TurnOff()
         {
