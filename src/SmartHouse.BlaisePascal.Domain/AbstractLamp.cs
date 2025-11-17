@@ -9,6 +9,9 @@ namespace SmartHouse.BlaisePascal.Domain
 {
     public abstract class AbstractLamp
     {
+        public const int MinBrightness = 0;
+
+
         public Guid Id { get; protected set; }
         public bool IsOn { get; protected set; }
         public int Brightness { get; protected set; }
@@ -19,7 +22,7 @@ namespace SmartHouse.BlaisePascal.Domain
         public abstract void ToggleOnOff();
         public abstract void SwitchOff();
         public abstract void SwitchOn();
-        public abstract void ChangeBrightness(int newBrightness);
+        public abstract void SetBrightness(int newBrightness);
         public abstract void SetName(string name);
 
         protected AbstractLamp(string name)

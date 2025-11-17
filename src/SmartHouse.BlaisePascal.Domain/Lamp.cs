@@ -1,23 +1,35 @@
-﻿namespace SmartHouse.BlaisePascal.Domain
+﻿using System.Text.Json.Serialization;
+
+namespace SmartHouse.BlaisePascal.Domain
 {
     public class Lamp: AbstractLamp
     {
         private const int MaxBrightness = 100;
 
-        private const int MinBrightness = 0;
+        //public Lamp() {}
+        //
+        //public Lamp()
+        //{
+        //    Id = Guid.NewGuid();
+        //    IsOn = false;
+        //    Brightness = MinBrightness;
+        //}
 
-        public Lamp()
+        ////public Lamp(int brightness, string name )
+        ////{
+        ////    Id = Guid.NewGuid();
+        ////    Brightness = brightness;
+        ////    IsOn = true;
+        ////    Name = name;
+        ////}
+
+
+        public Lamp(string name)
         {
+            Name = name;
             Id = Guid.NewGuid();
-            IsOn = false;
             Brightness = MinBrightness;
-        }
-
-        public Lamp(int brightness)
-        {
-            Id = Guid.NewGuid();
-            Brightness = brightness;
-            IsOn = true;
+            IsOn = false;
         }
 
         public override void ToggleOnOff() => IsOn = !IsOn;
@@ -40,7 +52,7 @@
 
         }
 
-        public override void ChangeBrightness(int newBrightness)
+        public override void SetBrightness(int newBrightness)
         {
             if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
                 throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));

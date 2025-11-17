@@ -68,27 +68,27 @@ namespace SmartHouse.BlaisePascal.DomainTest
         {
             EcoLamp newLamp = new EcoLamp();
             newLamp.SwitchOn();
-            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(71));
+            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.SetBrightness(71));
         }
         [Fact]
         public void EcoLampChangeBrightness_WhenBrightnessIsOutOfRangeNegative_ThrowNewArgumentOutOfRangeException()
         {
             EcoLamp newLamp = new EcoLamp();
             newLamp.SwitchOn();
-            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.ChangeBrightness(-1));
+            Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.SetBrightness(-1));
         }
         [Fact]
         public void EcoLampChangeBrightness_WhenLampIsOff_ThrowArgumentException()
         {
             EcoLamp newLamp = new EcoLamp();
-            Assert.Throws<ArgumentException>(() => newLamp.ChangeBrightness(30));
+            Assert.Throws<ArgumentException>(() => newLamp.SetBrightness(30));
         }
         [Fact]
         public void EcoLampChangeBrightness_WhenNewBrightnessIs0_SetBrightnessAs0AndTurnOffLamp()
         {
             EcoLamp newLamp = new EcoLamp();
             newLamp.SwitchOn();
-            newLamp.ChangeBrightness(0);
+            newLamp.SetBrightness(0);
             Assert.Equal(0, newLamp.Brightness);
             Assert.False(newLamp.IsOn);
         }
@@ -97,7 +97,7 @@ namespace SmartHouse.BlaisePascal.DomainTest
         {
             EcoLamp newLamp = new EcoLamp();
             newLamp.SwitchOn();
-            newLamp.ChangeBrightness(50);
+            newLamp.SetBrightness(50);
             Assert.Equal(50, newLamp.Brightness);
         }
         //AdjustBrightness Tests

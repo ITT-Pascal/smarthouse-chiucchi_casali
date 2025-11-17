@@ -10,20 +10,29 @@ namespace SmartHouse.BlaisePascal.Domain
     public class EcoLamp: AbstractLamp
     {
         private const int MaxBrightness = 70;
-        private const int MinBrightness = 0;
-        public EcoLamp()
-        {
-            Id = Guid.NewGuid();
-            Brightness = MinBrightness;
-            IsOn = false;
-        }
 
-        public EcoLamp(int brightness)
-        {
-            Id = Guid.NewGuid();
-            Brightness = brightness;
-            IsOn = true;
-        }
+        
+        //public EcoLamp()
+        //{
+        //    Id = Guid.NewGuid();
+        //    Brightness = MinBrightness;
+        //    IsOn = false;
+        //}
+
+        //public EcoLamp(int brightness)
+        //{
+        //    Id = Guid.NewGuid();
+        //    Brightness = brightness;
+        //    IsOn = true;
+        //}
+
+        ////public EcoLamp(int brightness, string name)
+        ////{
+        ////    Id = Guid.NewGuid();
+        ////    Brightness = brightness;
+        ////    IsOn = false;
+        ////    Name = name;
+        ////}
 
         public EcoLamp(int brightness, string name)
         {
@@ -34,7 +43,6 @@ namespace SmartHouse.BlaisePascal.Domain
         }
 
         public override void ToggleOnOff() => IsOn = !IsOn;
-
 
         public override void SwitchOff()
         {
@@ -53,7 +61,7 @@ namespace SmartHouse.BlaisePascal.Domain
             
         }
 
-        public override void ChangeBrightness(int newBrightness)
+        public override void SetBrightness(int newBrightness)
         {
             if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
                 throw new ArgumentOutOfRangeException("Brightness must be between 0 and 70", nameof(Brightness));
