@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SmartHouse.BlaisePascal.Domain
 {
@@ -13,7 +14,7 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public int Quantity { get; set; }
 
-
+        //Constructor
         public LampsRow(int quantity, AbstractLamp lamp)
         {
             Quantity = quantity;
@@ -25,7 +26,7 @@ namespace SmartHouse.BlaisePascal.Domain
         }
 
 
-
+        //Methods
         public void SwitchOff()
         {
             for (int i = 0; i < Quantity; i++)
@@ -40,12 +41,14 @@ namespace SmartHouse.BlaisePascal.Domain
                     LampList[i].SwitchOff();
             }
         }
+
         public void SwitchOff(string name) //Switch Off by name
         {
-            if (name != null)
-                LampList[name].SwitchOff();
-            else
-                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(name));
+            for (int i = 0; i < Quantity; i++)
+            {
+                if (name == LampList[i].Name)
+                    LampList.Remove(LampList[i]);
+            }
         }
 
         public void SwitchOn() //Switch On all
@@ -65,12 +68,12 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public void SwitchOn(string name) //Switch On by name
         {
-            if (name != null)
-                LampList[name].SwitchOn();
-            else
-                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(name));
+            for (int i = 0; i < Quantity; i++)
+            {
+                if (name == LampList[i].Name)
+                    LampList.Remove(LampList[i]);
+            }
         }
-
 
         public void SetBrightnessForAllLamps(int brightness)
         {
@@ -80,22 +83,27 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public void SetBrightnessForLamp(int brightness, int position) //sets ONE lamp's brightness by position
         {
-            if (position >= 0 && position < Quantity)
-                LampList[position].SetBrightness(brightness);
-            else
-                throw new ArgumentOutOfRangeException("position must be between 0 and Quantity", nameof(position));
+            LampList[position].SetBrightness(brightness);
+                
         }
 
         public void SetBrightnessForLamp(int brightness, string name) //sets ONE lamp's brightness by name 
         {
-  
+            for (int i = 0; i < Quantity; i++)
+            {
+                if (name == LampList[i].Name)
+                    LampList[i].SetBrightness(brightness);
+            }
         }
 
         public void SetBrightnessForLamp(int brightness, Guid Id) //sets ONE lamp's brightness by ID 
         {
-           
+            for (int i = 0; i < Quantity; i++)
+            {
+                if (Id == LampList[i].Id)
+                    LampList.Remove(LampList[i]);
+            }
         }
-
 
         public void AddLamp(AbstractLamp lamp)
         {
@@ -125,18 +133,18 @@ namespace SmartHouse.BlaisePascal.Domain
             }
         }
 
-        //TODO RemoveLampInPosition methods
-
         public void RemoveLampInPosition(Guid Id, int position) //RemoveLampInPosition by ID + position
         {
-
+            if (Id == LampList[position].Id)
+                LampList.Remove(LampList[position]);
         }
 
         public void RemoveLampInPosition(string name, int position) //RemoveLampInPosition by name + position
         {
-            
+            if (name == LampList[position].Name)
+                LampList.Remove(LampList[position]);
         }
-        
+
     }
 }
 

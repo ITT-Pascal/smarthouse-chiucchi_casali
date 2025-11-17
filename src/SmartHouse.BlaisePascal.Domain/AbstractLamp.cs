@@ -11,7 +11,7 @@ namespace SmartHouse.BlaisePascal.Domain
     {
         //Const
         public const int MinBrightness = 0;
-
+        public const int MaxBrightness = 100;
         //Properties
         public Guid Id { get; protected set; }
         public bool IsOn { get; protected set; }
@@ -34,13 +34,51 @@ namespace SmartHouse.BlaisePascal.Domain
         }
 
         //Methods
-        public virtual void ToggleOnOff() => IsOn = !IsOn;
-        public abstract void SwitchOff();
-        public abstract void SwitchOn();
-        public abstract void SetBrightness(int newBrightness);
-        public abstract void SetName(string name);
+        
+        public virtual void ToggleOnOff()
+        {
+            IsOn = !IsOn;
+        }
+        
+        public virtual void SwitchOff()
+        {
+            if (!IsOn)
+                throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
+            IsOn = false;
+            Brightness = MinBrightness;
+        }
+        
+        public virtual void SwitchOn()
+        {
+            if (IsOn)
+                throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
+            IsOn = true;
+            Brightness = 70;
 
-       
+
+        }
+        
+        public virtual void SetBrightness(int newBrightness)
+        {
+            if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
+                throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Brightness));
+
+            if (!IsOn)
+                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
+
+            if (newBrightness == MinBrightness)
+                SwitchOff();
+            else
+                Brightness = newBrightness;
+        }
+
+        public virtual void SetName(string name)
+        {
+            if (name != null)
+                Name = name;
+        }
+
+        //TODO Later...
         public void Toggle()
         {
             if (Status == DeviceStatus.On)
@@ -51,8 +89,8 @@ namespace SmartHouse.BlaisePascal.Domain
             LastModification_UTC = DateTime.UtcNow;
         }
 
-
-        /*public void Dimmer(int amount)
+        // TODO Later...
+        public void Dimmer(int amount)
         {
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Impossibile regolare l'intensità: la lampada è spenta.");
@@ -60,6 +98,6 @@ namespace SmartHouse.BlaisePascal.Domain
 
             if (newValue == Brightness)
                 throw new InvalidOperationException("L'intensità non può essere ulteriormente diminuita.");
-        }*/
+        }
     }
 }

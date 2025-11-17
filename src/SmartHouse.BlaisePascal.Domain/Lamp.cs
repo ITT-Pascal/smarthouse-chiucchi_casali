@@ -4,7 +4,6 @@ namespace SmartHouse.BlaisePascal.Domain
 {
     public class Lamp: AbstractLamp
     {
-        private const int MaxBrightness = 100;
 
         //public Lamp() {}
         //
@@ -24,49 +23,48 @@ namespace SmartHouse.BlaisePascal.Domain
         ////}
 
 
-        public Lamp(string name):base(name)
+        public Lamp(string name):base(name) { }
+
+
+        public void ToggleOnOff() => IsOn = !IsOn;
+
+        public void SwitchOff()
         {
+            base.SwitchOff();
+            //if (!IsOn)
+            //    throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
+            //IsOn = false;
+            //Brightness = MinBrightness;
+        }
+
+        public void SwitchOn()
+        {
+            base.SwitchOn(); 
+            //if (IsOn)
+            //    throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
+            //IsOn = true;
+            //Brightness = MaxBrightness;
 
         }
 
-        public override void ToggleOnOff() => IsOn = !IsOn;
-
-
-        public override void SwitchOff()
+        public void SetBrightness(int newBrightness)
         {
-            if (!IsOn)
-                throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
-            IsOn = false;
-            Brightness = MinBrightness;
+            base.SetBrightness(newBrightness);
+            //if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
+            //    throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));
+
+            //if (!IsOn)
+            //    throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
+
+            //if (newBrightness == MinBrightness)
+            //    SwitchOff();
+            //else
+            //    Brightness = newBrightness;
         }
 
-        public override void SwitchOn()
+        public void SetName(string name)
         {
-            if (IsOn)
-                throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
-            IsOn = true;
-            Brightness = MaxBrightness;
-
-        }
-
-        public override void SetBrightness(int newBrightness)
-        {
-            if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
-                throw new ArgumentOutOfRangeException("Brightness must be between 0 and 100", nameof(Brightness));
-
-            if (!IsOn)
-                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
-
-            if (newBrightness == MinBrightness)
-                SwitchOff();
-            else
-                Brightness = newBrightness;
-        }
-
-        public override void SetName(string name)
-        {
-            if (name != null)
-                Name = name;
-        }
+            base.SetName(name);
+        }   
     }
 }
