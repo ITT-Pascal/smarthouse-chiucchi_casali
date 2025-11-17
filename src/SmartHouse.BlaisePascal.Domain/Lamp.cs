@@ -24,12 +24,9 @@ namespace SmartHouse.BlaisePascal.Domain
         ////}
 
 
-        public Lamp(string name)
+        public Lamp(string name):base(name)
         {
-            Name = name;
-            Id = Guid.NewGuid();
-            Brightness = MinBrightness;
-            IsOn = false;
+
         }
 
         public override void ToggleOnOff() => IsOn = !IsOn;
