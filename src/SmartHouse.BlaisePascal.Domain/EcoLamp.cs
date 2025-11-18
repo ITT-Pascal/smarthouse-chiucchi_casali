@@ -36,9 +36,9 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public EcoLamp(string name) : base(name) { }
 
-        public void ToggleOnOff() => IsOn = !IsOn;
+        public override void ToggleOnOff() => IsOn = !IsOn;
 
-        public void SwitchOff()
+        public override void SwitchOff()
         {
             base.SwitchOff();
             //if (!IsOn)
@@ -47,7 +47,7 @@ namespace SmartHouse.BlaisePascal.Domain
             //Brightness = MinBrightness;
         }
         
-        public void SwitchOn()
+        public override void SwitchOn()
         {
             base.SwitchOn();
             //if (IsOn)
@@ -57,7 +57,7 @@ namespace SmartHouse.BlaisePascal.Domain
             
         }
 
-        public void SetBrightness(int newBrightness)
+        public override void SetBrightness(int newBrightness)
         {
             base.SetBrightness(newBrightness);
             //if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
@@ -125,7 +125,7 @@ namespace SmartHouse.BlaisePascal.Domain
             Brightness = (int)(Brightness * 0.8); //Diminuisce del 20% la luminosità attuale
         }
 
-        public void SetName(string name)
+        public override void SetName(string name)
         {
             base.SetName(name);
         }
