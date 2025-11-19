@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,14 @@ namespace SmartHouse.BlaisePascal.Domain
         //Const
         public const int MinBrightness = 0;
         public const int MaxBrightness = 100;
+        
         //Properties
         public Guid Id { get; protected set; }
+        public string Name { get; protected set; } = string.Empty;
+
         public bool IsOn { get; protected set; }
         public int Brightness { get; protected set; }
-        public string Name { get; protected set; } = string.Empty;
+        
         public DeviceStatus Status { get; protected set; }
         public DateTime CreationTime_UTC { get; protected set; }
         public DateTime LastModification_UTC { get; protected set; }
@@ -53,9 +57,7 @@ namespace SmartHouse.BlaisePascal.Domain
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
             IsOn = true;
-            Brightness = 70;
-
-
+            Brightness = MaxBrightness;
         }
         
         public virtual void SetBrightness(int newBrightness)
@@ -94,10 +96,15 @@ namespace SmartHouse.BlaisePascal.Domain
         {
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Impossibile regolare l'intensità: la lampada è spenta.");
+            
             int newValue = Math.Max(0, Brightness - amount);
-
             if (newValue == Brightness)
                 throw new InvalidOperationException("L'intensità non può essere ulteriormente diminuita.");
+
+            Brightness = newValue;
+            LastModification_UTC = DateTime.UtcNow;
         }
+
+        
     }
 }
