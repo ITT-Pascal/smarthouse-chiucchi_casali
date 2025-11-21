@@ -10,20 +10,21 @@ namespace SmartHouse.BlaisePascal.Domain
 {
     public abstract class AbstractLamp
     {
-        //Const
-        public const int MinBrightness = 0;
-        public const int MaxBrightness = 100;
-        
         //Properties
         public Guid Id { get; protected set; }
         public string Name { get; protected set; } = string.Empty;
 
         public bool IsOn { get; protected set; }
-        public int Brightness { get; protected set; }
+        public int Intensity { get; protected set; }
         
         public DeviceStatus Status { get; protected set; }
         public DateTime CreationTime_UTC { get; protected set; }
         public DateTime LastModification_UTC { get; protected set; }
+
+        //Properties defined in the daughter classes
+        public abstract int MinIntensity { get; }
+        public abstract int MaxIntensity { get; }
+        public abstract int DefaultIntensity { get; }
 
         //Constructor
         protected AbstractLamp(string name)
@@ -31,7 +32,7 @@ namespace SmartHouse.BlaisePascal.Domain
             IsOn = false;
             Id = Guid.NewGuid();
             Name = name;
-            Brightness = MinBrightness;
+            Intensity = MinIntensity;
             Status = DeviceStatus.Off;
             CreationTime_UTC = DateTime.UtcNow;
             LastModification_UTC = DateTime.UtcNow;
@@ -49,7 +50,7 @@ namespace SmartHouse.BlaisePascal.Domain
             if (!IsOn)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(IsOn));
             IsOn = false;
-            Brightness = MinBrightness;
+            Intensity = MinIntensity;
         }
         
         public virtual void SwitchOn()
@@ -57,21 +58,21 @@ namespace SmartHouse.BlaisePascal.Domain
             if (IsOn)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(IsOn));
             IsOn = true;
-            Brightness = MaxBrightness;
+            Intensity = MaxIntensity;
         }
         
-        public virtual void SetBrightness(int newBrightness)
+        public virtual void SetIntensity(int newIntensity)
         {
-            if (newBrightness < MinBrightness || newBrightness > MaxBrightness)
-                throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Brightness));
+            if (newIntensity < MinIntensity || newIntensity > MaxIntensity)
+                throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Intensity));
 
             if (!IsOn)
                 throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
 
-            if (newBrightness == MinBrightness)
+            if (newIntensity == MinIntensity)
                 SwitchOff();
             else
-                Brightness = newBrightness;
+                Intensity = newIntensity;
         }
 
         public virtual void SetName(string name)
@@ -97,11 +98,11 @@ namespace SmartHouse.BlaisePascal.Domain
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Impossibile regolare l'intensità: la lampada è spenta.");
             
-            int newValue = Math.Max(0, Brightness - amount);
-            if (newValue == Brightness)
+            int newValue = Math.Max(0, Intensity - amount);
+            if (newValue == Intensity)
                 throw new InvalidOperationException("L'intensità non può essere ulteriormente diminuita.");
 
-            Brightness = newValue;
+            Intensity = newValue;
             LastModification_UTC = DateTime.UtcNow;
         }
 

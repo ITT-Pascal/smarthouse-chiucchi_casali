@@ -78,12 +78,12 @@ namespace SmartHouse.BlaisePascal.Domain
         public void SetBrightnessForAllLamps(int brightness)
         {
             for (int i = 0; i < Quantity; i++)
-                LampList[i].SetBrightness(brightness);
+                LampList[i].SetIntensity(brightness);
         }
 
         public void SetBrightnessForLamp(int brightness, int position) //sets ONE lamp's brightness by position
         {
-            LampList[position].SetBrightness(brightness);
+            LampList[position].SetIntensity(brightness);
                 
         }
 
@@ -92,7 +92,7 @@ namespace SmartHouse.BlaisePascal.Domain
             for (int i = 0; i < Quantity; i++)
             {
                 if (name == LampList[i].Name)
-                    LampList[i].SetBrightness(brightness);
+                    LampList[i].SetIntensity(brightness);
             }
         }
 

@@ -9,57 +9,32 @@ namespace SmartHouse.BlaisePascal.Domain
 {
     public class EcoLamp: AbstractLamp
     {
-        new private const int MaxBrightness = 70;
+        //Constants
+        private const int StandardMin = 0;
+        private const int StandardDeFault = 30;
+        private const int StandardMax = 70;
 
+        //Abstract constants ovveride
+        public override int MinIntensity => StandardMin;
+        public override int MaxIntensity => StandardMax;
+        public override int DefaultIntensity => StandardDeFault;
+
+        //Constructor
         public EcoLamp(string name) : base(name) { }
 
-        public override void ToggleOnOff() => IsOn = !IsOn;
-
-        public override void SwitchOff()
-        {
-            base.SwitchOff();
-        }
-        
-        public override void SwitchOn()
-        {
-            base.SwitchOn();
-        }
-
-        public override void SetBrightness(int newBrightness)
-        {
-            base.SetBrightness(newBrightness);
-        }
-
+        //Methods
         public void AdjustBrightnessByAmbientLight(int ambientBrightness) //cambia brightness in base alla luminosità dell'ambiente in modo inversamente proporzionale.
         {
-            if (ambientBrightness < MinBrightness || ambientBrightness > MaxBrightness)
+            if (ambientBrightness < MinIntensity || ambientBrightness > MaxIntensity)
                 throw new ArgumentOutOfRangeException("Ambient brightness must be between MinBrightness and MaxBrightness", nameof(ambientBrightness));
 
             if (!IsOn)
                 throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
 
-            Brightness = Math.Max(MinBrightness, Math.Min(MaxBrightness, MaxBrightness - ambientBrightness));
+            Intensity = Math.Max(MinIntensity, Math.Min(MaxIntensity, MaxIntensity - ambientBrightness));
 
-            if(Brightness == MinBrightness)
+            if(Intensity == MinIntensity)
                 SwitchOff();
-
-            //ALTERNATIVE METHOD
-            //if (ambientBrightness == MinBrightness)
-            //{
-            //    Brightness = MaxBrightness;
-
-            //}else if (ambientBrightness <= 25)
-            //{
-            //    Brightness = 50;
-
-            //}else if (ambientBrightness >= 25 && ambientBrightness <= 50)
-            //{
-            //    Brightness = 25;
-
-            //}else if(ambientBrightness >=50)
-            //{
-            //    Brightness = MinBrightness;
-            //}
         }
 
 
@@ -80,7 +55,7 @@ namespace SmartHouse.BlaisePascal.Domain
             if (!IsOn)
                 throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(IsOn));
 
-            Brightness = (int)(Brightness * 0.8); //Diminuisce del 20% la luminosità attuale
+            Intensity = (int)(Intensity * 0.8); //Diminuisce del 20% la luminosità attuale
         }
 
         public override void SetName(string name)
@@ -89,3 +64,23 @@ namespace SmartHouse.BlaisePascal.Domain
         }
     }
 }
+
+
+
+//ALTERNATIVE METHOD
+//if (ambientBrightness == MinBrightness)
+//{
+//    Brightness = MaxBrightness;
+
+//}else if (ambientBrightness <= 25)
+//{
+//    Brightness = 50;
+
+//}else if (ambientBrightness >= 25 && ambientBrightness <= 50)
+//{
+//    Brightness = 25;
+
+//}else if(ambientBrightness >=50)
+//{
+//    Brightness = MinBrightness;
+//}

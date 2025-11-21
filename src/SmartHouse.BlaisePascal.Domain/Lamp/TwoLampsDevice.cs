@@ -55,15 +55,15 @@ namespace SmartHouse.BlaisePascal.Domain
         public void ChangeOneLampBrightness(Guid id, int brightness)
         {
             if(Lamp1.Id == id)
-                Lamp1.SetBrightness(brightness);
+                Lamp1.SetIntensity(brightness);
             else if(Lamp2.Id == id)
-                Lamp2.SetBrightness(brightness);
+                Lamp2.SetIntensity(brightness);
         }
 
         public void ChangeBothLampsBrightness(int firstBrightness, int secondBrightness)
         {
-            Lamp1.SetBrightness(firstBrightness);
-            Lamp2.SetBrightness(secondBrightness);
+            Lamp1.SetIntensity(firstBrightness);
+            Lamp2.SetIntensity(secondBrightness);
         }
     }
 }
