@@ -13,46 +13,47 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public TwoLampsDevice(AbstractLamp lamp1, AbstractLamp lamp2)
         {
-            Lamp1 = lamp1;
-            Lamp2 = lamp2;
+            Lamp1 = lamp1 ?? throw new ArgumentNullException(nameof(lamp1));
+            Lamp2 = lamp2 ?? throw new ArgumentNullException(nameof(lamp2));
         }
 
         public void ToggleOneLamp(Guid id)
         {
             if(Lamp1.Id == id)
-                Lamp1.ToggleOnOff();
+                Lamp1.Toggle();
             else if(Lamp2.Id == id)
-                Lamp2.ToggleOnOff();
+                Lamp2.Toggle();
         }
-        /*public void TurnOnOneLamp(Guid id)
-        {
-            if (Lamp1.Id == id)
-            {
-                Lamp1.ToggleOnOff();
-            }
-            else if(Lamp2.Id == id)
-            {
-                Lamp2.ToggleOnOff();
-            }
-        }*/
+
+        //public void TurnOnOneLamp(Guid id)
+        //{
+        //    if (Lamp1.Id == id)
+        //    {
+        //        Lamp1.ToggleOnOff();
+        //    }
+        //    else if(Lamp2.Id == id)
+        //    {
+        //        Lamp2.ToggleOnOff();
+        //    }
+        //}
 
         public void TurnOffBothLamps()
         {
-            if (Lamp1.IsOn)
-                Lamp1.ToggleOnOff();
-            if (Lamp2.IsOn)
-                Lamp2.ToggleOnOff();
+            if (Lamp2.Status == DeviceStatus.On)
+                Lamp1.Toggle();
+            if (Lamp2.Status == DeviceStatus.On)
+                Lamp2.Toggle();
         }
 
         public void TurnOnBothLamps()
         {
-            if (!Lamp1.IsOn)
-                Lamp1.ToggleOnOff();
-            if (!Lamp2.IsOn)
-                Lamp2.ToggleOnOff();
+            if (Lamp2.Status == DeviceStatus.Off)
+                Lamp1.Toggle();
+            if (Lamp2.Status == DeviceStatus.Off)
+                Lamp2.Toggle();
         }
 
-        public void ChangeOneLampBrightness(Guid id, int brightness)
+        public void ChangeOneLampIntensity(Guid id, int brightness)
         {
             if(Lamp1.Id == id)
                 Lamp1.SetIntensity(brightness);
@@ -60,7 +61,7 @@ namespace SmartHouse.BlaisePascal.Domain
                 Lamp2.SetIntensity(brightness);
         }
 
-        public void ChangeBothLampsBrightness(int firstBrightness, int secondBrightness)
+        public void ChangeBothLampsIntensity(int firstBrightness, int secondBrightness)
         {
             Lamp1.SetIntensity(firstBrightness);
             Lamp2.SetIntensity(secondBrightness);

@@ -22,26 +22,30 @@ namespace SmartHouse.BlaisePascal.Domain
         //Constructor
         public EcoLamp(string name) : base(name) { }
 
+
+
         //Methods
-        public void AdjustBrightnessByAmbientLight(int ambientBrightness) //cambia brightness in base alla luminosità dell'ambiente in modo inversamente proporzionale.
+        public void AdjustIntensityByAmbientLight(int ambientBrightness) //Cambia brightness in base alla luminosità dell'ambiente in modo inversamente proporzionale.
         {
             if (ambientBrightness < MinIntensity || ambientBrightness > MaxIntensity)
                 throw new ArgumentOutOfRangeException("Ambient brightness must be between MinBrightness and MaxBrightness", nameof(ambientBrightness));
 
-            if (!IsOn)
-                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(IsOn));
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(Status));
 
             Intensity = Math.Max(MinIntensity, Math.Min(MaxIntensity, MaxIntensity - ambientBrightness));
 
             if(Intensity == MinIntensity)
                 SwitchOff();
+
+            LastModification_UTC = DateTime.UtcNow;
         }
 
 
         public void IsNight()
         {
-            if (!IsOn)
-                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(IsOn));
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
 
             int hour = DateTime.Now.Hour;
 
@@ -52,15 +56,12 @@ namespace SmartHouse.BlaisePascal.Domain
 
         public void UltraEcoMode()
         {
-            if (!IsOn)
-                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(IsOn));
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
 
-            Intensity = (int)(Intensity * 0.8); //Diminuisce del 20% la luminosità attuale
-        }
+            Intensity = (int)(Intensity * 0.8); //Diminuisce del 20% la luminosità attuale (CASTING con int)
 
-        public override void SetName(string name)
-        {
-            base.SetName(name);
+            LastModification_UTC = DateTime.UtcNow;
         }
     }
 }
