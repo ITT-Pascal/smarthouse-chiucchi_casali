@@ -6,4 +6,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ElectroDomestics\CCTV\" />
+    <Folder Include="ElectroDomestics\AirConditioner\" />
+    <Folder Include="ElectroDomestics\Thermostat\" />
+    <Folder Include="Door\" />
+  </ItemGroup>
+
 </Project>
