@@ -13,7 +13,7 @@ namespace SmartHouse.BlaisePascal.Domain
         //Properties
         public List<AbstractLamp> LampList { get; set; } = new List<AbstractLamp>();
         public string Name { get; set; }
-        //public int Quantity { get; set; }
+
 
 
         //Constructor
@@ -131,7 +131,7 @@ namespace SmartHouse.BlaisePascal.Domain
         public void AddLampInPosition(AbstractLamp lamp, int position) => LampList.Insert(position, lamp); //Adds one lamp in a specified index
 
         // ---- REMOVE LAMP ----
-        public void RemoveAllLamps() //Removes all lamps
+        public void RemoveAllLamps() //Remove all lamps
         {
             for (int i = 0; i < LampList.Count; i++)
             {
@@ -257,6 +257,82 @@ namespace SmartHouse.BlaisePascal.Domain
                 intensities.Add(LampList[i].Intensity);
             intensities.Sort();
             return intensities;
+        }
+
+        // ---- DIMMER ----
+        public void DimmerAllLamps(int amount)
+        {
+            for (int i = 0; i < LampList.Count; i++)
+                LampList[i].Dimmer(amount);
+        }
+
+        public void DimmerLamp(Guid id, int amount)
+        {
+            for (int i = 0; i < LampList.Count; i++)
+            {
+                if (LampList[i].Id == id)
+                    LampList[i].Dimmer(amount);
+            }
+        }
+
+        public void DimmerLamp(string name, int amount)
+        {
+            for (int i = 0; i < LampList.Count; i++)
+            {
+                if (LampList[i].Name == name)
+                    LampList[i].Dimmer(amount);
+            }
+        }
+
+        public void DimmerLampInPosition(int position, int amount) => LampList[position].Dimmer(amount);
+
+        public void DimmerLampInPosition(Guid id, int position, int amount)
+        {
+            if (LampList[position].Id == id)
+                LampList[position].Dimmer(amount);
+        }
+        public void DimmerLampInPosition(string name, int position, int amount)
+        {
+            if (LampList[position].Name == name)
+                LampList[position].Dimmer(amount);
+        }
+
+        // ---- BRIGHTEN ----
+        public void BrightenAllLamps(int amount)
+        {
+            for (int i = 0; i < LampList.Count; i++)
+                LampList[i].Brighten(amount);
+        }
+
+        public void BrightenLamp(Guid id, int amount)
+        {
+            for (int i = 0; i < LampList.Count; i++)
+            {
+                if (LampList[i].Id == id)
+                    LampList[i].Brighten(amount);
+            }
+        }
+
+        public void BrightenLamp(string name, int amount)
+        {
+            for (int i = 0; i < LampList.Count; i++)
+            {
+                if (LampList[i].Name == name)
+                    LampList[i].Brighten(amount);
+            }
+        }
+
+        public void BrightenLampInPosition(int position, int amount) => LampList[position].Brighten(amount);
+
+        public void BrightenLampInPosition(Guid id, int position, int amount)
+        {
+            if (LampList[position].Id == id)
+                LampList[position].Brighten(amount);
+        }
+        public void BrightenLampInPosition(string name, int position, int amount)
+        {
+            if (LampList[position].Name == name)
+                LampList[position].Brighten(amount);
         }
     }
 }

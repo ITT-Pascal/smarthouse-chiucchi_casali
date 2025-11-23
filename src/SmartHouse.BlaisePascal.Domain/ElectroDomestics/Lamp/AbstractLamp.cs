@@ -93,8 +93,6 @@ namespace SmartHouse.BlaisePascal.Domain
             LastModification_UTC = DateTime.UtcNow;
         }
 
-
-        // TODO Later...
         public void Dimmer(int amount)
         {
             if (Status == DeviceStatus.Off)

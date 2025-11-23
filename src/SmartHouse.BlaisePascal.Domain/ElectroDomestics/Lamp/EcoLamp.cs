@@ -14,7 +14,7 @@ namespace SmartHouse.BlaisePascal.Domain
         private const int StandardDeFault = 30;
         private const int StandardMax = 70;
 
-        //Abstract constants ovveride
+        //Abstract properties ovveride
         public override int MinIntensity => StandardMin;
         public override int MaxIntensity => StandardMax;
         public override int DefaultIntensity => StandardDeFault;
