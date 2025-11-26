@@ -8,17 +8,16 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.BlaisePascal.Domain
 {
-    public abstract class AbstractLamp
+    public abstract class AbstractLamp:DeviceProperties
     {
-        //Properties
-        public Guid Id { get; protected set; }
-        public string Name { get; protected set; } = string.Empty;
-        public DeviceStatus Status { get; protected set; }
+        //Properties ereditate
         public int Intensity { get; protected set; }
+        public override Guid Id { get; protected set; }
+        public override string Name { get; protected set; } = string.Empty;
+        public override DeviceStatus Status { get; protected set; }
 
-        public DateTime CreationTime_UTC { get; protected set; }
-        public DateTime LastModification_UTC { get; protected set; }
-
+        public override DateTime CreationTime_UTC { get; protected set; }
+        public override DateTime LastModification_UTC { get; protected set; }
 
         //Properties defined in the daughter classes
         public abstract int MinIntensity { get; }
@@ -27,14 +26,9 @@ namespace SmartHouse.BlaisePascal.Domain
 
 
         //Constructor
-        protected AbstractLamp(string name)
+        protected AbstractLamp(string name):base(name)
         {
-            Id = Guid.NewGuid();
-            Name = name;
             Intensity = MinIntensity;
-            Status = DeviceStatus.Off;
-            CreationTime_UTC = DateTime.UtcNow;
-            LastModification_UTC = DateTime.UtcNow;
         }
 
 
