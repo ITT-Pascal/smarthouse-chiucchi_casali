@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 {
+    //Used for conditioner: Dir, Swing, FanSpeed.. 
     public enum Values
     {
         One,

@@ -9,41 +9,39 @@ using System.Xml;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 {
-    public class Thermostat:DeviceProperties
+    public class Thermostat:AbstractDevice
     {
-        //Properties ereditate
-        public override Guid Id { get; protected set; }
-        public override string Name { get; protected set; } = string.Empty;
-        public override DeviceStatus Status { get; protected set; }
-
-        public override DateTime CreationTime_UTC { get; protected set; }
-        public override DateTime LastModification_UTC { get; protected set; }
         
         //Properties
         public int Temperature { get; private set; }
         public Values Mode { get; private set; }
-
-        private const int MinTemperature = 18;
-
-        private const int MaxTemperature = 30;
+        
+        //Costanti: di temperatura minima e massima. Si accende se:  17 <= x <= 30
+        private const int MinAmbientTemperature = 17;
+        private const int MaxAmbientTemperature = 30;
 
         public Thermostat(string name) : base(name) { }
 
-        public void SetTemperature(int newTemperature)
+        public void SetOperatingTemperature(int newTemperature)
         {
-            if(Status == DeviceStatus.On)
+            if (Status == DeviceStatus.On)
             {
-                if(Temperature > MinTemperature && Temperature < MaxTemperature )
+                if (newTemperature > MinAmbientTemperature && newTemperature < MaxAmbientTemperature)
                     Temperature = newTemperature;
             }
-            
-        }
 
-        
+            LastModification_UTC = DateTime.UtcNow;
+        }
 
 
 
     }
+
+
+
+
+
+}
 }
 
 

@@ -43,7 +43,7 @@ namespace SmartHouse.BlaisePascal.Domain
         }
 
 
-        public void IsNight()
+        public override void IsNight()
         {
             if (Status == DeviceStatus.Off)
                 throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
@@ -54,8 +54,7 @@ namespace SmartHouse.BlaisePascal.Domain
                 UltraEcoMode();
         }
 
-
-        public void UltraEcoMode()
+        public override void UltraEcoMode()
         {
             if (Status == DeviceStatus.Off)
                 throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));

@@ -9,22 +9,15 @@ using System.Threading.Tasks;
 
 namespace SmartHouse.BlaisePascal.Domain
 {
-    public abstract class AbstractLamp:DeviceProperties
+    public abstract class AbstractLamp:AbstractDevice
     {
         //Properties ereditate
-        public int Intensity { get; protected set; }
-        public override Guid Id { get; protected set; }
-        public override string Name { get; protected set; } = string.Empty;
-        public override DeviceStatus Status { get; protected set; }
-
-        public override DateTime CreationTime_UTC { get; protected set; }
-        public override DateTime LastModification_UTC { get; protected set; }
 
         //Properties defined in the daughter classes
         public abstract int MinIntensity { get; }
         public abstract int MaxIntensity { get; }
         public abstract int DefaultIntensity { get; }
-
+        public int Intensity { get; set; }
 
         //Constructor
         protected AbstractLamp(string name):base(name)
@@ -34,36 +27,31 @@ namespace SmartHouse.BlaisePascal.Domain
 
 
         //Methods
-        public void Toggle()
-        {
-            if (Status == DeviceStatus.On)
-                SwitchOff();
-            else
-                SwitchOn();
 
-            LastModification_UTC = DateTime.UtcNow;
-        }
-
-        public void SwitchOff()
+        //Override from AbstractDevice
+        public override void SwitchOff()
         {
             if (Status == DeviceStatus.Off)
                 throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(Status));
+            
             Status = DeviceStatus.Off;
             Intensity = MinIntensity;
 
             LastModification_UTC = DateTime.UtcNow;
         }
         
-        public void SwitchOn()
+        //Override from AbstractDevice
+        public override void SwitchOn()
         {
             if (Status == DeviceStatus.On)
                 throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(Status));
+            
             Status = DeviceStatus.On;
             Intensity = DefaultIntensity;
 
             LastModification_UTC = DateTime.UtcNow;
         }
-        
+
         public void SetIntensity(int newIntensity)
         {
             if (newIntensity < MinIntensity || newIntensity > MaxIntensity)
@@ -76,14 +64,6 @@ namespace SmartHouse.BlaisePascal.Domain
                 SwitchOff();
             else
                 Intensity = newIntensity;
-
-            LastModification_UTC = DateTime.UtcNow;
-        }
-
-        public void SetName(string name)
-        {
-            if (name != null)
-                Name = name;
 
             LastModification_UTC = DateTime.UtcNow;
         }
