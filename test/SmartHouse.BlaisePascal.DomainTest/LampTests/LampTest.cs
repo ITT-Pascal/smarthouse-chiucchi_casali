@@ -10,7 +10,7 @@ namespace SmartHouse.BlaisePascal.DomainTest
         public void LampIsOn_WhenLampIsCreated_LampStatusMustBeOff()
         {
             Lamp newLamp = new Lamp("n");
-            Assert.False(newLamp.IsOn);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
         //ToggleOnOff Tests
         [Fact]
@@ -19,17 +19,17 @@ namespace SmartHouse.BlaisePascal.DomainTest
             //ARRANGE
             Lamp newLamp = new Lamp("n");
             //ACT
-            newLamp.ToggleOnOff();
+            newLamp.Toggle();
             //ASSERT
-            Assert.True(newLamp.IsOn);
+            Assert.Equal(DeviceStatus.On, newLamp.Status);
         }
         [Fact]
         public void LampToggleOnOff_WhenLampIsOff_LampStatusIsTurnedToOn()
         {
             Lamp newLamp = new Lamp("n");
             newLamp.SwitchOn();
-            newLamp.ToggleOnOff();
-            Assert.False(newLamp.IsOn);
+            newLamp.Toggle();
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
         //TurnOn Tests
         [Fact]
@@ -37,7 +37,7 @@ namespace SmartHouse.BlaisePascal.DomainTest
         {
             Lamp newLamp = new Lamp("n");
             newLamp.SwitchOn();
-            Assert.True(newLamp.IsOn);
+            Assert.Equal(DeviceStatus.On, newLamp.Status);
         }
         [Fact]
         public void LampTurnOn_WhenLampIsOn_ShouldThrowArgumentException()
@@ -59,7 +59,7 @@ namespace SmartHouse.BlaisePascal.DomainTest
             Lamp newLamp = new Lamp("n");
             newLamp.SwitchOn();
             newLamp.SwitchOff();
-            Assert.False(newLamp.IsOn);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
         //ChangeBrightness Tests
         [Fact]
@@ -97,7 +97,7 @@ namespace SmartHouse.BlaisePascal.DomainTest
             newLamp.SwitchOn();
             newLamp.SetIntensity(0);
             Assert.Equal(0, newLamp.Intensity);
-            Assert.False(newLamp.IsOn);
+            Assert.Equal(DeviceStatus.Off, newLamp.Status);
         }
     }
 }

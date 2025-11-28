@@ -28,8 +28,8 @@ namespace SmartHouse.BlaisePascal.DomainTest
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.ToggleOneLamp(lamp1.Id);
-            Assert.True(newLamp.Lamp1.IsOn);
-            Assert.False(newLamp.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.On, newLamp.Lamp1.Status);
+            Assert.Equal(DeviceStatus.Off, lamp2.Status);
         }
         [Fact]
         public void TwoLampsDeviceToggleOneLamp_WhenLamp2IsSelected_Lamp2IsToggled()
@@ -38,8 +38,8 @@ namespace SmartHouse.BlaisePascal.DomainTest
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.ToggleOneLamp(lamp2.Id);
-            Assert.False(newLamp.Lamp1.IsOn);
-            Assert.True(newLamp.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp1.Status);
+            Assert.Equal(DeviceStatus.On, newLamp.Lamp2.Status);
         }
         //TurnOnBothLamps test
         [Fact]
@@ -49,8 +49,8 @@ namespace SmartHouse.BlaisePascal.DomainTest
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.TurnOnBothLamps();
-            Assert.True(newLamp.Lamp1.IsOn);
-            Assert.True(newLamp.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.On, newLamp.Lamp1.Status);
+            Assert.Equal(DeviceStatus.On, newLamp.Lamp2.Status);
         }
         //TurnOffBothLamps test
         [Fact]
@@ -60,8 +60,8 @@ namespace SmartHouse.BlaisePascal.DomainTest
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.TurnOffBothLamps();
-            Assert.False(newLamp.Lamp1.IsOn);
-            Assert.False(newLamp.Lamp2.IsOn);
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp1.Status);
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp2.Status);
         }
         //ChangeOneLampBrightness tests
         [Fact]
