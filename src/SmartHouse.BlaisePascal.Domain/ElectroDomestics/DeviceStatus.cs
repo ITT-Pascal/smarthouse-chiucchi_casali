@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.BlaisePascal.Domain
+namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics
 {
     public enum DeviceStatus
     {

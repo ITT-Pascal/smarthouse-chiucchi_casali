@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;

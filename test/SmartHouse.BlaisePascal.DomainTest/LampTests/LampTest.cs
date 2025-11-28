@@ -1,4 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Domain;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics;
 using System;
 
 namespace SmartHouse.BlaisePascal.DomainTest
