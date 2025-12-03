@@ -4,8 +4,6 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public abstract class AbstractLamp:AbstractDevice
     {
-        //Properties ereditate
-
         //Properties defined in the daughter classes
         public abstract int MinIntensity { get; }
         public abstract int MaxIntensity { get; }
@@ -13,39 +11,17 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public int Intensity { get; set; }
 
         //Constructor
-        protected AbstractLamp(string name):base(name)
-        {
-            Intensity = MinIntensity;
-        }
+        protected AbstractLamp(string name):base(name) { Intensity = MinIntensity; }
 
 
         //Methods
-
         //Override from AbstractDevice
-        public override void SwitchOff()
-        {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot turn off a lamp that is already off.", nameof(Status));
-            
-            Status = DeviceStatus.Off;
-            Intensity = MinIntensity;
+        public override void SwitchOff() { base.SwitchOff(); Intensity = MinIntensity; }
 
-            LastModification_UTC = DateTime.UtcNow;
-        }
-        
-        //Override from AbstractDevice
-        public override void SwitchOn()
-        {
-            if (Status == DeviceStatus.On)
-                throw new ArgumentException("Cannot turn on a lamp that is already on.", nameof(Status));
-            
-            Status = DeviceStatus.On;
-            Intensity = DefaultIntensity;
+        public override void SwitchOn() { base.SwitchOn(); Intensity = DefaultIntensity; }
 
-            LastModification_UTC = DateTime.UtcNow;
-        }
-
-        public void SetIntensity(int newIntensity)
+        //Virtual methods
+        public virtual void SetIntensity(int newIntensity)
         {
             if (newIntensity < MinIntensity || newIntensity > MaxIntensity)
                 throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Intensity));
@@ -61,7 +37,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             LastModification_UTC = DateTime.UtcNow;
         }
 
-        public void Dimmer(int amount)
+        public virtual void Dimmer(int amount)
         {
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Cannot dimmer lamp because it's off.");
@@ -76,7 +52,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             LastModification_UTC = DateTime.UtcNow;
         }
 
-        public void Brighten(int amount)
+        public virtual void Brighten(int amount)
         {
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Cannot brighten lamp because it's off.");
@@ -87,6 +63,12 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
             LastModification_UTC = DateTime.UtcNow;
         }
+
+        //static void ControlIfStatusIsOn()       CONTROLLO FATTO MOLTE VOLTE
+        //{
+        //    if (Status != DeviceStatus.On)
+        //        throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
+        //}
     }
 }
 

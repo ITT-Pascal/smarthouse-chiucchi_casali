@@ -57,24 +57,5 @@
 
             LastModification_UTC = DateTime.UtcNow;
         }
-
-        public virtual void IsNight()
-        {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot enable IsNight method", nameof(Status));
-
-            int hour = DateTime.Now.Hour;
-            
-            UltraEcoMode();
-        }
-
-
-        public virtual void UltraEcoMode()
-        {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot enable UltraEcoMode method", nameof(Status));
-
-            LastModification_UTC = DateTime.UtcNow;
-        }
     }
 }

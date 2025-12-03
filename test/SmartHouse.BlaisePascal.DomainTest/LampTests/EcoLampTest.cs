@@ -41,14 +41,14 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
         {
             EcoLamp newLamp = new EcoLamp("n");
             newLamp.SwitchOn();
-            Assert.Throws<ArgumentException>(() => newLamp.SwitchOn());
+            Assert.Throws<InvalidOperationException>(() => newLamp.SwitchOn());
         }
         //TurnOff Tests
         [Fact]
         public void EcoLampTurnOff_WhenLampIsOff_ShouldThrowArgumentException()
         {
             EcoLamp newLamp = new EcoLamp("n");
-            Assert.Throws<ArgumentException>(() => newLamp.SwitchOff());
+            Assert.Throws<InvalidOperationException>(() => newLamp.SwitchOff());
         }
         [Fact]
         public void EcoLampTurnOff_WhenLampIsOn_LampStatusIsTurnedToOff()
