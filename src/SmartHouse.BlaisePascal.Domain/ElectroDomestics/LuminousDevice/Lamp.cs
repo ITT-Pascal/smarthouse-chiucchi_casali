@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace SmartHouse.BlaisePascal.Domain
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public class Lamp: AbstractLamp
     {

@@ -1,11 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartHouse.BlaisePascal.Domain
+﻿namespace SmartHouse.BlaisePascal.Domain.Shared
 {
     public abstract class AbstractDevice
     {

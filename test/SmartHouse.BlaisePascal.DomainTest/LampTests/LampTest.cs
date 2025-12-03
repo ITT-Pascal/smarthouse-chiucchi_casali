@@ -1,8 +1,7 @@
-﻿using SmartHouse.BlaisePascal.Domain;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics;
-using System;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
+using SmartHouse.BlaisePascal.Domain.Shared;
 
-namespace SmartHouse.BlaisePascal.DomainTest
+namespace SmartHouse.BlaisePascal.DomainTest.LampTests
 {
     public class LampTest
     {

@@ -1,11 +1,6 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartHouse.BlaisePascal.Domain.Shared;
 
-namespace SmartHouse.BlaisePascal.Domain
+namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public class TwoLampsDevice
     {
