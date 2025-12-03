@@ -13,40 +13,63 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         private const int MinAmbientTemperature = 17;
         private const int MaxAmbientTemperature = 30;
 
+        //Temperatura ambientale
+        public int AmbientTemperature { get; private set; }
+
+        //Temperatura di lavoro attuale
+        public int ActualWorkingTemperature { get; private set; }
+
+
+        
+        //Costruttore
         public Thermostat(string name) : base(name) { }
 
+        //Setta la temperatura a cui si vuole arrivare con il termostato
         public void SetOperatingTemperature(int newTemperature)
         {
             if (Status == DeviceStatus.On)
             {
-                if (newTemperature > MinAmbientTemperature && newTemperature < MaxAmbientTemperature)
+                if (newTemperature >= MinAmbientTemperature && newTemperature <= MaxAmbientTemperature)
                     Temperature = newTemperature;
             }
+            ActualWorkingTemperature = newTemperature;
 
             LastModification_UTC = DateTime.UtcNow;
         }
 
+        
+
+        //Legge la temperatura ambientale
+        public void ReadAmbientTemperature(int ambientTemperature)
+        {
+            AmbientTemperature = ambientTemperature;
+            
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        //Selezione della modalità di lavoro del termostato
+        public void SetManualMode()
+        {
+            
+        }
+
+        public void SetAutoMode()
+        {
+            
+        }
 
 
     }
-
-
-
-
-
 }
 
 
 
-//  -temperature
 //  -manual mode
 //  -auto mode
 //  -set temperature for single hour
 //	-set mode
-//	-water temperature
-//	-give temperature
-//	-screen on		 (lampMatrix)
-//	-screen off 	 (lampMatrix)
 
 //	-toggle termosifoni
+//	-water temperature
+//	-give temperature
 
