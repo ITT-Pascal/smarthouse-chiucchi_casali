@@ -24,7 +24,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         public int AmbientTemperature { get; private set; }
 
         //Temperatura di lavoro attuale
-        public int ActualReachingTemperature { get; private set; }
+        public int ReachingTemperature { get; private set; }
 
 
         //Costruttore
@@ -41,27 +41,19 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
             }
         }
 
-        //Setta la temperatura a cui si vuole arrivare con il termostato
-        private void SetOperatingTemperatures(int newTemperature, int nightTemperature)
-        {
-            if (Status == DeviceStatus.On)
-            {
-                if (newTemperature >= MinReachingTemperature && newTemperature <= MaxReachingTemperature)
-                    ActualReachingTemperature = newTemperature;
-                
-                if (nightTemperature >= MinReachingTemperature && nightTemperature <= MaxReachingTemperature)
-                    NightTemperature = nightTemperature;
-            }
-            
-            LastModification_UTC = DateTime.UtcNow;
-        }
-
         //Selezione della modalità di lavoro del termostato => manuale
         public void ManualMode(int newTemperature, Values power, int nightTemperature)
         {
 
-            if(Status == DeviceStatus.On)
-                SetOperatingTemperatures(newTemperature, nightTemperature);
+            if (Status == DeviceStatus.On)
+            {
+                if (newTemperature >= MinReachingTemperature && newTemperature <= MaxReachingTemperature)
+                    ReachingTemperature = newTemperature;
+
+                if (nightTemperature >= MinReachingTemperature && nightTemperature <= MaxReachingTemperature)
+                    NightTemperature = nightTemperature;
+            }
+
             Power = power;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -109,29 +101,29 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
             {
                 if (Power == Values.One)
                 {
-                    ActualReachingTemperature = MinReachingTemperature;
+                    ReachingTemperature = MinReachingTemperature;
                 }
                 else if (Power == Values.Two)
                 {
-                    ActualReachingTemperature = MinReachingTemperature + 2;
+                    ReachingTemperature = MinReachingTemperature + 2;
                 }
                 else if (Power == Values.Three)
                 {
-                    ActualReachingTemperature = DefaultReachingTemperature;
+                    ReachingTemperature = DefaultReachingTemperature;
                 }
                 else if (Power == Values.Four)
                 {
-                    ActualReachingTemperature = DefaultReachingTemperature + 3;
+                    ReachingTemperature = DefaultReachingTemperature + 3;
                 }
                 else
                 {
-                    ActualReachingTemperature = MaxReachingTemperature;
+                    ReachingTemperature = MaxReachingTemperature;
                 }   
             }
 
             if(Automatic == true)
             {
-                ActualReachingTemperature = DefaultReachingTemperature;
+                ReachingTemperature = DefaultReachingTemperature;
             }
 
             LastModification_UTC = DateTime.UtcNow;
@@ -147,11 +139,11 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 
                 if (Automatic == true)
                 {
-                    ActualReachingTemperature = DefaultNightReachingTemperature;
+                    ReachingTemperature = DefaultNightReachingTemperature;
                 }
                 else
                 {
-                    ActualReachingTemperature = NightTemperature;
+                    ReachingTemperature = NightTemperature;
                 }
             }
             _isNight = false;
