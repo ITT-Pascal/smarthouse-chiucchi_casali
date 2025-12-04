@@ -6,20 +6,19 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 {
     public class Thermostat:AbstractDevice
     {
-        
         //Costanti: di temperatura minima e massima a cui si accende il termostato:  17 <= x <= 30
         private const int MinReachingTemperature = 17;
         private const int DefaultReachingTemperature = 22;
         private const int MaxReachingTemperature = 29;
 
-        //Temperatura notturna default
+        //Temperature notturne
         private const int DefaultNightReachingTemperature = 18;
-
-        //Temperatura dell'acqua => Varia in base alla potenza e alla temperatura da raggiungere.
-        private int WaterTemperature { get; set; }
+        public int NightTemperature { get; private set; }
+        private bool _isNight;
 
         //Properties
         public Values Power { get; private set; }
+        public bool Automatic { get; private set; }
 
         //Temperatura ambientale
         public int AmbientTemperature { get; private set; }
@@ -31,89 +30,131 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         //Costruttore
         public Thermostat(string name) : base(name) { }
 
+        //Legge la temperatura ambientale
+        public void ReadAmbientTemperature(int ambientTemperature)
+        {
+            if (Status == DeviceStatus.On)
+            {
+                AmbientTemperature = ambientTemperature;
+
+                LastModification_UTC = DateTime.UtcNow;
+            }
+        }
+
         //Setta la temperatura a cui si vuole arrivare con il termostato
-        private void SetOperatingTemperature(int newTemperature)
+        private void SetOperatingTemperatures(int newTemperature, int nightTemperature)
         {
             if (Status == DeviceStatus.On)
             {
                 if (newTemperature >= MinReachingTemperature && newTemperature <= MaxReachingTemperature)
                     ActualReachingTemperature = newTemperature;
+                
+                if (nightTemperature >= MinReachingTemperature && nightTemperature <= MaxReachingTemperature)
+                    NightTemperature = nightTemperature;
             }
             
             LastModification_UTC = DateTime.UtcNow;
         }
 
-        //Legge la temperatura ambientale
-        public void ReadAmbientTemperature(int ambientTemperature)
+        //Selezione della modalità di lavoro del termostato => manuale
+        public void ManualMode(int newTemperature, Values power, int nightTemperature)
         {
+
             if(Status == DeviceStatus.On)
+                SetOperatingTemperatures(newTemperature, nightTemperature);
+            Power = power;
+
+            LastModification_UTC = DateTime.UtcNow;
+            
+            Automatic = false;
+        }
+        
+        //Selezione della modalità di lavoro del termostato => automatica  
+        public void AutomaticMode()
+        {
+            Automatic = true;
+            if (Status == DeviceStatus.On)
             {
-                AmbientTemperature = ambientTemperature;
+                if (_isNight == true)
+                {
+                    IsNight();
+                    return;
+                }
+                if (AmbientTemperature <= MinReachingTemperature)
+                {
+                    Power = Values.Four;
+                    SetReachingTemperature();
+                }
+                else if(AmbientTemperature <= DefaultReachingTemperature)
+                {
+                    Power = Values.Three;
+                    SetReachingTemperature();
+                }
+                else if(AmbientTemperature <= MaxReachingTemperature)
+                {
+                    Power = Values.Two;
+                    SetReachingTemperature();
+                }
+                else
+                {
+                    Status = DeviceStatus.Standby;
+                }
                 LastModification_UTC = DateTime.UtcNow;
             }
         }
-
-        //Selezione della modalità di lavoro del termostato
-        public void ManualMode(int newTemperature)
+        
+        private void SetReachingTemperature() //Setta la temperatura in base alla potenza selezionata
         {
-
-            if(Status == DeviceStatus.On)
-                SetOperatingTemperature(newTemperature);
-            
-            LastModification_UTC = DateTime.UtcNow;
-        }
-        //TODO AutomaticMode
-        public void AutomaticMode()
-        {
-             if(Status == DeviceStatus.On)
+            if (Status == DeviceStatus.On)
             {
-                if()
-                if(AmbientTemperature < MinReachingTemperature)
+                if (Power == Values.One)
                 {
-                    Power = Values.One;
-                    SetPower();
+                    ActualReachingTemperature = MinReachingTemperature;
                 }
+                else if (Power == Values.Two)
+                {
+                    ActualReachingTemperature = MinReachingTemperature + 2;
+                }
+                else if (Power == Values.Three)
+                {
+                    ActualReachingTemperature = DefaultReachingTemperature;
+                }
+                else if (Power == Values.Four)
+                {
+                    ActualReachingTemperature = DefaultReachingTemperature + 3;
+                }
+                else
+                {
+                    ActualReachingTemperature = MaxReachingTemperature;
+                }   
             }
 
-            LastModification_UTC = DateTime.UtcNow;
-        }
-        //TODO check
-        private int SetPower()
-        {
-            if (Power == Values.One)
-            {
-                ActualReachingTemperature = MinReachingTemperature;
-                WaterTemperature = 25;
-            }
-            else if (Power == Values.Two)
-            {
-                ActualReachingTemperature = MinReachingTemperature + 2;
-                WaterTemperature = 30;
-            }
-            else if (Power == Values.Three)
+            if(Automatic == true)
             {
                 ActualReachingTemperature = DefaultReachingTemperature;
-                WaterTemperature = 35;
-            }
-            else if(Power == Values.Four)
-            {
-                ActualReachingTemperature = DefaultReachingTemperature + 3;
-                WaterTemperature = 45;
-            }
-            else
-            {
-                ActualReachingTemperature = MaxReachingTemperature;
-                WaterTemperature = 65;
             }
 
             LastModification_UTC = DateTime.UtcNow;
-
-            return ActualReachingTemperature;
         }
-        //TODO finish
-        public override void IsNight()
-        {  
-            ActualReachingTemperature = DefaultNightReachingTemperature;
+
+        public void IsNight()
+        {
+            int hour = DateTime.Now.Hour;
+
+            if (hour >= 22 || hour < 6)//Orari convenzionali per la notte
+            {
+                _isNight = true;
+
+                if (Automatic == true)
+                {
+                    ActualReachingTemperature = DefaultNightReachingTemperature;
+                }
+                else
+                {
+                    ActualReachingTemperature = NightTemperature;
+                }
+            }
+            _isNight = false;
         }
     }
 }
