@@ -1,13 +1,12 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner.ScrappedMaterial
 {
-    public class Dry_AirConditioner : Abstract_AirConditioner
+    public class EcoCool_AirConditioner : Abstract_AirConditioner
     {
         //Override costante di temperatura massima
-        protected new const int MaxTemperature = 25;
-        private new const int DefaultTemperature = 22;
+        protected new const int MaxTemperature = 28;
 
         //Costruttore
-        public Dry_AirConditioner(string name) : base(name) { }
+        public EcoCool_AirConditioner(string name) : base(name) { }
 
         //manuale
         public override void ManualMode(int newTemperature)

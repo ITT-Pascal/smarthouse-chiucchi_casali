@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.Shared
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner.ScrappedMaterial
 {
     //Used for conditioner: Dir, Swing, FanSpeed.. 
     public enum Values

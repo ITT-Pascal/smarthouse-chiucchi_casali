@@ -1,4 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.Shared;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {

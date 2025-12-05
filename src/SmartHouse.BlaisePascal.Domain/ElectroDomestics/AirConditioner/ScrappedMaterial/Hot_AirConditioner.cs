@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner.ScrappedMaterial
 {
     public class Hot_AirConditioner : Abstract_AirConditioner
     {

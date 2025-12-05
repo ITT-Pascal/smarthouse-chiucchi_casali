@@ -1,5 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
-using SmartHouse.BlaisePascal.Domain.Shared;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -274,11 +274,10 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
         {
             LampsRow newLampsRow = new LampsRow("n");
             newLampsRow.AddLamp("ciao");
-            newLampsRow.AddLamp("buongiorno");
+            newLampsRow.AddEcoLamp("buongiorno");
             newLampsRow.AddLamp("buonasera");
             newLampsRow.RemoveAllLamps();
-            newLampsRow.RemoveAllLamps();
-            Assert.Equal(0, newLampsRow.LampList.Count);
+            Assert.Empty(newLampsRow.LampList);
         }
 
         [Fact]

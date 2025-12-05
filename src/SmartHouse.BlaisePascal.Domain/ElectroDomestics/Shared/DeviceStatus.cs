@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.Shared
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared
 {
     public enum DeviceStatus
     {

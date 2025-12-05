@@ -1,5 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.Shared;
-using System.Xml.Linq;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
@@ -160,8 +159,8 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public void RemoveAllLamps() //Remove all lamps
         {
             LampList.Clear();
-            //for (int i = 0; i < LampList.Count; i++)
-            //    LampList.RemoveAt(i);
+            //for (int i = 0; i < lamplist.count; i++) //REMOVE ONE BY ONE
+            //    lamplist.removeat(i);
         }
 
         public void RemoveLamp(Guid Id) //Remove one lamp by Id
