@@ -11,6 +11,17 @@
         public DateTime CreationTime_UTC { get; protected set; }
         public DateTime LastModification_UTC { get; protected set; }
 
+        public Door(string name)
+        {
+            Name = name;
+            Id = Guid.NewGuid();
+            Status = DoorStatus.Closed;
+            ClosedDoorStatus = ClosedStatus.Unlocked;
+
+            CreationTime_UTC = DateTime.UtcNow;
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
         public Door(string name, Guid id)
         {
             Name = name;
@@ -35,6 +46,8 @@
         {
             if (Status == DoorStatus.Open)
                 throw new ArgumentException("Cannot open a door that is already open.", nameof(Status));
+            if (ClosedDoorStatus == ClosedStatus.Locked)
+                throw new ArgumentException("Cannot open a door that is locked.", nameof(ClosedDoorStatus));
             Status = DoorStatus.Open;
 
             LastModification_UTC = DateTime.Now;

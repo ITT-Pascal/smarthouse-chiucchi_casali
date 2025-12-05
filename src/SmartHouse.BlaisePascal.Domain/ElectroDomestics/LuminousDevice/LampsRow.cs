@@ -17,6 +17,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             Name = name;
             LampList = new List<AbstractLamp>();
         }
+
         public LampsRow(string name, List<AbstractLamp> lamps)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -36,17 +37,6 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             //    throw new ArgumentException("Must have at least one lamp in a row of lamps.", nameof(LampList));
             //Name = name;
         }
-
-        //public LampsRow(int quantity, AbstractLamp lamp)
-        //{
-        //    Quantity = quantity;
-
-        //    LampList = new List<AbstractLamp>();
-
-        //    for (int i = 0; i < Quantity; i++)
-        //        LampList.Add(lamp);
-        //}
-
 
 
         //Methods
@@ -399,4 +389,10 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         }
     }
 }
-
+//public LampsRow(int quantity, AbstractLamp lamp)
+//{
+//    Quantity = quantity;
+//    LampList = new List<AbstractLamp>();
+//    for (int i = 0; i < Quantity; i++)
+//        LampList.Add(lamp);
+//}
