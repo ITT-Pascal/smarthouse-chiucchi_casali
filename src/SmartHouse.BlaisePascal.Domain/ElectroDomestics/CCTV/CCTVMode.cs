@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 {
     public enum CCTVMode
     {
