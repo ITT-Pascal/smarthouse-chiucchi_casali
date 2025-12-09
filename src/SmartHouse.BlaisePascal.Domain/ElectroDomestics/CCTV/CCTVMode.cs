@@ -4,7 +4,6 @@
     {
         Normal,
         NightVision,
-        InfraredVision, 
-        Off
+        InfraredVision
     }
 }

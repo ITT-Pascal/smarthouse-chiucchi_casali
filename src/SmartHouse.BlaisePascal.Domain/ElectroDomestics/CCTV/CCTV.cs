@@ -8,21 +8,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public CCTVMode Mode { get; private set; }
 
         //Constructor
-        public CCTV(string name) : base(name) { Mode = CCTVMode.Normal; }
+        public CCTV(string name) : base(name) { Status = DeviceStatus.Off; Mode = CCTVMode.Normal; }
 
         //Methods
-        public override void SwitchOn()
-        {
-            base.SwitchOn();
-            Mode = CCTVMode.Normal;
-        }
-
-        public override void SwitchOff()
-        {
-            base.SwitchOff();
-            Mode = CCTVMode.Off;
-        }
-
         public void SwitchToNormalMode()
         {
             if (Status == DeviceStatus.Off)
@@ -63,13 +51,8 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
             if (newMode == Mode)
                 throw new ArgumentException("Cannot set new mode that is same to current mode.", nameof(Mode));
 
-            if (newMode == CCTVMode.Off)
-                SwitchOff();
-            else
-            {
-                Mode = newMode;
-                LastModification_UTC = DateTime.UtcNow;
-            }
+            Mode = newMode;
+            LastModification_UTC = DateTime.UtcNow;
         }
 
         public void SetNightVisionWhenNight()
