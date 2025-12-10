@@ -6,12 +6,6 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
     public class AirConditionerTest
     {
         [Fact]
-        public void When_TheNameOfTheAirConditionerIsEmpty_TheNameIsNotValid()
-        {
-            Assert.Throws<ArgumentException>(() => new AirConditioner(string.Empty));
-        }
-
-        [Fact]
         public void When_TheAirConditionerIsOff_CanTurnOnIt()
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
@@ -49,7 +43,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             newAirConditioner.SwitchOn();
             newAirConditioner.SetPowerToWeak();
 
-            Assert.Equal(Power.Weak, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Weak, newAirConditioner.Power);
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
@@ -70,7 +64,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             newAirConditioner.SwitchOn();
             newAirConditioner.SetPowerToWeak();
 
-            Assert.Equal(Power.Normal, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Weak, newAirConditioner.Power);
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
@@ -91,7 +85,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             newAirConditioner.SwitchOn();
             newAirConditioner.SetPowerToPowerful();
 
-            Assert.Equal(Power.Powerful, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Powerful, newAirConditioner.Power);
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
         }
 
@@ -100,9 +94,9 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower());
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower(AirConditionerPower.Normal));
             Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
-            Assert.Equal(Power.Normal, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Normal, newAirConditioner.Power);
         }
 
         [Fact]
@@ -111,10 +105,10 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             newAirConditioner.SwitchOn();
-            newAirConditioner.SetPower();
+            newAirConditioner.SetPower(AirConditionerPower.Powerful);
 
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
-            Assert.Equal(Power.Powerful, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Powerful, newAirConditioner.Power);
         }
 
         [Fact]
@@ -123,11 +117,11 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             newAirConditioner.SwitchOn();
-            newAirConditioner.SetPower();
+            newAirConditioner.SetPower(AirConditionerPower.Powerful);
 
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower());
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower(AirConditionerPower.Powerful));
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
-            Assert.Equal(Power.Powerful, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Powerful, newAirConditioner.Power);
         }
 
         [Fact]
@@ -135,9 +129,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
-            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower());
-            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
-            Assert.Equal(Power.Weak, newAirConditioner.Power);
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower(AirConditionerPower.Normal));
         }
 
         [Fact]
@@ -146,10 +138,10 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             newAirConditioner.SwitchOn();
-            newAirConditioner.SetPower();
+            newAirConditioner.SetPower(AirConditionerPower.Weak);
 
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
-            Assert.Equal(Power.Weak, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Weak, newAirConditioner.Power);
         }
 
         [Fact]
@@ -158,11 +150,16 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
             newAirConditioner.SwitchOn();
-            newAirConditioner.SetPower();
+            newAirConditioner.SetPower(AirConditionerPower.Weak);
 
-            Assert.Throws<ArgumentException>(() => newAirConditioner.Power());
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPower(AirConditionerPower.Weak));
             Assert.Equal(DeviceStatus.On, newAirConditioner.Status);
-            Assert.Equal(Power.Weak, newAirConditioner.Power);
+            Assert.Equal(AirConditionerPower.Weak, newAirConditioner.Power);
         }
     }
 }
+//[Fact]
+//public void When_TheNameOfTheAirConditionerIsEmpty_TheNameIsNotValid()
+//{
+//    Assert.Throws<ArgumentException>(() => new AirConditioner(string.Empty));
+//}

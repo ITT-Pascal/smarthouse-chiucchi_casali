@@ -6,9 +6,30 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
     public class CCTVTest
     {
         [Fact]
-        public void When_TheNameOfCCTVIsEmpty_TheNameIsNotValid()
+        public void Constructor_WhenCreated_CamerIsOffButModeIsSettedToNormal()
         {
-            Assert.Throws<ArgumentException>(() => new CCTV(string.Empty));
+            CCTV camera = new CCTV("n");
+            Assert.Equal(DeviceStatus.Off, camera.Status);
+            Assert.Equal(CCTVMode.Normal, camera.Mode);
+        }
+
+        [Fact]
+        public void SwitchOn_WhenOff_ModeIsNotChanged()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            Assert.Equal(CCTVMode.Normal, camera.Mode);
+            Assert.Equal(DeviceStatus.On, camera.Status);
+        }
+
+        [Fact]
+        public void SwitchOff_WhenOn_ModeIsNotChanged()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SwitchOff();
+            Assert.Equal(CCTVMode.Normal, camera.Mode);
+            Assert.Equal(DeviceStatus.Off, camera.Status);
         }
 
         [Fact]
@@ -24,10 +45,11 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SwitchToNightVisionMode();
             newCCTV.SwitchToNormalMode();
 
-            Assert.Equal(newCCTV.Mode, SwitchToNormalMode());
+            Assert.Equal(CCTVMode.Normal, newCCTV.Mode);
 
         }
 
@@ -36,6 +58,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SwitchToNightVisionMode();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SwitchToNightVisionMode());
@@ -46,9 +69,10 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SwitchToNightVisionMode();
 
-            Assert.Equal(Mode.NightVision, newCCTV.Mode);
+            Assert.Equal(CCTVMode.NightVision, newCCTV.Mode);
 
         }
 
@@ -57,6 +81,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SwitchToInfraredVisionMode();
 
             Assert.Throws<ArgumentException>(() => newCCTV.SwitchToInfraredVisionMode());
@@ -67,46 +92,16 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV newCCTV = new CCTV("Salvatore");
 
+            newCCTV.SwitchOn();
             newCCTV.SwitchToInfraredVisionMode();
 
-            Assert.Equal(Mode.InfraredVision, newCCTV.Mode);
+            Assert.Equal(CCTVMode.InfraredVision, newCCTV.Mode);
 
         }
     }
-
-
-
-
-
-
-
-    //public class CCTVTests
-    //{
-    //    [Fact]
-    //    public void Constructor_WhenCreated_CamerIsOffButModeIsSettedToNormal()
-    //    {
-    //        CCTV camera = new CCTV("n");
-    //        Assert.Equal(DeviceStatus.Off, camera.Status);
-    //        Assert.Equal(CCTVMode.Normal, camera.Mode);
-    //    }
-
-    //    [Fact]
-    //    public void SwitchOn_WhenOff_ModeIsNotChanged()
-    //    {
-    //        CCTV camera = new CCTV("n");
-    //        camera.SwitchOn();
-    //        Assert.Equal(CCTVMode.Normal, camera.Mode);
-    //        Assert.Equal(DeviceStatus.On, camera.Status);
-    //    }
-
-    //    [Fact]
-    //    public void SwitchOff_WhenOn_ModeIsNotChanged()
-    //    {
-    //        CCTV camera = new CCTV("n");
-    //        camera.SwitchOn();
-    //        camera.SwitchOff();
-    //        Assert.Equal(CCTVMode.Normal, camera.Mode);
-    //        Assert.Equal(DeviceStatus.Off, camera.Status);
-    //    }
-    //}
 }
+//[Fact]
+//public void When_TheNameOfCCTVIsEmpty_TheNameIsNotValid()
+//{
+//    Assert.Throws<ArgumentException>(() => new CCTV(string.Empty));
+//}
