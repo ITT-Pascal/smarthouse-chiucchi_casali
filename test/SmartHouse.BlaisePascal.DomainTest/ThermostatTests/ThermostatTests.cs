@@ -3,7 +3,7 @@
 namespace SmartHouse.Domain.UnitTest.ThermostatTest
 {
     public class ThermostatTest
-    {
+    { //si
 
         [Fact]
         public void When_WnatToSetNewTemperatureButNewTempIsHigherThanMaxTemperature_ThrowArgumentException()
