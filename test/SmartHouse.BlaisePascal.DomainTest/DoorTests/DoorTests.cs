@@ -1,4 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.Door;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door;
 
 namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
 {
@@ -9,7 +9,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         {
             Door newDoor = new Door("n");
             Assert.Equal(ClosedStatus.Unlocked, newDoor.ClosedDoorStatus);
-            Assert.Equal(DoorStatus.Closed, newDoor.Status);
+            Assert.Equal(DoorStatus.Closed, newDoor.DoorStatus);
         }
 
         [Fact]
@@ -17,7 +17,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         {
             Door newDoor = new Door("n");
             newDoor.OpenDoor();
-            Assert.Equal(DoorStatus.Open, newDoor.Status);
+            Assert.Equal(DoorStatus.Open, newDoor.DoorStatus);
         }
 
         [Fact]
@@ -32,7 +32,8 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void OpenDoor_WhenDoorIsLocked_ThrowArgumentException()
         {
             Door newDoor = new Door("n");
-            newDoor.LockDoor();
+            newDoor.SwitchOn();
+            newDoor.LockDoor(newDoor.EntryId);
             Assert.Throws<ArgumentException>(() => newDoor.OpenDoor());
         }
 
@@ -42,7 +43,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
             Door newDoor = new Door("n");
             newDoor.OpenDoor();
             newDoor.CloseDoor();
-            Assert.Equal(DoorStatus.Closed, newDoor.Status);
+            Assert.Equal(DoorStatus.Closed, newDoor.DoorStatus);
         }
 
         [Fact]
@@ -56,7 +57,8 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void LockDoor_WhenDoorIsClosedAndUnlocked_LocksDoor()
         {
             Door newDoor = new Door("n");
-            newDoor.LockDoor();
+            newDoor.SwitchOn();
+            newDoor.LockDoor(newDoor.EntryId);
             Assert.Equal(ClosedStatus.Locked, newDoor.ClosedDoorStatus);
         }
 
@@ -65,23 +67,25 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         {
             Door newDoor = new Door("n");
             newDoor.OpenDoor();
-            Assert.Throws<ArgumentException>(() => newDoor.LockDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.LockDoor(newDoor.EntryId));
         }
 
         [Fact]
         public void LockDoor_WhenDoorIsAlreadyLocked_ThrowArgumentException()
         {
             Door newDoor = new Door("n");
-            newDoor.LockDoor();
-            Assert.Throws<ArgumentException>(() => newDoor.LockDoor());
+            newDoor.SwitchOn();
+            newDoor.LockDoor(newDoor.EntryId);
+            Assert.Throws<ArgumentException>(() => newDoor.LockDoor(newDoor.EntryId));
         }
 
         [Fact]
         public void UnlockDoor_WhenDoorIsClosedAndLocked_UnlocksDoor()
         {
             Door newDoor = new Door("n");
-            newDoor.LockDoor();
-            newDoor.UnlockDoor();
+            newDoor.SwitchOn();
+            newDoor.LockDoor(newDoor.EntryId);
+            newDoor.UnlockDoor(newDoor.EntryId);
             Assert.Equal(ClosedStatus.Unlocked, newDoor.ClosedDoorStatus);
         }
 
@@ -90,14 +94,14 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         {
             Door newDoor = new Door("n");
             newDoor.OpenDoor();
-            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(newDoor.EntryId));
         }
 
         [Fact]
         public void UnlockDoor_WhenDoorIsAlreadyUnlocked_ThrowArgumentException()
         {
             Door newDoor = new Door("n");
-            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(newDoor.EntryId));
         }
     }
 }

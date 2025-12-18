@@ -301,7 +301,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             //return intensities;
 
 
-            // "ALMOST THERE" METHOD
+            // ALTERNATIVE METHOD
 
             //List<AbstractLamp> sortedLamps = new List<AbstractLamp>();
             //AbstractLamp? lampToRemove = null;

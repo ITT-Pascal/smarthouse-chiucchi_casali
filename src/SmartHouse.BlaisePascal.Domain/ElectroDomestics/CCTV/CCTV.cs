@@ -6,11 +6,82 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
     {
         //Properties
         public CCTVMode Mode { get; private set; }
+        public double FOV { get; private set; } //FOV, or Field Of View, is the extent of the observable world visible at any moment, measured in degrees, representing how much of a scene a camera, eye, or device can capture.
+        //Constants
+        //FOV expressed in degrees (from min of 30° to max of 120°)
+        public const int FocusFOV = 30; //Min
+        public const int StandardFOV = 60;
+        public const int WideAngleFOV = 120; //Max
+        public const int StandardStep = 1;
 
         //Constructor
-        public CCTV(string name) : base(name) { Status = DeviceStatus.Off; Mode = CCTVMode.Normal; }
+        public CCTV(string name) : base(name) { Status = DeviceStatus.Off; Mode = CCTVMode.Normal; FOV = StandardFOV; }
 
         //Methods
+        public void SetFOVToStandard()
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            if (FOV == StandardFOV)
+                throw new ArgumentException("FOV is already standard.", nameof(FOV));
+            FOV = StandardFOV;
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void SetFOVToFocus()
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            if (FOV == FocusFOV)
+                throw new ArgumentException("FOV is already focused.", nameof(FOV));
+            FOV = FocusFOV;
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void SetFOVToWideAngle()
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            if (FOV == WideAngleFOV)
+                throw new ArgumentException("FOV is already wide angle.", nameof(FOV));
+            FOV = WideAngleFOV;
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void SetFOV(int newFOV)
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            if (newFOV < FocusFOV || newFOV > WideAngleFOV)
+                throw new ArgumentException("Cannot exceed camera FOV limits.", nameof(newFOV));
+            if (newFOV == FOV)
+                throw new ArgumentException("FOV alread at that degree.", nameof(newFOV));
+            FOV = newFOV;
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void IncreaseFOV()
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            FOV = Math.Min(WideAngleFOV, FOV + StandardStep);
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void DecreaseFOV()
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            FOV = Math.Max(FocusFOV, FOV - StandardStep);
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
         public void SwitchToNormalMode()
         {
             if (Status == DeviceStatus.Off)

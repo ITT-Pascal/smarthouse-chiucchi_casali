@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.Door
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 {
     public enum ClosedStatus
     {

@@ -44,7 +44,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         public void IncreaseTemperature()
         {
             if (WorkingTemperature >= MaxTemperature)
-                throw new ArgumentException("Cannot increase more than the limit.", nameof(WorkingTemperature));
+                throw new ArgumentException("Cannot increase more than the max limit.", nameof(WorkingTemperature));
             if (Mode == ThermostatMode.Automatic)
                 throw new ArgumentException("Cannot change temperature when in automatic mode.", nameof(Mode));
             WorkingTemperature = Math.Min(MaxTemperature, WorkingTemperature + StandardStep);
