@@ -35,7 +35,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
         public void TurnOffBothLamps()
         {
-            if (Lamp2.Status == DeviceStatus.On)
+            if (Lamp1.Status == DeviceStatus.On)
                 Lamp1.Toggle();
             if (Lamp2.Status == DeviceStatus.On)
                 Lamp2.Toggle();
@@ -43,7 +43,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
         public void TurnOnBothLamps()
         {
-            if (Lamp2.Status == DeviceStatus.Off)
+            if (Lamp1.Status == DeviceStatus.Off)
                 Lamp1.Toggle();
             if (Lamp2.Status == DeviceStatus.Off)
                 Lamp2.Toggle();

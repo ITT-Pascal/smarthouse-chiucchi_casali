@@ -156,13 +156,9 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLamp.SwitchOn();
             newLamp.IsNight();
             if (DateTime.Now.Hour >= 22 || DateTime.Now.Hour <= 6)
-            {
                 Assert.Equal(24, newLamp.Intensity);
-            }
             else
-            {
                 Assert.Equal(30, newLamp.Intensity);
-            }
         }
         //UltraEcoMode Tests
         [Fact]
@@ -172,12 +168,52 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             Assert.Throws<ArgumentException>(() => newLamp.UltraEcoMode());
         }
         [Fact]
-        public void EcoLampUltraEcoMode_WhenEcoLampIsOnAndBightnessIs70_ReduceBrightnessBy20Percent()
+        public void EcoLampUltraEcoMode_WhenEcoLampIsOnAndBrightnessIs70_ReduceBrightnessBy20Percent()
         {
             EcoLamp newLamp = new EcoLamp("n");
             newLamp.SwitchOn();
             newLamp.UltraEcoMode();
             Assert.Equal(24, newLamp.Intensity);
         }
+
+        [Fact]
+        public void Dimmer_ErrorWhenOff()
+        {
+            EcoLamp newLamp = new EcoLamp("n");
+            Assert.Throws<InvalidOperationException>(() => newLamp.Dimmer(1));
+        }
+
+        [Fact]
+        public void Brighten_ErrorWhenOff()
+        {
+            EcoLamp newLamp = new EcoLamp("n");
+            Assert.Throws<InvalidOperationException>(() => newLamp.Brighten(1));
+        }
+
+
+
+        //AutoOffTests
+
+        //[Fact]
+        //public void AutoOff_SwitchOnError()
+        //{
+        //    EcoLamp newLamp = new EcoLamp("n");
+        //    Assert.Throws<ArgumentOutOfRangeException>(() => newLamp.SwitchOn(-1));
+        //}
+
+        //[Fact]
+        //public void AutoOff_SwitchOnNormal()
+        //{
+        //    EcoLamp newLamp = new EcoLamp("n");
+        //    newLamp.SwitchOn(8);
+        //    Assert.Equal(newLamp.);
+        //}
+
+        //[Fact]
+        //public void AutoOff_SwitchOnError()
+        //{
+        //    EcoLamp newLamp = new EcoLamp("n");
+        //    Assert.Throws<ArgumentException>(() => newLamp.CheckAutoOff());
+        //}
     }
 }

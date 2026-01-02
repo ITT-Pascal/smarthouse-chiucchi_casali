@@ -12,16 +12,16 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         //Constructor
         public LampsRow(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name of the lamps row cannot be null or white spaces.", nameof(name));
+            //if (string.IsNullOrWhiteSpace(name))
+            //    throw new ArgumentException("Name of the lamps row cannot be null or white spaces.", nameof(name));
             Name = name;
             LampList = new List<AbstractLamp>();
         }
 
         public LampsRow(string name, List<AbstractLamp> lamps)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Name of the lamps row cannot be null or white spaces.", nameof(name));
+            //if (string.IsNullOrWhiteSpace(name))
+            //    throw new ArgumentException("Name of the lamps row cannot be null or white spaces.", nameof(name));
             Name = name;
             LampList = lamps;
 

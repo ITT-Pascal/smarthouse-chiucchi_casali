@@ -21,6 +21,14 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
         }
 
         [Fact]
+        public void Constructor_WhenCreatingANewLampsRowWithNoName_ThrowsArgumentException()
+        {
+            List<AbstractLamp> list = [];
+            LampsRow newLampsRow = new LampsRow("Ok", list);
+            Assert.Empty(newLampsRow.LampList);
+        }
+
+        [Fact]
         public void Constructor_WhenCreatingNewLampsRowWith2Lamps_LampsRowHas2Lamps()
         {
             LampsRow newLampsRow = new LampsRow("n");
@@ -28,6 +36,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLampsRow.AddLamp("giova");
             Assert.Equal(2, newLampsRow.LampList.Count);
         }
+
 
         //AddLamp tests
         [Fact]
@@ -50,8 +59,8 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
         public void AddEcoLamp_WhenAddingNewEcoLampWithEmptyOrNullName_ThrowArgumentException()
         {
             LampsRow newLampsRow = new LampsRow("n");
-            Assert.Throws<ArgumentException>(() => newLampsRow.AddLamp(""));
-            Assert.Throws<ArgumentException>(() => newLampsRow.AddLamp(" "));
+            Assert.Throws<ArgumentException>(() => newLampsRow.AddEcoLamp(""));
+            Assert.Throws<ArgumentException>(() => newLampsRow.AddEcoLamp(" "));
         }
 
         [Fact]

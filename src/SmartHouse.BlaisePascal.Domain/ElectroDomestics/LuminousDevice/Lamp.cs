@@ -7,12 +7,12 @@
         private const int StandardDeFault = 50;
         private const int StandardMax = 100;
 
-        //Abstract properties ovveride
+        //Abstract properties override
         public override int MinIntensity => StandardMin;
         public override int MaxIntensity => StandardMax;
         public override int DefaultIntensity => StandardDeFault;
         
-        //Construcor
+        //Constructor
         public Lamp(string name):base(name) { }  
     }
 }

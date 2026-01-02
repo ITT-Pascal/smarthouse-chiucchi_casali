@@ -42,12 +42,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Cannot dimmer lamp because it's off.");
 
-            int newValue = Math.Max(MinIntensity, Intensity - amount);
-
-            if (newValue == Intensity)
-                throw new InvalidOperationException("Intensity cannot be dimmered more.");
-
-            Intensity = newValue;
+            Intensity = Math.Max(MinIntensity, Intensity - amount);
 
             LastModification_UTC = DateTime.UtcNow;
         }
@@ -57,9 +52,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             if (Status == DeviceStatus.Off)
                 throw new InvalidOperationException("Cannot brighten lamp because it's off.");
 
-            int newValue = Math.Min(MaxIntensity, Intensity + amount);
-            
-            Intensity = newValue;
+            Intensity = Math.Min(MaxIntensity, Intensity + amount);
 
             LastModification_UTC = DateTime.UtcNow;
         }

@@ -202,6 +202,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV camera = new CCTV("n");
             camera.SwitchOn();
+            camera.SetNightVisionWhenNight();
             int hour = DateTime.Now.Hour;
             if (hour >= 22 || hour < 6)
                 Assert.Equal(CCTVMode.NightVision, camera.Mode);

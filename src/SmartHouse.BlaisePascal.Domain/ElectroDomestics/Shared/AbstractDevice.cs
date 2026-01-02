@@ -41,7 +41,7 @@
         public virtual void SwitchOff()
         {
             if (Status == DeviceStatus.Off)
-                throw new InvalidOperationException($"{Name} is alredy off.");
+                throw new InvalidOperationException($"{Name} is already off.");
             
             Status = DeviceStatus.Off;
 
@@ -51,7 +51,7 @@
         public virtual void SwitchOn()
         {
             if (Status == DeviceStatus.On)
-                throw new InvalidOperationException($"{Name} is alredy on.");
+                throw new InvalidOperationException($"{Name} is already on.");
 
             Status = DeviceStatus.On;
 

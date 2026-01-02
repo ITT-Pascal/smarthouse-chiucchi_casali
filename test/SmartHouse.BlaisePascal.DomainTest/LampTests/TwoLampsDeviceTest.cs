@@ -54,6 +54,29 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp1 = new Lamp("n");
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.TurnOffBothLamps();
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp1.Status);
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp2.Status);
+        }
+        [Fact]
+        public void TwoLampsDeviceTurnOffBothLamps_WhenFirstLampIsOn_Lamp1IsTurnedOff()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("na");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.ToggleOneLamp(lamp1.Id);
+            newLamp.TurnOffBothLamps();
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp1.Status);
+            Assert.Equal(DeviceStatus.Off, newLamp.Lamp2.Status);
+        }
+        [Fact]
+        public void TwoLampsDeviceTurnOffBothLamps_WhenSecondLampIsOn_Lamp2IsTurnedOff()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("na");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.ToggleOneLamp(lamp2.Id);
             newLamp.TurnOffBothLamps();
             Assert.Equal(DeviceStatus.Off, newLamp.Lamp1.Status);
             Assert.Equal(DeviceStatus.Off, newLamp.Lamp2.Status);
@@ -136,6 +159,74 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.ToggleOneLamp(lamp1.Id);
             Assert.Throws<ArgumentException>(() => newLamp.SetBothLampsIntensity(20, 10));
+        }
+        //Dimmer Tests
+        [Fact]
+        public void DimmerOneLamp_IfIdIsLamp1_DimmersLamp1()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("nn");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.DimmerOneLamp(lamp1.Id, 1);
+            Assert.Equal(49, lamp1.Intensity);
+            Assert.Equal(30, lamp2.Intensity);
+        }
+        [Fact]
+        public void DimmerOneLamp_IfIdIsLamp2_DimmersLamp2()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("nn");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.DimmerOneLamp(lamp2.Id, 1);
+            Assert.Equal(50, lamp1.Intensity);
+            Assert.Equal(29, lamp2.Intensity);
+        }
+        [Fact]
+        public void DimmerBothLamps_DimmersLamp1AndLamp2()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("nn");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.DimmerBothLamps(1, 1);
+            Assert.Equal(49, lamp1.Intensity);
+            Assert.Equal(29, lamp2.Intensity);
+        }
+        //Brighten Tests
+        [Fact]
+        public void BrightenOneLamp_IfIdIsLamp1_BrightensLamp1()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("nn");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.BrightenOneLamp(lamp1.Id, 1);
+            Assert.Equal(51, lamp1.Intensity);
+            Assert.Equal(30, lamp2.Intensity);
+        }
+        [Fact]
+        public void BrightenOneLamp_IfIdIsLamp2_BrightensLamp2()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("nn");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.BrightenOneLamp(lamp2.Id, 1);
+            Assert.Equal(50, lamp1.Intensity);
+            Assert.Equal(31, lamp2.Intensity);
+        }
+        [Fact]
+        public void BrightenBothLamps_BrightensLamp1AndLamp2()
+        {
+            AbstractLamp lamp1 = new Lamp("n");
+            AbstractLamp lamp2 = new EcoLamp("nn");
+            TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
+            newLamp.TurnOnBothLamps();
+            newLamp.BrightenBothLamps(1, 1);
+            Assert.Equal(51, lamp1.Intensity);
+            Assert.Equal(31, lamp2.Intensity);
         }
     }
 }

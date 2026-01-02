@@ -9,7 +9,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         private const int StandardDeFault = 30;
         private const int StandardMax = 70;
 
-        //Abstract properties ovveride
+        //Abstract properties override
         public override int MinIntensity => StandardMin;
         public override int MaxIntensity => StandardMax;
         public override int DefaultIntensity => StandardDeFault;
@@ -24,7 +24,6 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
 
 
-        //Methods
         //AutoOff methods
         public override void SwitchOn() //SwitchOn without AutoOff timer (Normal lamp)
         {
@@ -37,54 +36,56 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             autoOffAtUtc = enableAutoOff? DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes) : null;
         }
 
-        public void SwitchOn(int autoOffMinutes) //SwitchOn with AutoOff (decide timer length)
-        {
-            if (autoOffMinutes < MinAutoOffMinutes)
-                throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
+        //public void SwitchOn(int autoOffMinutes) //SwitchOn with AutoOff (decide timer length)
+        //{
+        //    if (autoOffMinutes < MinAutoOffMinutes)
+        //        throw new ArgumentOutOfRangeException(nameof(autoOffMinutes));
 
-            base.SwitchOn();
-            autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
-        }
+        //    base.SwitchOn();
+        //    autoOffAtUtc = DateTime.UtcNow.AddMinutes(autoOffMinutes);
+        //}
 
-        public override void SetIntensity(int value) //Resets AutoOff if needed
-        {
-            base.SetIntensity(value);
-            ResetAutoOffIfNeeded();
-        }
+        //public override void SetIntensity(int value) //Resets AutoOff if needed
+        //{
+        //    base.SetIntensity(value);
+        //    ResetAutoOffIfNeeded();
+        //}
 
-        public override void Dimmer(int amount) //Resets AutoOff if needed
-        {
-            base.Dimmer(amount);
-            ResetAutoOffIfNeeded();
-        }
+        //public override void Dimmer(int amount) //Resets AutoOff if needed
+        //{
+        //    base.Dimmer(amount);
+        //    ResetAutoOffIfNeeded();
+        //}
 
-        public override void Brighten(int amount) //Resets AutoOff if needed
-        {
-            base.Brighten(amount);
-            ResetAutoOffIfNeeded();
-        }
+        //public override void Brighten(int amount) //Resets AutoOff if needed
+        //{
+        //    base.Brighten(amount);
+        //    ResetAutoOffIfNeeded();
+        //}
 
-        public override void SwitchOff() //Nulls the AutoOff timer
-        {
-            base.SwitchOff();
-            autoOffAtUtc = null;
-        }
+        //public override void SwitchOff() //Nulls the AutoOff timer
+        //{
+        //    base.SwitchOff();
+        //    autoOffAtUtc = null;
+        //}
 
-        public void CheckAutoOff() //Controls if AutoOff time is up (if true switches off)
-        {
-            if (Status == DeviceStatus.On && autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
-                SwitchOff();
-        }
+        //public void CheckAutoOff() //Controls if AutoOff time is up (if true switches off)
+        //{
+        //    if (Status == DeviceStatus.On && autoOffAtUtc.HasValue && DateTime.UtcNow >= autoOffAtUtc.Value)
+        //        SwitchOff();
+        //    else
+        //        throw new ArgumentException("no", nameof(autoOffAtUtc));
+        //}
 
-        private void ResetAutoOffIfNeeded()
-        {
-            if (autoOffAtUtc.HasValue)
-                autoOffAtUtc = DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes);
-        }
+        //private void ResetAutoOffIfNeeded()
+        //{
+        //    if (autoOffAtUtc.HasValue)
+        //        autoOffAtUtc = DateTime.UtcNow.AddMinutes(DefaultAutoOffMinutes);
+        //}
 
 
         //Special eco methods
-        public void AdjustIntensityByAmbientLight(int ambientBrightness) //Cambia brightness in base alla luminosità dell'ambiente in modo inversamente proporzionale
+        public void AdjustIntensityByAmbientLight(int ambientBrightness) //Adjusts brightness by the ambient brightness with inverse proportionality
         {
             if (ambientBrightness < MinIntensity || ambientBrightness > MaxIntensity)
                 throw new ArgumentOutOfRangeException("Ambient brightness must be between MinBrightness and MaxBrightness", nameof(ambientBrightness));
@@ -94,7 +95,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
             Intensity = Math.Max(MinIntensity, Math.Min(MaxIntensity, MaxIntensity - ambientBrightness));
 
-            ResetAutoOffIfNeeded();
+            //ResetAutoOffIfNeeded();
 
             if (Intensity == MinIntensity)
                 SwitchOff();
@@ -109,7 +110,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
             int hour = DateTime.Now.Hour;
 
-            if (hour >= 22 || hour < 6) //Orari convenzionali per la notte
+            if (hour >= 22 || hour < 6) //Conventional hours for night
                 UltraEcoMode();
         }
 
@@ -118,14 +119,15 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             if (Status == DeviceStatus.Off)
                 throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
 
-            Intensity = (int)(Intensity * 0.8); //Diminuisce del 20% la luminosità attuale
+            Intensity = (int)(Intensity * 0.8); //Reduces current brightness by 20%
 
-            ResetAutoOffIfNeeded();
+            //ResetAutoOffIfNeeded();
 
             LastModification_UTC = DateTime.UtcNow;
         }
     }
 }
+
 //ALTERNATIVE METHOD
 //if (ambientBrightness == MinBrightness)
 //{
