@@ -6,11 +6,207 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
     public class CCTVTest
     {
         [Fact]
-        public void Constructor_WhenCreated_CamerIsOffButModeIsSettedToNormal()
+        public void Constructor_WhenCreated_CameraIsOffButModeIsSetToNormal()
         {
             CCTV camera = new CCTV("n");
             Assert.Equal(DeviceStatus.Off, camera.Status);
             Assert.Equal(CCTVMode.Normal, camera.Mode);
+        }
+
+        [Fact]
+        public void SetFOVToStandard_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SetFOVToStandard());
+        }
+
+        [Fact]
+        public void SetFOVToFocus_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SetFOVToFocus());
+        }
+
+        [Fact]
+        public void SetFOVToWideAngle_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SetFOVToWideAngle());
+        }
+
+        [Fact]
+        public void SetFOV_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SetFOV(40));
+        }
+
+        [Fact]
+        public void IncreaseFOV_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.IncreaseFOV());
+        }
+
+        [Fact]
+        public void DecreaseFOV_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.DecreaseFOV());
+        }
+
+        [Fact]
+        public void SwitchToInfraredVisionMode_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SwitchToInfraredVisionMode());
+        }
+
+        [Fact]
+        public void SwitchToNightVisionMode_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SwitchToNightVisionMode());
+        }
+
+        [Fact]
+        public void SwitchToNormalMode_WhenCCTVIsAlreadyOnThatMode_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            Assert.Throws<ArgumentException>(() => camera.SwitchToNormalMode());
+        }
+
+        [Fact]
+        public void SetMode_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SetMode(CCTVMode.NightVision));
+        }
+
+        [Fact]
+        public void SetNightVisionWhenNight_WhenCCTVIsOff_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            Assert.Throws<ArgumentException>(() => camera.SetNightVisionWhenNight());
+        }
+
+        [Fact]
+        public void SetFOVToStandard_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            Assert.Throws<ArgumentException>(() => camera.SetFOVToStandard());
+        }
+
+        [Fact]
+        public void SetFOVToFocus_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SetFOVToFocus();
+            Assert.Throws<ArgumentException>(() => camera.SetFOVToFocus());
+        }
+
+        [Fact]
+        public void SetFOVToWideAngle_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SetFOVToWideAngle();
+            Assert.Throws<ArgumentException>(() => camera.SetFOVToWideAngle());
+        }
+
+        [Fact]
+        public void SetFOV_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SetFOVToWideAngle();
+            Assert.Throws<ArgumentException>(() => camera.SetFOV(120));
+        }
+
+        [Fact]
+        public void IncreaseFOV_NormalIncrease_IncreasesFOV()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.IncreaseFOV();
+            Assert.Equal(61, camera.FOV);
+        }
+
+        [Fact]
+        public void DecreaseFOV_NormalIncrease_IncreasesFOV()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.DecreaseFOV();
+            Assert.Equal(59, camera.FOV);
+        }
+
+        [Fact]
+        public void SetFOV_WhenNewFOVIsOutOfRange_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            Assert.Throws<ArgumentException>(() => camera.SetFOV(121));
+        }
+
+        [Fact]
+        public void SetFOVToStandard_NormalSwitch_SetsFOVToStandard()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SetFOVToFocus();
+            camera.SetFOVToStandard();
+            Assert.Equal(60, camera.FOV);
+        }
+
+        [Fact]
+        public void SetFOV_NormalSwitch_SetsFOVToStandard()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SetFOV(80);
+            Assert.Equal(80, camera.FOV);
+        }
+
+        [Fact]
+        public void SetMode_WhenNewModeIsAlreadyOnThatMode_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            Assert.Throws<ArgumentException>(() => camera.SetMode(CCTVMode.Normal));
+        }
+
+        [Fact]
+        public void SetMode_NormalSet_SetsModeWithNewMode()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SetMode(CCTVMode.NightVision);
+            Assert.Equal(CCTVMode.NightVision, camera.Mode);
+        }
+
+        [Fact]
+        public void SetNightVisionWhenNight_WhenModeIsAlreadyAtNightVision_ThrowArgumentException()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            camera.SwitchToNightVisionMode();
+            Assert.Throws<ArgumentException>(() => camera.SetNightVisionWhenNight());
+        }
+
+        [Fact]
+        public void SetNightVisionWhenNight_NormalSet()
+        {
+            CCTV camera = new CCTV("n");
+            camera.SwitchOn();
+            int hour = DateTime.Now.Hour;
+            if (hour >= 22 || hour < 6)
+                Assert.Equal(CCTVMode.NightVision, camera.Mode);
+            else
+                Assert.Equal(CCTVMode.Normal, camera.Mode);
         }
 
         [Fact]
@@ -35,67 +231,67 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetDefaultVisionButItHasAlreadyBeenSet_CannotSetDefaultVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore");
 
-            Assert.Throws<ArgumentException>(() => newCCTV.SwitchToNormalMode());
+            Assert.Throws<ArgumentException>(() => camera.SwitchToNormalMode());
         }
 
         [Fact]
         public void When_WantToSetDefaultVisionAndItIsAlreadySetToNightVision_CanSetDefaultVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore");
 
-            newCCTV.SwitchOn();
-            newCCTV.SwitchToNightVisionMode();
-            newCCTV.SwitchToNormalMode();
+            camera.SwitchOn();
+            camera.SwitchToNightVisionMode();
+            camera.SwitchToNormalMode();
 
-            Assert.Equal(CCTVMode.Normal, newCCTV.Mode);
+            Assert.Equal(CCTVMode.Normal, camera.Mode);
 
         }
 
         [Fact]
         public void When_WantToSetNightVisionButItHasAlreadyBeenSet_CannotSetNightVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore");
 
-            newCCTV.SwitchOn();
-            newCCTV.SwitchToNightVisionMode();
+            camera.SwitchOn();
+            camera.SwitchToNightVisionMode();
 
-            Assert.Throws<ArgumentException>(() => newCCTV.SwitchToNightVisionMode());
+            Assert.Throws<ArgumentException>(() => camera.SwitchToNightVisionMode());
         }
 
         [Fact]
         public void When_WantToSetNightVisionAndItIsAlreadySetToDefaultVision_CanSetNightVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore");
 
-            newCCTV.SwitchOn();
-            newCCTV.SwitchToNightVisionMode();
+            camera.SwitchOn();
+            camera.SwitchToNightVisionMode();
 
-            Assert.Equal(CCTVMode.NightVision, newCCTV.Mode);
+            Assert.Equal(CCTVMode.NightVision, camera.Mode);
 
         }
 
         [Fact]
         public void When_WantToSetThermalVisionButItHasAlreadyBeenSet_CannotSetThermalVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore");
 
-            newCCTV.SwitchOn();
-            newCCTV.SwitchToInfraredVisionMode();
+            camera.SwitchOn();
+            camera.SwitchToInfraredVisionMode();
 
-            Assert.Throws<ArgumentException>(() => newCCTV.SwitchToInfraredVisionMode());
+            Assert.Throws<ArgumentException>(() => camera.SwitchToInfraredVisionMode());
         }
 
         [Fact]
         public void When_WantToSetThermalVisionAndItIsAlreadySetToDefaultVision_CanSetThermalVision()
         {
-            CCTV newCCTV = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore");
 
-            newCCTV.SwitchOn();
-            newCCTV.SwitchToInfraredVisionMode();
+            camera.SwitchOn();
+            camera.SwitchToInfraredVisionMode();
 
-            Assert.Equal(CCTVMode.InfraredVision, newCCTV.Mode);
+            Assert.Equal(CCTVMode.InfraredVision, camera.Mode);
 
         }
     }

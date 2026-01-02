@@ -58,7 +58,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
             if (newFOV < FocusFOV || newFOV > WideAngleFOV)
                 throw new ArgumentException("Cannot exceed camera FOV limits.", nameof(newFOV));
             if (newFOV == FOV)
-                throw new ArgumentException("FOV alread at that degree.", nameof(newFOV));
+                throw new ArgumentException("FOV already at that degree.", nameof(newFOV));
             FOV = newFOV;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -133,7 +133,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
             if (Mode == CCTVMode.NightVision)
                 throw new ArgumentException("Cannot set mode to night vision when it already is night vision.", nameof(Mode));
             int hour = DateTime.Now.Hour;
-            if (hour >= 22 || hour < 6) //Orari convenzionali per la notte 
+            if (hour >= 22 || hour < 6) //Conventional Hours For Night
                 Mode = CCTVMode.NightVision;
 
             LastModification_UTC = DateTime.UtcNow;
