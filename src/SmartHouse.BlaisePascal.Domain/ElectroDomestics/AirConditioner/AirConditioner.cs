@@ -24,13 +24,13 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         }
 
         //Methods
-        public override void SwitchOn()
-        {
-            base.SwitchOn();
-            Mode = AirConditionerMode.Dry; 
-            Power = AirConditionerPower.Normal;
-            AirTemperature = DryAirTemperature;
-        }
+        //public override void SwitchOn()
+        //{
+        //    base.SwitchOn();
+        //    Mode = AirConditionerMode.Dry; 
+        //    Power = AirConditionerPower.Normal;
+        //    AirTemperature = DryAirTemperature;
+        //}
 
         public void SwitchToDryMode()
         {

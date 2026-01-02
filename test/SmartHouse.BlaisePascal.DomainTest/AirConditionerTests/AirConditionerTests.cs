@@ -16,7 +16,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
         }
 
         [Fact]
-        public void When_TheAirConditionerIsOn_CanTurnOffIt()
+        public void When_TheAirConditionerIsOn_CanTurnItOff()
         {
             AirConditioner newAirConditioner = new AirConditioner("Pino");
 
@@ -24,6 +24,148 @@ namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests
             newAirConditioner.SwitchOff();
 
             Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
+        }
+
+        [Fact]
+        public void SwitchToDryMode_WhenDeviceIsOff_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchToDryMode());
+        }
+
+        [Fact]
+        public void SwitchToHotMode_WhenDeviceIsOff_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchToHotMode());
+        }
+
+        [Fact]
+        public void SwitchToCoolMode_WhenDeviceIsOff_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchToCoolMode());
+        }
+
+        [Fact]
+        public void SwitchMode_WhenDeviceIsOff_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchMode(AirConditionerMode.Cool));
+        }
+
+        [Fact]
+        public void SwitchToDryMode_WhenDeviceIsAlreadyInThatMode_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchToDryMode());
+        }
+
+        [Fact]
+        public void SwitchToHotMode_WhenDeviceIsAlreadyInThatMode_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SwitchToHotMode();
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchToHotMode());
+        }
+
+        [Fact]
+        public void SwitchToCoolMode_WhenDeviceIsAlreadyInThatMode_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SwitchToCoolMode();
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchToCoolMode());
+        }
+
+        [Fact]
+        public void SwitchMode_WhenDeviceIsAlreadyInThatMode_ThrowArgumentException()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SwitchMode(AirConditionerMode.Cool);
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SwitchMode(AirConditionerMode.Cool));
+        }
+
+        [Fact]
+        public void SwitchToDryMode_NormalSwitch_SwitchesToDryMode()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SwitchToCoolMode();
+            newAirConditioner.SwitchToDryMode();
+            Assert.Equal(AirConditionerMode.Dry, newAirConditioner.Mode);
+        }
+
+        [Fact]
+        public void SwitchMode_NormalSwitch_SwitchesToDryMode()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SwitchToCoolMode();
+            newAirConditioner.SwitchMode(AirConditionerMode.Dry);
+            Assert.Equal(AirConditionerMode.Dry, newAirConditioner.Mode);
+        }
+
+        [Fact]
+        public void SwitchMode_NormalSwitch_SwitchesToHotMode()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SwitchMode(AirConditionerMode.Hot);
+            Assert.Equal(AirConditionerMode.Hot, newAirConditioner.Mode);
+        }
+
+        [Fact]
+        public void When_TheAirConditionerIsOffAndWantToSetItToNormalFanSpeed_CannotDoIt()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SetPowerToPowerful();
+            newAirConditioner.SwitchOff();
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPowerToNormal());
+            Assert.Equal(DeviceStatus.Off, newAirConditioner.Status);
+        }
+
+        [Fact]
+        public void SetPowerToNormal_TheAirConditionerIsAlreadyOnTheSelectedMode_CannotDoIt()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPowerToNormal());
+        }
+
+        [Fact]
+        public void SetPowerToNormal_NormalSwitch_SetsPowerToNormal()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+            newAirConditioner.SetPowerToPowerful();
+            newAirConditioner.SetPowerToNormal();
+            Assert.Equal(AirConditionerPower.Normal, newAirConditioner.Power);
+        }
+
+        [Fact]
+        public void SetPowerToWeak_TheAirConditionerIsAlreadyOnTheSelectedMode_CannotDoIt()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+
+            newAirConditioner.SetPowerToWeak();
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPowerToWeak());
+        }
+
+        [Fact]
+        public void SetPowerToPowerful_TheAirConditionerIsAlreadyOnTheSelectedMode_CannotDoIt()
+        {
+            AirConditioner newAirConditioner = new AirConditioner("Pino");
+            newAirConditioner.SwitchOn();
+
+            newAirConditioner.SetPowerToPowerful();
+            Assert.Throws<ArgumentException>(() => newAirConditioner.SetPowerToPowerful());
         }
 
         [Fact]
