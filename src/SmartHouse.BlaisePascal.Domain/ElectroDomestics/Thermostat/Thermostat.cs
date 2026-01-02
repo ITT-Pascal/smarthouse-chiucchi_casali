@@ -84,7 +84,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
             if (ambientTemperature <= MinTemperature)
                 WorkingTemperature = MaxTemperature;
             else if (ambientTemperature < MaxTemperature && ambientTemperature > MinTemperature)
-                WorkingTemperature = Math.Max(MinTemperature, Math.Min(MaxTemperature, MaxTemperature - ambientTemperature));
+                WorkingTemperature = StandardTemperature;
             else if (ambientTemperature >= MaxTemperature)
                 SwitchOff();
 

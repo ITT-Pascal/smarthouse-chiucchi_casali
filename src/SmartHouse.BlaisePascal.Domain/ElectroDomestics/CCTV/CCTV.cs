@@ -15,7 +15,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public const int StandardStep = 1;
 
         //Constructor
-        public CCTV(string name) : base(name) { Status = DeviceStatus.Off; Mode = CCTVMode.Normal; FOV = StandardFOV; }
+        public CCTV(string name) : base(name) { Mode = CCTVMode.Normal; FOV = StandardFOV; }
 
         //Methods
         public void SetFOVToStandard()

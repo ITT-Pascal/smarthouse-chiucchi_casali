@@ -35,11 +35,11 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
             if (Status == DeviceStatus.Off)
                 throw new ArgumentException("Cannot lock door when it's off.", nameof(Status));
             if (DoorStatus == DoorStatus.Open)
-                throw new ArgumentException("Cannot lock and open door.", nameof(DoorStatus));
+                throw new ArgumentException("Cannot lock an open door.", nameof(DoorStatus));
             if(ClosedDoorStatus == ClosedStatus.Locked)
                 throw new ArgumentException("Cannot lock a door that is already locked.", nameof(ClosedDoorStatus));
             if (entryId != EntryId)
-                throw new Exception("Access denied.");
+                throw new Exception("Access denied. Police has been alerted.");
             ClosedDoorStatus = ClosedStatus.Locked;
 
             LastModification_UTC = DateTime.Now;
@@ -54,7 +54,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
             if (ClosedDoorStatus == ClosedStatus.Unlocked)
                 throw new ArgumentException("Cannot unlock a door that is already unlocked.", nameof(ClosedDoorStatus));
             if (entryId != EntryId)
-                throw new Exception("Access denied.");
+                throw new Exception("Access denied. Police has been alerted.");
             ClosedDoorStatus = ClosedStatus.Unlocked;
 
             LastModification_UTC = DateTime.Now;

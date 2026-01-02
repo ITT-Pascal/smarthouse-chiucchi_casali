@@ -66,7 +66,15 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void LockDoor_WhenDoorIsOpen_ThrowArgumentException()
         {
             Door newDoor = new Door("n");
+            newDoor.SwitchOn();
             newDoor.OpenDoor();
+            Assert.Throws<ArgumentException>(() => newDoor.LockDoor(newDoor.EntryId));
+        }
+
+        [Fact]
+        public void LockDoor_WhenDoorIsOff_ThrowArgumentException()
+        {
+            Door newDoor = new Door("n");
             Assert.Throws<ArgumentException>(() => newDoor.LockDoor(newDoor.EntryId));
         }
 
@@ -80,6 +88,15 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         }
 
         [Fact]
+        public void LockDoor_WhenEntryIdIsNotEqual_ThrowArgumentExceptionAndThePoliceIsCalled()
+        {
+            Door newDoor = new Door("n");
+            Guid notId = Guid.NewGuid();
+            newDoor.SwitchOn();
+            Assert.Throws<Exception>(() => newDoor.LockDoor(notId));
+        }
+
+        [Fact]
         public void UnlockDoor_WhenDoorIsClosedAndLocked_UnlocksDoor()
         {
             Door newDoor = new Door("n");
@@ -90,9 +107,19 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         }
 
         [Fact]
-        public void UnockDoor_WhenDoorIsOpen_ThrowArgumentException()
+        public void UnlockDoor_WhenDoorIsOff_ThrowArgumentException()
         {
             Door newDoor = new Door("n");
+            Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(newDoor.EntryId));
+        }
+
+
+
+        [Fact]
+        public void UnlockDoor_WhenDoorIsOpen_ThrowArgumentException()
+        {
+            Door newDoor = new Door("n");
+            newDoor.SwitchOn();
             newDoor.OpenDoor();
             Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(newDoor.EntryId));
         }
@@ -101,7 +128,20 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void UnlockDoor_WhenDoorIsAlreadyUnlocked_ThrowArgumentException()
         {
             Door newDoor = new Door("n");
+            newDoor.SwitchOn();
+            newDoor.LockDoor(newDoor.EntryId);
+            newDoor.UnlockDoor(newDoor.EntryId);
             Assert.Throws<ArgumentException>(() => newDoor.UnlockDoor(newDoor.EntryId));
+        }
+
+        [Fact]
+        public void UnlockDoor_WhenEntryIdIsNotEqual_ThrowArgumentExceptionAndThePoliceIsCalled()
+        {
+            Door newDoor = new Door("n");
+            Guid notId = Guid.NewGuid();
+            newDoor.SwitchOn();
+            newDoor.LockDoor(newDoor.EntryId);
+            Assert.Throws<Exception>(() => newDoor.UnlockDoor(notId));
         }
     }
 }
