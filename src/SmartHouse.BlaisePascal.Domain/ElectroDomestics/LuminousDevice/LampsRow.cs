@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
-    public class LampsRow
+    public sealed class LampsRow
     {
         //Properties
         public List<AbstractLamp> LampList { get; set; } //= new List<AbstractLamp>();

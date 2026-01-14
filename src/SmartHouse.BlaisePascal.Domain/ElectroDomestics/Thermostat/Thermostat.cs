@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 {
-    public class Thermostat:AbstractDevice
+    public sealed class Thermostat:AbstractDevice
     {
         //Property
         public double WorkingTemperature { get; private set; }

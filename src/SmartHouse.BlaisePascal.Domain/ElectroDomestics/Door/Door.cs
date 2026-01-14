@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 {
-    public class Door: AbstractDevice
+    public sealed class Door: AbstractDevice
     {
         public DoorStatus DoorStatus { get; private set; }
         public ClosedStatus ClosedDoorStatus { get; private set; }

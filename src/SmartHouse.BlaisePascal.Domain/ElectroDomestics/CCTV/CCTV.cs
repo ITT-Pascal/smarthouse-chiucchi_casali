@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 {
-    public class CCTV: AbstractDevice
+    public sealed class CCTV: AbstractDevice
     {
         //Properties
         public CCTVMode Mode { get; private set; }

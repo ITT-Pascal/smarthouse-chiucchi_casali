@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 {
-    public class AirConditioner:AbstractDevice
+    public sealed class AirConditioner:AbstractDevice
     {
         //Properties
         public AirConditionerMode Mode { get; private set; }

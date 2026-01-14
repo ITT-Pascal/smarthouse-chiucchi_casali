@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
-    public class EcoLamp : AbstractLamp
+    public sealed class EcoLamp : AbstractLamp
     {
         //Constants
         private const int StandardMin = 0;
