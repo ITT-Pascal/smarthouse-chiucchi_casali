@@ -70,3 +70,4 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 //{
 //    IsOn = !IsOn;
 //}
+//Commento prova push
