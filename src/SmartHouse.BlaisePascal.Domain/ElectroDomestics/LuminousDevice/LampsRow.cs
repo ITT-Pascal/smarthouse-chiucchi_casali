@@ -45,7 +45,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Name of the lamp cannot be null or white spaces.", nameof(name));
-            LampList.Add(new Lamp(name)); 
+            LampList.Add(new Lamp(name));
         }
 
         public void AddEcoLamp(string name)
