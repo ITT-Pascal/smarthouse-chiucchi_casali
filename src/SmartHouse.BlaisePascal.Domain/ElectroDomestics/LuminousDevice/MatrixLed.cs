@@ -18,15 +18,15 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             int c = 0;
 
-            foreach(AbstractLamp lmp in MatrixLamp)
-                if(lmp != null)
+            foreach (AbstractLamp lmp in MatrixLamp)
+                if (lmp != null)
                     c++;
 
             if (c == MatrixLamp.Length)
                 throw new Exception("The matrix is alredy full");
-
-            for(int i =0; i < MatrixLamp.GetLength(0); i++)
-                for(int j = 0; j < MatrixLamp.GetLength(1); j++)
+            //aggiunger booleano 
+            for (int i = 0; i < MatrixLamp.GetLength(0); i++)
+                for (int j = 0; j < MatrixLamp.GetLength(1); j++)
                     if (MatrixLamp[i, j] == null)
                         MatrixLamp[i, j] = lamp;
         }
@@ -83,17 +83,15 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public void SwitchOn(string name)
         {
             foreach (AbstractLamp l in MatrixLamp)
-                if (l != null)
-                    if (l.Name == name)
-                        l.SwitchOn();
+                if (l.Name == name)
+                    l?.SwitchOn();
         }
 
         public void SwitchOn(Guid id)
         {
             foreach (AbstractLamp l in MatrixLamp)
-                if (l != null)
-                    if (l.Id == id)
-                        l.SwitchOn();
+                if (l.Id == id)
+                    l?.SwitchOn();
         }
 
         public void SwitchOnInPosition(int row, int column)
@@ -104,24 +102,22 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public void AllSwitchOn()
         {
             foreach (AbstractLamp l in MatrixLamp)
-                l.SwitchOn();
+                l?.SwitchOn();
         }
 
         // ---- SWITCH OFF
         public void SwitchOff(string name)
         {
             foreach (AbstractLamp l in MatrixLamp)
-                if (l != null)
-                    if (l.Name == name)
-                        l.SwitchOff();
+                if (l.Name == name)
+                    l?.SwitchOff();
         }
 
         public void SwitchOff(Guid id)
         {
             foreach (AbstractLamp l in MatrixLamp)
-                if (l != null)
-                    if (l.Id == id)
-                        l.SwitchOff();
+                if (l.Id == id)
+                    l?.SwitchOff();
         }
 
         public void SwitchOffInPosition(int row, int column)
@@ -132,7 +128,111 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public void AllSwitchOff()
         {
             foreach (AbstractLamp l in MatrixLamp)
-                l.SwitchOff();
+                l?.SwitchOff();
+        }
+
+        // ---- TOGGLE ----
+        public void Toggle(string name)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Name == name)
+                    l?.Toggle();
+        }
+
+        public void Toggle(Guid id)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Id == id)
+                    l?.Toggle();
+        }
+
+        public void ToggleInPosition(int row, int column)
+        {
+            MatrixLamp[row, column]?.Toggle();
+        }
+
+        public void ToggleAll()
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                l?.Toggle();
+        }
+
+        // ---- SET INTENSITY ----
+        public void SeIntensity(string name, int newIntensity)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Name == name)
+                    l?.SetIntensity(newIntensity);
+        }
+
+        public void SeIntensity(Guid id, int newIntensity)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Id == id)
+                    l?.SetIntensity(newIntensity);
+        }
+
+        public void SetIntensityInPosition(int row, int column, int newIntensity)
+        {
+            MatrixLamp[row, column]?.SetIntensity(newIntensity);
+        }
+
+        public void SetAllIntensity(int newIntensity)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                l?.SetIntensity(newIntensity);
+        }
+
+        // ---- DIMMER ----
+        public void Dimmer(string name, int amount)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Name == name)
+                    l?.Dimmer(amount);
+        }
+
+        public void Dimmer(Guid id, int amount)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Id == id)
+                    l?.Dimmer(amount);
+        }
+
+        public void DimmerInPosition(int row, int column, int amount)
+        {
+            MatrixLamp[row, column]?.Dimmer(amount);
+        }
+
+        public void DimmerAll(int amount)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                l?.Dimmer(amount);
+        }
+
+        // ---- BRIGHTEN ----
+        public void Brighten(string name, int amount)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Name == name)
+                    l?.Brighten(amount);
+        }
+
+        public void Brighten(Guid id, int amount)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                if (l.Id == id)
+                    l?.Brighten(amount);
+        }
+
+        public void BrightenInPosition(int row, int column, int amount)
+        {
+            MatrixLamp[row, column]?.Brighten(amount);
+        }
+
+        public void BrightenAll(int amount)
+        {
+            foreach (AbstractLamp l in MatrixLamp)
+                l?.Brighten(amount);
         }
     }
 }
