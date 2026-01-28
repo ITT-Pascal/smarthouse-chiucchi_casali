@@ -24,11 +24,20 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
             if (c == MatrixLamp.Length)
                 throw new Exception("The matrix is alredy full");
-            //aggiunger booleano 
-            for (int i = 0; i < MatrixLamp.GetLength(0); i++)
-                for (int j = 0; j < MatrixLamp.GetLength(1); j++)
+
+            bool b = false;
+
+            for (int i = 0; i < MatrixLamp.GetLength(0) && b; i++)
+            {
+                for (int j = 0; j < MatrixLamp.GetLength(1) && b; j++)
+                {
                     if (MatrixLamp[i, j] == null)
+                    {
                         MatrixLamp[i, j] = lamp;
+                        b = true;
+                    }
+                }
+            }
         }
 
         public void AddLampInPosition(AbstractLamp lamp, int row, int column)
