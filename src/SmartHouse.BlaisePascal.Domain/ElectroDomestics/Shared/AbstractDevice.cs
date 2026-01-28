@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared
 {
-    public abstract class AbstractDevice
+    public abstract class AbstractDevice: IDevice
     {
         public Guid Id { get; protected set; }
         public string Name { get; protected set; } = string.Empty;
