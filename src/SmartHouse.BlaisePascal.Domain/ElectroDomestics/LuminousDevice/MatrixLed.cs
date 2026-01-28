@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
@@ -25,19 +26,17 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             if (c == MatrixLamp.Length)
                 throw new Exception("The matrix is alredy full");
 
-            bool b = false;
+            MatrixLamp[FindEmptySpot().row, FindEmptySpot().column] = lamp;
+        }
 
-            for (int i = 0; i < MatrixLamp.GetLength(0) && b; i++)
-            {
-                for (int j = 0; j < MatrixLamp.GetLength(1) && b; j++)
-                {
+        private (int row, int column) FindEmptySpot()
+        {
+            for (int i = 0; i < MatrixLamp.GetLength(0); i++)
+                for (int j = 0; j < MatrixLamp.GetLength(1); j++)
                     if (MatrixLamp[i, j] == null)
-                    {
-                        MatrixLamp[i, j] = lamp;
-                        b = true;
-                    }
-                }
-            }
+                        return (i, j);
+            
+            return (-1, -1);
         }
 
         public void AddLampInPosition(AbstractLamp lamp, int row, int column)
