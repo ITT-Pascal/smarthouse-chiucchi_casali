@@ -20,8 +20,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         //Methods
         public void SetFOVToStandard()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (FOV == StandardFOV)
                 throw new ArgumentException("FOV is already standard.", nameof(FOV));
             FOV = StandardFOV;
@@ -31,8 +30,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SetFOVToFocus()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (FOV == FocusFOV)
                 throw new ArgumentException("FOV is already focused.", nameof(FOV));
             FOV = FocusFOV;
@@ -42,8 +40,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SetFOVToWideAngle()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (FOV == WideAngleFOV)
                 throw new ArgumentException("FOV is already wide angle.", nameof(FOV));
             FOV = WideAngleFOV;
@@ -53,8 +50,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SetFOV(int newFOV)
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (newFOV < FocusFOV || newFOV > WideAngleFOV)
                 throw new ArgumentException("Cannot exceed camera FOV limits.", nameof(newFOV));
             if (newFOV == FOV)
@@ -66,8 +62,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void IncreaseFOV()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            CheckIsOff();
             FOV = Math.Min(WideAngleFOV, FOV + StandardStep);
 
             LastModification_UTC = DateTime.UtcNow;
@@ -75,8 +70,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void DecreaseFOV()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change FOV when CCTV is off.", nameof(Status));
+            CheckIsOff();
             FOV = Math.Max(FocusFOV, FOV - StandardStep);
 
             LastModification_UTC = DateTime.UtcNow;
@@ -84,8 +78,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SwitchToNormalMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change mode when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == CCTVMode.Normal)
                 throw new ArgumentException("Cannot set mode to normal when it already is normal.", nameof(Mode));
             Mode = CCTVMode.Normal;
@@ -95,8 +88,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SwitchToInfraredVisionMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change mode when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == CCTVMode.InfraredVision)
                 throw new ArgumentException("Cannot set mode to infrared vision when it already is infrared vision.", nameof(Mode));
             Mode = CCTVMode.InfraredVision;
@@ -106,8 +98,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SwitchToNightVisionMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change mode when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == CCTVMode.NightVision)
                 throw new ArgumentException("Cannot set mode to night vision when it already is night vision.", nameof(Mode));
             Mode = CCTVMode.NightVision;
@@ -117,8 +108,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SetMode(CCTVMode newMode)
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change mode when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (newMode == Mode)
                 throw new ArgumentException("Cannot set new mode that is same to current mode.", nameof(Mode));
 
@@ -128,8 +118,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void SetNightVisionWhenNight()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change mode when CCTV is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == CCTVMode.NightVision)
                 throw new ArgumentException("Cannot set mode to night vision when it already is night vision.", nameof(Mode));
             int hour = DateTime.Now.Hour;

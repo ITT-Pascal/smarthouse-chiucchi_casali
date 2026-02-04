@@ -1,6 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
-
-namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public sealed class EcoLamp : AbstractLamp
     {
@@ -90,8 +88,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             if (ambientBrightness < MinIntensity || ambientBrightness > MaxIntensity)
                 throw new ArgumentOutOfRangeException("Ambient brightness must be between MinBrightness and MaxBrightness", nameof(ambientBrightness));
 
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(Status));
+            CheckIsOff();
 
             Intensity = Math.Max(MinIntensity, Math.Min(MaxIntensity, MaxIntensity - ambientBrightness));
 
@@ -105,8 +102,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
         public void IsNight()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
+            CheckIsOff();
 
             int hour = DateTime.Now.Hour;
 
@@ -116,8 +112,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
         public void UltraEcoMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
+            CheckIsOff();
 
             Intensity = (int)(Intensity * 0.8); //Reduces current brightness by 20%
 

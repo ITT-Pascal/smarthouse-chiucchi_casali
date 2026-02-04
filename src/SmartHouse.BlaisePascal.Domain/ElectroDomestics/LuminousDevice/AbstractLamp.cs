@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
-    public abstract class AbstractLamp:AbstractDevice
+    public abstract class AbstractLamp:AbstractDevice, ILuminous
     {
         //Properties defined in the daughter classes
         public abstract int MinIntensity { get; }
@@ -26,8 +26,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
             if (newIntensity < MinIntensity || newIntensity > MaxIntensity)
                 throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Intensity));
 
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot change brightness when the lamp is off", nameof(Status));
+            CheckIsOff();
 
             if (newIntensity == MinIntensity)
                 SwitchOff();
@@ -39,8 +38,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
         public virtual void Dimmer(int amount)
         {
-            if (Status == DeviceStatus.Off)
-                throw new InvalidOperationException("Cannot dimmer lamp because it's off.");
+            CheckIsOff();
 
             Intensity = Math.Max(MinIntensity, Intensity - amount);
 
@@ -49,25 +47,11 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 
         public virtual void Brighten(int amount)
         {
-            if (Status == DeviceStatus.Off)
-                throw new InvalidOperationException("Cannot brighten lamp because it's off.");
+            CheckIsOff();
 
             Intensity = Math.Min(MaxIntensity, Intensity + amount);
 
             LastModification_UTC = DateTime.UtcNow;
         }
-
-        //static void ControlIfStatusIsOn()       CONTROLLO FATTO MOLTE VOLTE
-        //{
-        //    if (Status != DeviceStatus.On)
-        //        throw new ArgumentException("Cannot reduce brightness when lamp is off", nameof(Status));
-        //}
     }
 }
-
-
-//public virtual void ToggleOnOff()
-//{
-//    IsOn = !IsOn;
-//}
-//Commento prova push

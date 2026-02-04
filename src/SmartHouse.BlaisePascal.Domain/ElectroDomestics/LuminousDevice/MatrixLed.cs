@@ -1,7 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Xml.Linq;
-
-namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public sealed class MatrixLed
     {

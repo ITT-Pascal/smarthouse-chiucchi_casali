@@ -32,8 +32,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 
         public void LockDoor(Guid entryId)
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot lock door when it's off.", nameof(Status));
+            CheckIsOff();
             if (DoorStatus == DoorStatus.Open)
                 throw new ArgumentException("Cannot lock an open door.", nameof(DoorStatus));
             if(ClosedDoorStatus == ClosedStatus.Locked)
@@ -47,8 +46,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 
         public void UnlockDoor(Guid entryId)
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot unlock door when it's off.", nameof(Status));
+            CheckIsOff();
             if (DoorStatus == DoorStatus.Open)
                 throw new ArgumentException("Cannot lock and open door.", nameof(DoorStatus));
             if (ClosedDoorStatus == ClosedStatus.Unlocked)

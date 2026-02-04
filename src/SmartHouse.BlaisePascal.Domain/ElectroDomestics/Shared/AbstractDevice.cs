@@ -40,9 +40,8 @@
 
         public virtual void SwitchOff()
         {
-            if (Status == DeviceStatus.Off)
-                throw new InvalidOperationException($"{Name} is already off.");
-            
+            CheckIsOff();
+
             Status = DeviceStatus.Off;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -50,12 +49,71 @@
 
         public virtual void SwitchOn()
         {
-            if (Status == DeviceStatus.On)
-                throw new InvalidOperationException($"{Name} is already on.");
+            CheckIsOn();
 
             Status = DeviceStatus.On;
 
             LastModification_UTC = DateTime.UtcNow;
         }
+
+        protected void CheckIsOff()
+        {
+            if (Status == DeviceStatus.Off)
+                throw new ArgumentException($"{Name} is off.");
+        }
+
+        protected void CheckIsOn()
+        {
+            if (Status == DeviceStatus.On)
+                throw new ArgumentException($"{Name} is on.");
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//╰(*°▽°*)╯ viva i test

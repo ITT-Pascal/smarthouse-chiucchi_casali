@@ -76,8 +76,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 
         public void AdjustTemperatureByAmbientTemperature(int ambientTemperature)
         {
-            if (Status == DeviceStatus.Off) //E' meglio fare =! da On o == a Off?
-                throw new ArgumentException("Cannot change temperature when the thermostat is off", nameof(Status));
+            CheckIsOff();
             if (Mode == ThermostatMode.Manual)
                 throw new ArgumentException("Cannot adjust temperature automatically when in manual mode.", nameof(Mode));
 
@@ -93,8 +92,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 
         public void AutoSwitchOffWhenIsNight()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch off automatically when the thermostat is off", nameof(Status));
+            CheckIsOff();
             if (Mode == ThermostatMode.Manual)
                 throw new ArgumentException("Cannot switch off automatically when in manual mode.", nameof(Mode));
             int hour = DateTime.Now.Hour;

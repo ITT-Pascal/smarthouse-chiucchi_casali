@@ -23,19 +23,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
             AirTemperature = DryAirTemperature;
         }
 
-        //Methods
-        //public override void SwitchOn()
-        //{
-        //    base.SwitchOn();
-        //    Mode = AirConditionerMode.Dry; 
-        //    Power = AirConditionerPower.Normal;
-        //    AirTemperature = DryAirTemperature;
-        //}
-
         public void SwitchToDryMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch mode when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == AirConditionerMode.Dry)
                 throw new ArgumentException("Cannot change to dry mode when current mode is dry.", nameof(Mode));
             Mode = AirConditionerMode.Dry;
@@ -46,8 +36,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 
         public void SwitchToHotMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch mode when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == AirConditionerMode.Hot)
                 throw new ArgumentException("Cannot change to Hot mode when current mode is Hot.", nameof(Mode));
             Mode = AirConditionerMode.Hot;
@@ -58,8 +47,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 
         public void SwitchToCoolMode()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch mode when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == AirConditionerMode.Cool)
                 throw new ArgumentException("Cannot change to Cool mode when current mode is Cool.", nameof(Mode));
             Mode = AirConditionerMode.Cool;
@@ -70,8 +58,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         
         public void SwitchMode(AirConditionerMode newMode)
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch mode when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Mode == newMode)
                 throw new ArgumentException("Cannot change to a mode when current mode is the same.", nameof(Mode));
             Mode = newMode;
@@ -88,8 +75,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         //Set Power
         public void SetPowerToPowerful()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch power when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Power == AirConditionerPower.Powerful)
                 throw new ArgumentException("Cannot change to powerful when current power is powerful.", nameof(Power));
             Power = AirConditionerPower.Powerful;
@@ -99,8 +85,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 
         public void SetPowerToNormal()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch power when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Power == AirConditionerPower.Normal)
                 throw new ArgumentException("Cannot change to normal when current power is normal.", nameof(Power));
             Power = AirConditionerPower.Normal;
@@ -110,8 +95,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 
         public void SetPowerToWeak()
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch power when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Power == AirConditionerPower.Weak)
                 throw new ArgumentException("Cannot change to weak when current power is weak.", nameof(Power));
             Power = AirConditionerPower.Weak;
@@ -121,8 +105,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 
         public void SetPower(AirConditionerPower newPower)
         {
-            if (Status == DeviceStatus.Off)
-                throw new ArgumentException("Cannot switch mode when the air conditioner is off.", nameof(Status));
+            CheckIsOff();
             if (Power == newPower)
                 throw new ArgumentException("Cannot change to a power when current power is the same.", nameof(Mode));
             Power = newPower;

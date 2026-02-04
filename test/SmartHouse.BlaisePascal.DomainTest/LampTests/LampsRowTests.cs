@@ -151,7 +151,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             LampsRow newLampsRow = new LampsRow("n");
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
-            Assert.Throws<InvalidOperationException>(() => newLampsRow.SwitchOff());
+            Assert.Throws<ArgumentException>(() => newLampsRow.SwitchOff());
         }
 
         [Fact]
@@ -194,7 +194,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.Toggle();
-            Assert.Throws<InvalidOperationException>(() => newLampsRow.SwitchOn());
+            Assert.Throws<ArgumentException>(() => newLampsRow.SwitchOn());
         }
 
         [Fact]
