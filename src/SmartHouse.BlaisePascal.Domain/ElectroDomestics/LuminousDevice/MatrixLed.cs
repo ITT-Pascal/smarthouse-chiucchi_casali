@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
-    public sealed class MatrixLed
+    public sealed class MatrixLed: ILampFamily
     {
         public AbstractLamp[,] MatrixLamp { get; private set; }
         public string Name { get; private set; }
@@ -156,7 +156,7 @@
             MatrixLamp[row, column]?.Toggle();
         }
 
-        public void ToggleAll()
+        public void AllToggle ()
         {
             foreach (AbstractLamp l in MatrixLamp)
                 l?.Toggle();

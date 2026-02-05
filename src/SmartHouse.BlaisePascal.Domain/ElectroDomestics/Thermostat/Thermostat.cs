@@ -6,7 +6,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
     {
         //Property
         public double WorkingTemperature { get; private set; }
-        public ThermostatMode Mode { get; private set; }
+        public ThermostatMode Mode { get; private set; } //Chiedi a Pulga se va bene mettere un metodo privato che fa un check delle modalità del termostato (Bryan non cancellare il commento)
 
         //Constants
         public const double MinTemperature = 18; //Range of temperature the thermostat can work in

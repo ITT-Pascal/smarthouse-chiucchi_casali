@@ -5,7 +5,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
     public sealed class AirConditioner:AbstractDevice
     {
         //Properties
-        public AirConditionerMode Mode { get; private set; }
+        public AirConditionerMode Mode { get; private set; } //Fare a Pulga stessa domanda fatta all'interno Thermostat
         public AirConditionerPower Power { get; private set; }
         public double AirTemperature { get; private set; }
 

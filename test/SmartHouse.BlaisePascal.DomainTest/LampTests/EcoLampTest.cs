@@ -180,14 +180,14 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
         public void Dimmer_ErrorWhenOff()
         {
             EcoLamp newLamp = new EcoLamp("n");
-            Assert.Throws<InvalidOperationException>(() => newLamp.Dimmer(1));
+            Assert.Throws<ArgumentException>(() => newLamp.Dimmer(1));
         }
 
         [Fact]
         public void Brighten_ErrorWhenOff()
         {
             EcoLamp newLamp = new EcoLamp("n");
-            Assert.Throws<InvalidOperationException>(() => newLamp.Brighten(1));
+            Assert.Throws<ArgumentException>(() => newLamp.Brighten(1));
         }
 
 

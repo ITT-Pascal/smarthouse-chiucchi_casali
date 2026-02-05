@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
-    public sealed class LampsRow
+    public sealed class LampsRow: ILampFamily
     {
         //Properties
         public List<AbstractLamp> LampList { get; set; } //= new List<AbstractLamp>();
@@ -60,7 +60,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public void AddLampInPosition(AbstractLamp lamp, int position) => LampList.Insert(position, lamp); //Adds one lamp in a specified index
 
         // ---- TOGGLE ----
-        public void Toggle() //Toggle all
+        public void AllToggle() //Toggle all
         {
             for (int i = 0; i < LampList.Count; i++)
                 LampList[i].Toggle();
@@ -81,7 +81,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         }
 
         // ---- SWITCH OFF ----
-        public void SwitchOff() //Switch Off all
+        public void AllSwitchOff() //Switch Off all
         {
             for (int i = 0; i < LampList.Count; i++)
                 LampList[i].SwitchOff();
@@ -102,7 +102,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         }
 
         // ---- SWITCH ON ----
-        public void SwitchOn() //Switch On all
+        public void AllSwitchOn() //Switch On all
         {
             for (int i = 0; i < LampList.Count; i++)
                 LampList[i].SwitchOn();

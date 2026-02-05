@@ -4,7 +4,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 {
     public sealed class Door: AbstractDevice
     {
-        public DoorStatus DoorStatus { get; private set; }
+        public DoorStatus DoorStatus { get; private set; } //Fare a Pulga la stessa domanda fatta in Thermostat
         public ClosedStatus ClosedDoorStatus { get; private set; }
         public Guid EntryId { get; private set; } //Guid id that works as passkey to lock or unlock door
 

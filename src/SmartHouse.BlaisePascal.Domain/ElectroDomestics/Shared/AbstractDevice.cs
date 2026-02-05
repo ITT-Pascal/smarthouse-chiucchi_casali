@@ -56,13 +56,13 @@
             LastModification_UTC = DateTime.UtcNow;
         }
 
-        protected void CheckIsOff()
+        public void CheckIsOff()
         {
             if (Status == DeviceStatus.Off)
                 throw new ArgumentException($"{Name} is off.");
         }
 
-        protected void CheckIsOn()
+        public void CheckIsOn()
         {
             if (Status == DeviceStatus.On)
                 throw new ArgumentException($"{Name} is on.");
