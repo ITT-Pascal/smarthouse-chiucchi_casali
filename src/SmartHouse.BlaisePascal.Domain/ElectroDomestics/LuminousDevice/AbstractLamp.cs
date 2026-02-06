@@ -5,13 +5,13 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
     public abstract class AbstractLamp:AbstractDevice, ILuminous
     {
         //Properties defined in the daughter classes
-        public abstract int MinIntensity { get; }
-        public abstract int MaxIntensity { get; }
-        public abstract int DefaultIntensity { get; }
-        public int Intensity { get; set; }
+        public abstract Intensity MinIntensity { get; }
+        public abstract Intensity MaxIntensity { get; }
+        public abstract Intensity DefaultIntensity { get; }
+        public Intensity Intensity { get; protected set; }
 
         //Constructor
-        protected AbstractLamp(string name):base(name) { Intensity = MinIntensity; }
+        protected AbstractLamp(string name):base(name) { Intensity = Intensity.Create(0, MinIntensity._intensity, MaxIntensity._intensity); }
 
 
         //Methods
@@ -21,9 +21,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public override void SwitchOn() { base.SwitchOn(); Intensity = DefaultIntensity; }
 
         //Virtual methods
-        public virtual void SetIntensity(int newIntensity)
+        public virtual void SetIntensity(Intensity newIntensity)
         {
-            if (newIntensity < MinIntensity || newIntensity > MaxIntensity)
+            if (newIntensity < MinIntensity || newIntensity > MaxIntensity) //Chiedi a pulga se bisogna fare il cntrollo anche se ho fatto clamp in Intensity
                 throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Intensity));
 
             CheckIsOff();
@@ -40,7 +40,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             CheckIsOff();
 
-            Intensity = Math.Max(MinIntensity, Intensity - amount);
+            Intensity = Intensity.Create(Intensity._intensity - amount, MinIntensity._intensity, MaxIntensity._intensity);
 
             LastModification_UTC = DateTime.UtcNow;
         }
@@ -49,7 +49,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             CheckIsOff();
 
-            Intensity = Math.Min(MaxIntensity, Intensity + amount);
+            Intensity = Intensity.Create(Intensity._intensity + amount, MinIntensity._intensity, MaxIntensity._intensity);
 
             LastModification_UTC = DateTime.UtcNow;
         }

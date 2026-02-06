@@ -2,15 +2,15 @@
 {
     public sealed class EcoLamp : AbstractLamp
     {
-        //Constants
-        private const int StandardMin = 0;
-        private const int StandardDeFault = 30;
-        private const int StandardMax = 70;
+        //Defining standards
+        Intensity StandardMin { get; init; } = Intensity.Create(0, 0, 70);
+        Intensity StandardDeFault { get; init; } = Intensity.Create(30, 0, 70);
+        Intensity StandardMax { get; init; } = Intensity.Create(70, 0, 70);
 
         //Abstract properties override
-        public override int MinIntensity => StandardMin;
-        public override int MaxIntensity => StandardMax;
-        public override int DefaultIntensity => StandardDeFault;
+        public override Intensity MinIntensity => StandardMin;
+        public override Intensity MaxIntensity => StandardMax;
+        public override Intensity DefaultIntensity => StandardDeFault;
 
         //Properties AutoOff
         private DateTime? autoOffAtUtc;
@@ -19,7 +19,6 @@
 
         //Constructor
         public EcoLamp(string name) : base(name) { }
-
 
 
         //AutoOff methods
@@ -90,7 +89,7 @@
 
             CheckIsOff();
 
-            Intensity = Math.Max(MinIntensity, Math.Min(MaxIntensity, MaxIntensity - ambientBrightness));
+            Intensity = Intensity.Create(Math.Max(MinIntensity._intensity, Math.Min(MaxIntensity._intensity, MaxIntensity._intensity - ambientBrightness)), MinIntensity._intensity, MaxIntensity._intensity);
 
             //ResetAutoOffIfNeeded();
 
@@ -114,7 +113,7 @@
         {
             CheckIsOff();
 
-            Intensity = (int)(Intensity * 0.8); //Reduces current brightness by 20%
+            Intensity = Intensity.Create(Intensity._intensity * 0.8, MinIntensity._intensity, MaxIntensity._intensity); //Reduces current brightness by 20%
 
             //ResetAutoOffIfNeeded();
 

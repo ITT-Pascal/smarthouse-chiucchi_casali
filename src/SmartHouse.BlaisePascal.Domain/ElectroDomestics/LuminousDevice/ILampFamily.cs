@@ -2,7 +2,7 @@
 {
     public interface ILampFamily
     {
-        void AllSwitchOn();
+        void AllSwitchOn(); //Chiedi prof se implementare altre firme
         void AllSwitchOff();
         void AllToggle();
     }

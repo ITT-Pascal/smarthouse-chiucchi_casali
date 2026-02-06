@@ -2,15 +2,15 @@
 {
     public sealed class Lamp: AbstractLamp
     {
-        //Constants
-        private const int StandardMin = 0;
-        private const int StandardDeFault = 50;
-        private const int StandardMax = 100;
+        //Defining standards
+        Intensity StandardMin { get; init; } = Intensity.Create(0, 0, 100);
+        Intensity StandardDeFault { get; init; } = Intensity.Create(50, 0, 100);
+        Intensity StandardMax { get; init; } = Intensity.Create(100, 0, 100);
 
         //Abstract properties override
-        public override int MinIntensity => StandardMin;
-        public override int MaxIntensity => StandardMax;
-        public override int DefaultIntensity => StandardDeFault;
+        public override Intensity MinIntensity => StandardMin;
+        public override Intensity MaxIntensity => StandardMax;
+        public override Intensity DefaultIntensity => StandardDeFault;
         
         //Constructor
         public Lamp(string name):base(name) { }  

@@ -49,18 +49,18 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
                 Lamp2.Toggle();
         }
 
-        public void SetOneLampIntensity(Guid id, int brightness)
+        public void SetOneLampIntensity(Guid id, Intensity i)
         {
             if(Lamp1.Id == id)
-                Lamp1.SetIntensity(brightness);
+                Lamp1.SetIntensity(i);
             else if(Lamp2.Id == id)
-                Lamp2.SetIntensity(brightness);
+                Lamp2.SetIntensity(i);
         }
 
-        public void SetBothLampsIntensity(int firstBrightness, int secondBrightness)
+        public void SetBothLampsIntensity(Intensity i1, Intensity i2)
         {
-            Lamp1.SetIntensity(firstBrightness);
-            Lamp2.SetIntensity(secondBrightness);
+            Lamp1.SetIntensity(i1);
+            Lamp2.SetIntensity(i2);
         }
 
         public void DimmerOneLamp(Guid id, int amount)
