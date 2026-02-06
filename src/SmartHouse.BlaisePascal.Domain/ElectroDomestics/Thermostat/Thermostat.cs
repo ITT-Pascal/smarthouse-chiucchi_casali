@@ -6,13 +6,13 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
     {
         //Property
         public double WorkingTemperature { get; private set; }
-        public ThermostatMode Mode { get; private set; } //Chiedi a Pulga se va bene mettere un metodo privato che fa un check delle modalità del termostato (Bryan non cancellare il commento)
+        public ThermostatMode Mode { get; private set; }
 
         //Constants
         public const double MinTemperature = 18; //Range of temperature the thermostat can work in
         public const double StandardTemperature = 24;
         public const double MaxTemperature = 30;
-        public const double StandardStep = 0.5; 
+        public const double StandardStep = 0.5;
 
         //Constructor
         public Thermostat(string name):base(name) 
@@ -45,8 +45,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         {
             if (WorkingTemperature >= MaxTemperature)
                 throw new ArgumentException("Cannot increase more than the max limit.", nameof(WorkingTemperature));
-            if (Mode == ThermostatMode.Automatic)
-                throw new ArgumentException("Cannot change temperature when in automatic mode.", nameof(Mode));
+
+            CheckMode(ThermostatMode.Automatic);
+
             WorkingTemperature = Math.Min(MaxTemperature, WorkingTemperature + StandardStep);
 
             LastModification_UTC = DateTime.UtcNow;
@@ -56,8 +57,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         {
             if (WorkingTemperature <= MinTemperature)
                 throw new ArgumentException("Cannot decrease more than the limit.", nameof(WorkingTemperature));
-            if (Mode == ThermostatMode.Automatic)
-                throw new ArgumentException("Cannot change temperature when in automatic mode.", nameof(Mode));
+
+            CheckMode(ThermostatMode.Automatic);
+
             WorkingTemperature = Math.Max(MinTemperature, WorkingTemperature - StandardStep);
 
             LastModification_UTC = DateTime.UtcNow;
@@ -67,8 +69,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         {
             if(newTemperature > MaxTemperature || newTemperature < MinTemperature)
                 throw new ArgumentException("New temperature must be between the limits or equal to them.", nameof(WorkingTemperature));
-            if (Mode == ThermostatMode.Automatic)
-                throw new ArgumentException("Cannot change temperature when in automatic mode.", nameof(Mode));
+
+            CheckMode(ThermostatMode.Automatic);
+
             WorkingTemperature = newTemperature;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -77,8 +80,8 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         public void AdjustTemperatureByAmbientTemperature(int ambientTemperature)
         {
             CheckIsOff();
-            if (Mode == ThermostatMode.Manual)
-                throw new ArgumentException("Cannot adjust temperature automatically when in manual mode.", nameof(Mode));
+
+            CheckMode(ThermostatMode.Manual);
 
             if (ambientTemperature <= MinTemperature)
                 WorkingTemperature = MaxTemperature;
@@ -93,11 +96,18 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         public void AutoSwitchOffWhenIsNight()
         {
             CheckIsOff();
-            if (Mode == ThermostatMode.Manual)
-                throw new ArgumentException("Cannot switch off automatically when in manual mode.", nameof(Mode));
+
+            CheckMode(ThermostatMode.Manual); 
+
             int hour = DateTime.Now.Hour;
             if (hour >= 22 || hour < 6) //Orari convenzionali per la notte 
                 SwitchOff();
+        }
+
+        private void CheckMode(ThermostatMode mode)
+        {
+            if (this.Mode == mode)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(mode));
         }
     }
 

@@ -5,7 +5,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
     public sealed class AirConditioner:AbstractDevice
     {
         //Properties
-        public AirConditionerMode Mode { get; private set; } //Fare a Pulga stessa domanda fatta all'interno Thermostat
+        public AirConditionerMode Mode { get; private set; }
         public AirConditionerPower Power { get; private set; }
         public double AirTemperature { get; private set; }
 
@@ -26,8 +26,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SwitchToDryMode()
         {
             CheckIsOff();
-            if (Mode == AirConditionerMode.Dry)
-                throw new ArgumentException("Cannot change to dry mode when current mode is dry.", nameof(Mode));
+            CheckMode(AirConditionerMode.Dry);
             Mode = AirConditionerMode.Dry;
             AirTemperature = DryAirTemperature;
 
@@ -37,8 +36,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SwitchToHotMode()
         {
             CheckIsOff();
-            if (Mode == AirConditionerMode.Hot)
-                throw new ArgumentException("Cannot change to Hot mode when current mode is Hot.", nameof(Mode));
+            CheckMode(AirConditionerMode.Hot);
             Mode = AirConditionerMode.Hot;
             AirTemperature = HotAirTemperature;
 
@@ -48,8 +46,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SwitchToCoolMode()
         {
             CheckIsOff();
-            if (Mode == AirConditionerMode.Cool)
-                throw new ArgumentException("Cannot change to Cool mode when current mode is Cool.", nameof(Mode));
+            CheckMode(AirConditionerMode.Cool);
             Mode = AirConditionerMode.Cool;
             AirTemperature = CoolAirTemperature;
 
@@ -59,8 +56,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SwitchMode(AirConditionerMode newMode)
         {
             CheckIsOff();
-            if (Mode == newMode)
-                throw new ArgumentException("Cannot change to a mode when current mode is the same.", nameof(Mode));
+            CheckMode(newMode);
             Mode = newMode;
             if (newMode == AirConditionerMode.Cool)
                 AirTemperature = CoolAirTemperature;
@@ -76,8 +72,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SetPowerToPowerful()
         {
             CheckIsOff();
-            if (Power == AirConditionerPower.Powerful)
-                throw new ArgumentException("Cannot change to powerful when current power is powerful.", nameof(Power));
+            CheckPower(AirConditionerPower.Powerful);
             Power = AirConditionerPower.Powerful;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -86,8 +81,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SetPowerToNormal()
         {
             CheckIsOff();
-            if (Power == AirConditionerPower.Normal)
-                throw new ArgumentException("Cannot change to normal when current power is normal.", nameof(Power));
+            CheckPower(AirConditionerPower.Normal);
             Power = AirConditionerPower.Normal;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -96,8 +90,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SetPowerToWeak()
         {
             CheckIsOff();
-            if (Power == AirConditionerPower.Weak)
-                throw new ArgumentException("Cannot change to weak when current power is weak.", nameof(Power));
+            CheckPower(AirConditionerPower.Weak);
             Power = AirConditionerPower.Weak;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -106,11 +99,22 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         public void SetPower(AirConditionerPower newPower)
         {
             CheckIsOff();
-            if (Power == newPower)
-                throw new ArgumentException("Cannot change to a power when current power is the same.", nameof(Mode));
+            CheckPower(newPower);
             Power = newPower;
 
             LastModification_UTC = DateTime.UtcNow;
+        }
+
+        private void CheckMode(AirConditionerMode mode)
+        {
+            if (this.Mode == mode)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(Mode));
+        }
+
+        private void CheckPower(AirConditionerPower power)
+        {
+            if (this.Power == power)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(Power));
         }
     }
 }

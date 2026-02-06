@@ -21,8 +21,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOVToStandard()
         {
             CheckIsOff();
-            if (FOV == StandardFOV)
-                throw new ArgumentException("FOV is already standard.", nameof(FOV));
+            CheckFOV(StandardFOV);
             FOV = StandardFOV;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -31,8 +30,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOVToFocus()
         {
             CheckIsOff();
-            if (FOV == FocusFOV)
-                throw new ArgumentException("FOV is already focused.", nameof(FOV));
+            CheckFOV(FocusFOV);
             FOV = FocusFOV;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -41,8 +39,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOVToWideAngle()
         {
             CheckIsOff();
-            if (FOV == WideAngleFOV)
-                throw new ArgumentException("FOV is already wide angle.", nameof(FOV));
+            CheckFOV(WideAngleFOV);
             FOV = WideAngleFOV;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -53,8 +50,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
             CheckIsOff();
             if (newFOV < FocusFOV || newFOV > WideAngleFOV)
                 throw new ArgumentException("Cannot exceed camera FOV limits.", nameof(newFOV));
-            if (newFOV == FOV)
-                throw new ArgumentException("FOV already at that degree.", nameof(newFOV));
+            CheckFOV(newFOV);
             FOV = newFOV;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -79,8 +75,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SwitchToNormalMode()
         {
             CheckIsOff();
-            if (Mode == CCTVMode.Normal)
-                throw new ArgumentException("Cannot set mode to normal when it already is normal.", nameof(Mode));
+            CheckMode(CCTVMode.Normal);
             Mode = CCTVMode.Normal;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -89,8 +84,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SwitchToInfraredVisionMode()
         {
             CheckIsOff();
-            if (Mode == CCTVMode.InfraredVision)
-                throw new ArgumentException("Cannot set mode to infrared vision when it already is infrared vision.", nameof(Mode));
+            CheckMode(CCTVMode.InfraredVision);
             Mode = CCTVMode.InfraredVision;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -99,8 +93,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SwitchToNightVisionMode()
         {
             CheckIsOff();
-            if (Mode == CCTVMode.NightVision)
-                throw new ArgumentException("Cannot set mode to night vision when it already is night vision.", nameof(Mode));
+            CheckMode(CCTVMode.NightVision);
             Mode = CCTVMode.NightVision;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -109,23 +102,33 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetMode(CCTVMode newMode)
         {
             CheckIsOff();
-            if (newMode == Mode)
-                throw new ArgumentException("Cannot set new mode that is same to current mode.", nameof(Mode));
-
+            CheckMode(newMode);
             Mode = newMode;
+
             LastModification_UTC = DateTime.UtcNow;
         }
 
         public void SetNightVisionWhenNight()
         {
             CheckIsOff();
-            if (Mode == CCTVMode.NightVision)
-                throw new ArgumentException("Cannot set mode to night vision when it already is night vision.", nameof(Mode));
+            CheckMode(CCTVMode.NightVision);
             int hour = DateTime.Now.Hour;
             if (hour >= 22 || hour < 6) //Conventional Hours For Night
                 Mode = CCTVMode.NightVision;
 
             LastModification_UTC = DateTime.UtcNow;
+        }
+
+        private void CheckMode(CCTVMode mode)
+        {
+            if (this.Mode == mode)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(Mode));
+        }
+
+        private void CheckFOV(int fov)
+        {
+            if (this.FOV == fov)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(FOV));
         }
     }
 }

@@ -4,7 +4,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 {
     public sealed class Door: AbstractDevice
     {
-        public DoorStatus DoorStatus { get; private set; } //Fare a Pulga la stessa domanda fatta in Thermostat
+        public DoorStatus DoorStatus { get; private set; } //rimuovere EntryId come GuidId e sostituirlo con un PIN
         public ClosedStatus ClosedDoorStatus { get; private set; }
         public Guid EntryId { get; private set; } //Guid id that works as passkey to lock or unlock door
 
@@ -12,8 +12,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 
         public void CloseDoor()
         {
-            if (DoorStatus == DoorStatus.Closed)
-                throw new ArgumentException("Cannot close a door that is already closed.", nameof(DoorStatus));
+            CheckStatus(DoorStatus.Closed);
             DoorStatus = DoorStatus.Closed;
 
             LastModification_UTC = DateTime.Now;
@@ -21,10 +20,8 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 
         public void OpenDoor()
         {
-            if (DoorStatus == DoorStatus.Open)
-                throw new ArgumentException("Cannot open a door that is already open.", nameof(DoorStatus));
-            if (ClosedDoorStatus == ClosedStatus.Locked)
-                throw new ArgumentException("Cannot open a door that is locked.", nameof(ClosedDoorStatus));
+            CheckStatus(DoorStatus.Open);
+            CheckClosedStatus(ClosedStatus.Locked);
             DoorStatus = DoorStatus.Open;
 
             LastModification_UTC = DateTime.Now;
@@ -33,10 +30,8 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
         public void LockDoor(Guid entryId)
         {
             CheckIsOff();
-            if (DoorStatus == DoorStatus.Open)
-                throw new ArgumentException("Cannot lock an open door.", nameof(DoorStatus));
-            if(ClosedDoorStatus == ClosedStatus.Locked)
-                throw new ArgumentException("Cannot lock a door that is already locked.", nameof(ClosedDoorStatus));
+            CheckStatus(DoorStatus.Open);
+            CheckClosedStatus(ClosedStatus.Locked);
             if (entryId != EntryId)
                 throw new Exception("Access denied. Police has been alerted.");
             ClosedDoorStatus = ClosedStatus.Locked;
@@ -47,15 +42,25 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
         public void UnlockDoor(Guid entryId)
         {
             CheckIsOff();
-            if (DoorStatus == DoorStatus.Open)
-                throw new ArgumentException("Cannot lock and open door.", nameof(DoorStatus));
-            if (ClosedDoorStatus == ClosedStatus.Unlocked)
-                throw new ArgumentException("Cannot unlock a door that is already unlocked.", nameof(ClosedDoorStatus));
+            CheckStatus(DoorStatus.Open);
+            CheckClosedStatus(ClosedStatus.Unlocked);
             if (entryId != EntryId)
                 throw new Exception("Access denied. Police has been alerted.");
             ClosedDoorStatus = ClosedStatus.Unlocked;
 
             LastModification_UTC = DateTime.Now;
+        }
+
+        private void CheckStatus(DoorStatus status)
+        {
+            if (this.DoorStatus == status)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(DoorStatus));
+        }
+
+        private void CheckClosedStatus(ClosedStatus closedStatus)
+        {
+            if (this.ClosedDoorStatus == closedStatus)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(ClosedDoorStatus));
         }
     }
 }
