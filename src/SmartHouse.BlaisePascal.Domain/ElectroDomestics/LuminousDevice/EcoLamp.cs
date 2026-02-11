@@ -1,4 +1,6 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
+
+namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public sealed class EcoLamp : AbstractLamp
     {

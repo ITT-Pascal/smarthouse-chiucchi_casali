@@ -1,4 +1,5 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
@@ -23,7 +24,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         //Virtual methods
         public virtual void SetIntensity(Intensity newIntensity)
         {
-            if (newIntensity < MinIntensity || newIntensity > MaxIntensity) //Chiedi a pulga se bisogna fare il cntrollo anche se ho fatto clamp in Intensity
+            if (newIntensity < MinIntensity || newIntensity > MaxIntensity) //Chiedi a pulga se bisogna fare il controllo anche se ho fatto clamp in Intensity
                 throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Intensity));
 
             CheckIsOff();

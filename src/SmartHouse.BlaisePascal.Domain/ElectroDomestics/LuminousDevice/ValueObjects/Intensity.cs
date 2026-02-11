@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects
 {
     public sealed record Intensity
     {

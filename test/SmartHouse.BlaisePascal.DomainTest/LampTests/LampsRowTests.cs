@@ -1,4 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
 
 namespace SmartHouse.BlaisePascal.DomainTest.LampTests
