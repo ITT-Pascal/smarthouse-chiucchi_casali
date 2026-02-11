@@ -12,7 +12,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 
         public void CloseDoor()
         {
-            CheckStatus(DoorStatus.Closed);
+            CheckDoorStatus(DoorStatus.Closed);
             DoorStatus = DoorStatus.Closed;
 
             LastModification_UTC = DateTime.Now;
@@ -20,7 +20,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 
         public void OpenDoor()
         {
-            CheckStatus(DoorStatus.Open);
+            CheckDoorStatus(DoorStatus.Open);
             CheckClosedStatus(ClosedStatus.Locked);
             DoorStatus = DoorStatus.Open;
 
@@ -30,7 +30,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
         public void LockDoor(Guid entryId)
         {
             CheckIsOff();
-            CheckStatus(DoorStatus.Open);
+            CheckDoorStatus(DoorStatus.Open);
             CheckClosedStatus(ClosedStatus.Locked);
             if (entryId != EntryId)
                 throw new Exception("Access denied. Police has been alerted.");
@@ -42,7 +42,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
         public void UnlockDoor(Guid entryId)
         {
             CheckIsOff();
-            CheckStatus(DoorStatus.Open);
+            CheckDoorStatus(DoorStatus.Open);
             CheckClosedStatus(ClosedStatus.Unlocked);
             if (entryId != EntryId)
                 throw new Exception("Access denied. Police has been alerted.");
@@ -51,7 +51,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
             LastModification_UTC = DateTime.Now;
         }
 
-        private void CheckStatus(DoorStatus status)
+        private void CheckDoorStatus(DoorStatus status)
         {
             if (this.DoorStatus == status)
                 throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(DoorStatus));

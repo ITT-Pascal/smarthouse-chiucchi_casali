@@ -4,13 +4,13 @@
     {
         //Defining standards
         Intensity StandardMin { get; init; } = Intensity.Create(0, 0, 70);
-        Intensity StandardDeFault { get; init; } = Intensity.Create(30, 0, 70);
+        Intensity StandardDefault { get; init; } = Intensity.Create(30, 0, 70);
         Intensity StandardMax { get; init; } = Intensity.Create(70, 0, 70);
 
         //Abstract properties override
         public override Intensity MinIntensity => StandardMin;
         public override Intensity MaxIntensity => StandardMax;
-        public override Intensity DefaultIntensity => StandardDeFault;
+        public override Intensity DefaultIntensity => StandardDefault;
 
         //Properties AutoOff
         private DateTime? autoOffAtUtc;

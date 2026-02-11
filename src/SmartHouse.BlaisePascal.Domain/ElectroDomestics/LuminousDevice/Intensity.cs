@@ -1,6 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-
-namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public sealed record Intensity
     {
