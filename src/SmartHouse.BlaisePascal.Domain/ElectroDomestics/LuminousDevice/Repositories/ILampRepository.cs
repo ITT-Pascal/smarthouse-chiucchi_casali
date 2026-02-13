@@ -1,6 +1,6 @@
 ﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories
 {
-    public interface ILampRepositories
+    public interface ILampRepository
     {
         void Add(Lamp lamp);
         void Update(Lamp lamp);
