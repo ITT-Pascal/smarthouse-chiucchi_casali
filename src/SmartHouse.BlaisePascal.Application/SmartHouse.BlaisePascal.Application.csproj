@@ -1,13 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ElectroDomestics\AirConditioner\Queries\" />
+    <Folder Include="ElectroDomestics\CCTV\Commands\" />
+    <Folder Include="ElectroDomestics\CCTV\Queries\" />
+    <Folder Include="ElectroDomestics\Door\Commands\" />
+    <Folder Include="ElectroDomestics\Door\Queries\" />
+    <Folder Include="ElectroDomestics\Thermostat\Commands\" />
+    <Folder Include="ElectroDomestics\Thermostat\Queries\" />
   </ItemGroup>
 
 </Project>
