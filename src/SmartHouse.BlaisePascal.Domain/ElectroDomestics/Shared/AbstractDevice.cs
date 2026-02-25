@@ -3,7 +3,7 @@
     public abstract class AbstractDevice: IDevice
     {
         public Guid Id { get; protected set; }
-        public string Name { get; protected set; } = string.Empty;
+        public Name Name { get; protected set; }
         public DeviceStatus Status { get; protected set; }
 
         public DateTime CreationTime_UTC { get; protected set; }
@@ -12,7 +12,7 @@
         protected AbstractDevice(string name)
         {
             Id = Guid.NewGuid();
-            Name = name;
+            Name = Name.Create(name);
 
             Status = DeviceStatus.Off;
 
@@ -23,7 +23,7 @@
         public virtual void SetName(string name)
         {
             if (name != null)
-                Name = name;
+                Name = Name.Create(name);
 
             LastModification_UTC = DateTime.UtcNow;
         }

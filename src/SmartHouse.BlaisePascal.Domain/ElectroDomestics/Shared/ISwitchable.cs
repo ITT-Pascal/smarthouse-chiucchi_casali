@@ -2,6 +2,7 @@
 {
     public interface ISwitchable
     {
+        DeviceStatus Status { get; }
         void Toggle();
         void SwitchOff();
         void SwitchOn();
