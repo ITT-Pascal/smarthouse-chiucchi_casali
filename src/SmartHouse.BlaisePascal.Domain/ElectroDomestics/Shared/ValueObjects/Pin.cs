@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects
 {
     public sealed record Pin
     {

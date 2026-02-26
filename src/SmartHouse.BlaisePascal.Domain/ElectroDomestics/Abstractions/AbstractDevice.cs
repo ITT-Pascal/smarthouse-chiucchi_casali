@@ -1,4 +1,8 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Interfaces;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
+
+namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions
 {
     public abstract class AbstractDevice: IDevice
     {

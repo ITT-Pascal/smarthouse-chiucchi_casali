@@ -1,4 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat;
 
 namespace SmartHouse.Domain.UnitTest.ThermostatTest

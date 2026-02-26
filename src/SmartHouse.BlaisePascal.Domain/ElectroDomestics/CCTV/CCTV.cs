@@ -1,10 +1,15 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV.ValueObjects;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Interfaces;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 {
-    public sealed class CCTV: AbstractDevice
+    public sealed class CCTV: AbstractDevice, ILockable
     {
         //Properties
+        public Pin Pin { get; private set; }
+        public bool IsLocked { get; private set; }
         public CCTVMode Mode { get; private set; }
         public FOV FOV { get; private set; } //FOV, or Field Of View, is the extent of the observable world visible at any moment, measured in degrees, representing how much of a scene a camera, eye, or device can capture.
         //Constants
@@ -15,9 +20,22 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public const int StandardStep = 1;
 
         //Constructor
-        public CCTV(string name) : base(name) { Mode = CCTVMode.Normal; FOV = StandardFOV; }
+        public CCTV(string name, int pin) : base(name) 
+        { 
+            Mode = CCTVMode.Normal; 
+            FOV = StandardFOV;
+            IsLocked = false;
+            Pin = Pin.Create(pin);
+        }
 
         //Methods
+        public void Lock(Pin pin)
+        {
+            if (IsLocked)
+                throw new Exception("CCTV camera is already locked.");
+
+        }
+
         public void SetFOVToStandard()
         {
             CheckIsOff();

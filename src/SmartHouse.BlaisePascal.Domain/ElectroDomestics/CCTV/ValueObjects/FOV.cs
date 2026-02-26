@@ -1,4 +1,4 @@
-﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
+﻿namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV.ValueObjects
 {
     public sealed record FOV
     {

@@ -1,4 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 {
