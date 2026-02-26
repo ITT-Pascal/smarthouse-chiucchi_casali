@@ -1,4 +1,5 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Interfaces;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice

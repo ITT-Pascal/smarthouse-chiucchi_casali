@@ -15,5 +15,8 @@
                 throw new Exception("Pin is invalid.");
             return new Pin(pin);
         }
+
+        public static bool operator ==(Pin p1, int p2) => p1._pin == p2;
+        public static bool operator !=(Pin p1, int p2) => p1._pin != p2;
     }
 }

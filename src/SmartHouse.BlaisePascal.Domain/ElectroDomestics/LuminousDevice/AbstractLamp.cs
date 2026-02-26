@@ -1,4 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Interfaces;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
@@ -41,7 +42,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             CheckIsOff();
 
-            Intensity = Intensity.Create(Intensity._intensity - amount, MinIntensity._intensity, MaxIntensity._intensity);
+            Intensity = Intensity.Create(Intensity - amount, MinIntensity._intensity, MaxIntensity._intensity);
 
             LastModification_UTC = DateTime.UtcNow;
         }
@@ -50,7 +51,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             CheckIsOff();
 
-            Intensity = Intensity.Create(Intensity._intensity + amount, MinIntensity._intensity, MaxIntensity._intensity);
+            Intensity = Intensity.Create(Intensity + amount, MinIntensity._intensity, MaxIntensity._intensity);
 
             LastModification_UTC = DateTime.UtcNow;
         }

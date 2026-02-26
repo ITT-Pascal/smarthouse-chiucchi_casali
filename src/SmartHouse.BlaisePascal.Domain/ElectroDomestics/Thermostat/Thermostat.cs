@@ -1,18 +1,19 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 {
     public sealed class Thermostat:AbstractDevice
     {
         //Property
-        public double WorkingTemperature { get; private set; }
+        public Temperature WorkingTemperature { get; private set; }
         public ThermostatMode Mode { get; private set; }
 
         //Constants
-        public const double MinTemperature = 18; //Range of temperature the thermostat can work in
-        public const double StandardTemperature = 24;
-        public const double MaxTemperature = 30;
+        public Temperature MinTemperature { get; init; } = 18; //Range of temperature the thermostat can work in
+        public Temperature StandardTemperature { get; init; } = 24;
+        public Temperature MaxTemperature { get; init; } = Temperature.Create(30);
         public const double StandardStep = 0.5;
 
         //Constructor

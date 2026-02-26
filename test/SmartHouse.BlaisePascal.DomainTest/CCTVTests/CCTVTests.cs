@@ -9,7 +9,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void Constructor_WhenCreated_CameraIsOffButModeIsSetToNormal()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Equal(DeviceStatus.Off, camera.Status);
             Assert.Equal(CCTVMode.Normal, camera.Mode);
         }
@@ -17,63 +17,63 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetFOVToStandard_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SetFOVToStandard());
         }
 
         [Fact]
         public void SetFOVToFocus_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SetFOVToFocus());
         }
 
         [Fact]
         public void SetFOVToWideAngle_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SetFOVToWideAngle());
         }
 
         [Fact]
         public void SetFOV_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SetFOV(FOV.Create(40)));
         }
 
         [Fact]
         public void IncreaseFOV_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.IncreaseFOV());
         }
 
         [Fact]
         public void DecreaseFOV_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.DecreaseFOV());
         }
 
         [Fact]
         public void SwitchToInfraredVisionMode_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SwitchToInfraredVisionMode());
         }
 
         [Fact]
         public void SwitchToNightVisionMode_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SwitchToNightVisionMode());
         }
 
         [Fact]
         public void SwitchToNormalMode_WhenCCTVIsAlreadyOnThatMode_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             Assert.Throws<ArgumentException>(() => camera.SwitchToNormalMode());
         }
@@ -81,21 +81,21 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetMode_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SetMode(CCTVMode.NightVision));
         }
 
         [Fact]
         public void SetNightVisionWhenNight_WhenCCTVIsOff_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             Assert.Throws<ArgumentException>(() => camera.SetNightVisionWhenNight());
         }
 
         [Fact]
         public void SetFOVToStandard_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             Assert.Throws<ArgumentException>(() => camera.SetFOVToStandard());
         }
@@ -103,7 +103,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetFOVToFocus_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetFOVToFocus();
             Assert.Throws<ArgumentException>(() => camera.SetFOVToFocus());
@@ -112,7 +112,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetFOVToWideAngle_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetFOVToWideAngle();
             Assert.Throws<ArgumentException>(() => camera.SetFOVToWideAngle());
@@ -121,7 +121,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetFOV_WhenFOVIsAlreadyOnThatFOV_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetFOVToWideAngle();
             Assert.Throws<ArgumentException>(() => camera.SetFOV(FOV.Create(120)));
@@ -130,7 +130,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void IncreaseFOV_NormalIncrease_IncreasesFOV()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.IncreaseFOV();
             Assert.Equal(61, camera.FOV._fov);
@@ -139,7 +139,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void DecreaseFOV_NormalIncrease_IncreasesFOV()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.DecreaseFOV();
             Assert.Equal(59, camera.FOV._fov);
@@ -156,7 +156,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetFOVToStandard_NormalSwitch_SetsFOVToStandard()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetFOVToFocus();
             camera.SetFOVToStandard();
@@ -166,7 +166,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetFOV_NormalSwitch_SetsFOVToStandard()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetFOV(FOV.Create(80));
             Assert.Equal(80, camera.FOV._fov);
@@ -175,7 +175,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetMode_WhenNewModeIsAlreadyOnThatMode_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             Assert.Throws<ArgumentException>(() => camera.SetMode(CCTVMode.Normal));
         }
@@ -183,7 +183,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetMode_NormalSet_SetsModeWithNewMode()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetMode(CCTVMode.NightVision);
             Assert.Equal(CCTVMode.NightVision, camera.Mode);
@@ -192,7 +192,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetNightVisionWhenNight_WhenModeIsAlreadyAtNightVision_ThrowArgumentException()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SwitchToNightVisionMode();
             Assert.Throws<ArgumentException>(() => camera.SetNightVisionWhenNight());
@@ -201,7 +201,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SetNightVisionWhenNight_NormalSet()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetNightVisionWhenNight();
             int hour = DateTime.Now.Hour;
@@ -214,7 +214,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SwitchOn_WhenOff_ModeIsNotChanged()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             Assert.Equal(CCTVMode.Normal, camera.Mode);
             Assert.Equal(DeviceStatus.On, camera.Status);
@@ -223,7 +223,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void SwitchOff_WhenOn_ModeIsNotChanged()
         {
-            CCTV camera = new CCTV("n");
+            CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SwitchOff();
             Assert.Equal(CCTVMode.Normal, camera.Mode);
@@ -233,7 +233,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetDefaultVisionButItHasAlreadyBeenSet_CannotSetDefaultVision()
         {
-            CCTV camera = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore", 1234);
 
             Assert.Throws<ArgumentException>(() => camera.SwitchToNormalMode());
         }
@@ -241,7 +241,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetDefaultVisionAndItIsAlreadySetToNightVision_CanSetDefaultVision()
         {
-            CCTV camera = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore", 1234);
 
             camera.SwitchOn();
             camera.SwitchToNightVisionMode();
@@ -254,7 +254,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetNightVisionButItHasAlreadyBeenSet_CannotSetNightVision()
         {
-            CCTV camera = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore", 1234);
 
             camera.SwitchOn();
             camera.SwitchToNightVisionMode();
@@ -265,7 +265,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetNightVisionAndItIsAlreadySetToDefaultVision_CanSetNightVision()
         {
-            CCTV camera = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore", 1234);
 
             camera.SwitchOn();
             camera.SwitchToNightVisionMode();
@@ -277,7 +277,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetThermalVisionButItHasAlreadyBeenSet_CannotSetThermalVision()
         {
-            CCTV camera = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore", 1234);
 
             camera.SwitchOn();
             camera.SwitchToInfraredVisionMode();
@@ -288,7 +288,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         [Fact]
         public void When_WantToSetThermalVisionAndItIsAlreadySetToDefaultVision_CanSetThermalVision()
         {
-            CCTV camera = new CCTV("Salvatore");
+            CCTV camera = new CCTV("Salvatore", 1234);
 
             camera.SwitchOn();
             camera.SwitchToInfraredVisionMode();

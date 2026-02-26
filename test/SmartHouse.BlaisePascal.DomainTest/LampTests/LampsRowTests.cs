@@ -99,7 +99,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lampToTest = new Lamp("ok");
             newLampsRow.AddLampInPosition(lampToTest, 2);
             Assert.IsType<Lamp>(newLampsRow.LampList[2]);
-            Assert.Equal("ok", newLampsRow.LampList[2].Name);
+            Assert.Equal("ok", newLampsRow.LampList[2].Name._name);
             Assert.Equal(3, newLampsRow.LampList.Count);
         }
 

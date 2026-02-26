@@ -10,11 +10,11 @@
 
         public static Intensity Create(double value, double min, double max) => new Intensity(Math.Clamp(value, min, max));
 
-        public static Intensity operator -(Intensity i, int value) => new Intensity(i._intensity - value);
+        public static double operator -(Intensity i, double value) => i._intensity - value;
 
-        public static Intensity operator -(Intensity i1, Intensity i2) => new Intensity(i1._intensity - i2._intensity);
+        public static double operator -(Intensity i1, Intensity i2) => i1._intensity - i2._intensity;
 
-        public static Intensity operator +(Intensity i, int value) => new Intensity(i._intensity + value);
+        public static double operator +(Intensity i, double value) => i._intensity + value;
 
         public static bool operator <(Intensity i1, Intensity i2) => i1._intensity < i2._intensity;
 

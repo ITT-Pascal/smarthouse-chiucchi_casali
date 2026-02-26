@@ -15,5 +15,10 @@
                 throw new Exception("Name is invalid");
             return new Name(name);
         }
+
+        public static bool operator ==(Name n1, string n2) => n1._name == n2;
+        public static bool operator !=(Name n1, string n2) => n1._name != n2;
+        public static bool operator ==(string n1, Name n2) => n1 == n2._name;
+        public static bool operator !=(string n1, Name n2) => n1 != n2._name;
     }
 }

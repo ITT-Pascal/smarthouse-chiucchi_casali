@@ -208,7 +208,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
         {
             Thermostat newThermostat = new Thermostat("Franco");
             newThermostat.SetName("Giovanni");
-            Assert.Equal("Giovanni", newThermostat.Name);
+            Assert.Equal("Giovanni", newThermostat.Name._name);
         }
     }
 }
