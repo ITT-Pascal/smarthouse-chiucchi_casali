@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\Devices\Lighting\Lamps\Csv\" />
+    <Folder Include="Repositories\Devices\Lighting\Lamps\Json\" />
+  </ItemGroup>
+
 </Project>

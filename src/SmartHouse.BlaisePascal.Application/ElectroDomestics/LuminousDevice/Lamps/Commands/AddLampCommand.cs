@@ -12,11 +12,12 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
             _repository = repository;
         }
 
-        public void Execute(string name)
+        public void Execute(string name, string imageUrl)
         {
             var l = new Lamp(name); // TODO: implementare VO DeviceName
-            // var l = new Lamp(new DeviceName(name)); // TODO: dopo aver implementato VO DeviceName
-
+            //// var l = new Lamp(new DeviceName(name)); // TODO: dopo aver implementato VO DeviceName
+            //var lamp = new Lamp(new DeviceName(name), new DeviceImage(imageUrl))
+            
             _repository.Add(l);
         }
     }
