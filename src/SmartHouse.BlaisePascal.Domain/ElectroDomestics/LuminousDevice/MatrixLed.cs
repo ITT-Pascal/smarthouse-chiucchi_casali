@@ -1,16 +1,17 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Interfaces;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
     public sealed class MatrixLed: ILampFamily
     {
         public AbstractLamp[,] MatrixLamp { get; private set; }
-        public string Name { get; private set; }
+        public Name Name { get; private set; }
 
         public MatrixLed(string name, AbstractLamp[,] matrixLamp)
         {
-            Name = name;
+            Name = Name.Create(name);
             MatrixLamp = matrixLamp;
         }
 

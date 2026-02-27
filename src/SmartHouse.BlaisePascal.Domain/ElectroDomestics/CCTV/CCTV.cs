@@ -15,9 +15,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public FOV FOV { get; private set; } //FOV, or Field Of View, is the extent of the observable world visible at any moment, measured in degrees, representing how much of a scene a camera, eye, or device can capture.
         //Constants
         //FOV expressed in degrees (from min of 30° to max of 120°)
-        public FOV FocusFOV { get; init; } = FOV.Create(30); //Min
-        public FOV StandardFOV { get; init; } = FOV.Create(60);
-        public FOV WideAngleFOV { get; init; } = FOV.Create(120); //Max
+        FOV FocusFOV { get; init; } = FOV.Create(30); //Min
+        FOV StandardFOV { get; init; } = FOV.Create(60);
+        FOV WideAngleFOV { get; init; } = FOV.Create(120); //Max
         public const int StandardStep = 1;
 
         //Constructor
@@ -30,17 +30,22 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         }
 
         //Methods
-        public void Lock(Pin pin)
+        public void Lock(int pin)
         {
-            CheckLocked();
+            CheckIsOff();
+            CheckPin(pin);
+            CheckLockStatus(LockStatus.Locked);
+
             LockStatus = LockStatus.Locked;
 
             LastModification_UTC = DateTime.UtcNow;
         }
 
-        public void Unlock(Pin pin)
+        public void Unlock(int pin)
         {
-            CheckUnlocked();
+            CheckIsOff();
+            CheckPin(pin);
+            CheckLockStatus(LockStatus.Unlocked);
             LockStatus = LockStatus.Unlocked;
 
             LastModification_UTC = DateTime.UtcNow;
@@ -48,9 +53,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
 
         public void ChangePin(int currentPin, int newPin)
         {
-            CheckLocked();
-            if (Pin != currentPin)
-                throw new ArgumentException("Wrong pin, police has been advised.", nameof(Pin));
+            CheckIsOff();
+            CheckLockStatus(LockStatus.Locked);
+            CheckPin(currentPin);
             if (Pin == newPin)
                 throw new ArgumentException("The new pin is equal to the current one.", nameof(Pin));
 
@@ -62,7 +67,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOVToStandard()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckFOV(StandardFOV);
             FOV = StandardFOV;
 
@@ -72,7 +77,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOVToFocus()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckFOV(FocusFOV);
             FOV = FocusFOV;
 
@@ -82,7 +87,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOVToWideAngle()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckFOV(WideAngleFOV);
             FOV = WideAngleFOV;
 
@@ -92,7 +97,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetFOV(FOV newFOV) //Chiedi se fare int o FOV
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             //if (newFOV < FocusFOV || newFOV > WideAngleFOV)
             //    throw new ArgumentException("Cannot exceed camera FOV limits.", nameof(newFOV));
             CheckFOV(newFOV);
@@ -104,7 +109,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void IncreaseFOV()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             FOV = FOV.Create(FOV._fov + StandardStep);
 
             LastModification_UTC = DateTime.UtcNow;
@@ -113,7 +118,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void DecreaseFOV()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             FOV = FOV.Create(FOV._fov - StandardStep);
 
             LastModification_UTC = DateTime.UtcNow;
@@ -122,7 +127,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SwitchToNormalMode()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckMode(CCTVMode.Normal);
             Mode = CCTVMode.Normal;
 
@@ -132,7 +137,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SwitchToInfraredVisionMode()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckMode(CCTVMode.InfraredVision);
             Mode = CCTVMode.InfraredVision;
 
@@ -142,7 +147,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SwitchToNightVisionMode()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckMode(CCTVMode.NightVision);
             Mode = CCTVMode.NightVision;
 
@@ -152,7 +157,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetMode(CCTVMode newMode)
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckMode(newMode);
             Mode = newMode;
 
@@ -162,7 +167,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
         public void SetNightVisionWhenNight()
         {
             CheckIsOff();
-            CheckLocked();
+            CheckLockStatus(LockStatus.Locked);
             CheckMode(CCTVMode.NightVision);
             int hour = DateTime.Now.Hour;
             if (hour >= 22 || hour < 6) //Conventional Hours For Night
@@ -183,16 +188,16 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV
                 throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(FOV));
         }
 
-        public void CheckLocked()
+        public void CheckLockStatus(LockStatus status)
         {
-            if (this.LockStatus == LockStatus.Locked)
+            if (this.LockStatus == status)
                 throw new ArgumentException("CCTV is locked.", nameof(LockStatus));
         }
-
-        public void CheckUnlocked()
+        
+        public void CheckPin(int pin)
         {
-            if (this.LockStatus == LockStatus.Unlocked)
-                throw new ArgumentException("CCTV is unlocked.", nameof(LockStatus));
+            if (this.Pin != pin)
+                throw new ArgumentException("Wrong pin, police has been advised.", nameof(Pin));
         }
     }
 }

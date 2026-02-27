@@ -1,14 +1,22 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Interfaces;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
 {
-    public sealed class Door: AbstractDevice
+    public sealed class Door : AbstractDevice, ILockable
     {
-        public DoorStatus DoorStatus { get; private set; } //rimuovere EntryId come GuidId e sostituirlo con un PIN
-        public ClosedStatus ClosedDoorStatus { get; private set; }
-        public Guid EntryId { get; private set; } //Guid id that works as passkey to lock or unlock door
+        public Pin Pin { get; private set; }
+        public DoorStatus DoorStatus { get; private set; }
+        public LockStatus LockStatus { get; private set; }
 
-        public Door(string name) : base(name) { DoorStatus = DoorStatus.Closed; ClosedDoorStatus = ClosedStatus.Unlocked; EntryId = Guid.NewGuid(); }
+        public Door(string name, int pin) : base(name)
+        {
+            DoorStatus = DoorStatus.Closed;
+            LockStatus = LockStatus.Unlocked;
+            Pin = Pin.Create(pin);
+        }
 
         public void CloseDoor()
         {
@@ -21,34 +29,45 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
         public void OpenDoor()
         {
             CheckDoorStatus(DoorStatus.Open);
-            CheckClosedStatus(ClosedStatus.Locked);
+            CheckLockStatus(LockStatus.Locked);
             DoorStatus = DoorStatus.Open;
 
             LastModification_UTC = DateTime.Now;
         }
 
-        public void LockDoor(Guid entryId)
+        public void Lock(int pin)
         {
             CheckIsOff();
             CheckDoorStatus(DoorStatus.Open);
-            CheckClosedStatus(ClosedStatus.Locked);
-            if (entryId != EntryId)
-                throw new Exception("Access denied. Police has been alerted.");
-            ClosedDoorStatus = ClosedStatus.Locked;
+            CheckLockStatus(LockStatus.Locked);
+            CheckPin(pin);
+            LockStatus = LockStatus.Locked;
 
             LastModification_UTC = DateTime.Now;
         }
 
-        public void UnlockDoor(Guid entryId)
+        public void Unlock(int pin)
         {
             CheckIsOff();
             CheckDoorStatus(DoorStatus.Open);
-            CheckClosedStatus(ClosedStatus.Unlocked);
-            if (entryId != EntryId)
-                throw new Exception("Access denied. Police has been alerted.");
-            ClosedDoorStatus = ClosedStatus.Unlocked;
+            CheckLockStatus(LockStatus.Unlocked);
+            CheckPin(pin);
+            LockStatus = LockStatus.Unlocked;
 
             LastModification_UTC = DateTime.Now;
+        }
+
+        public void ChangePin(int currentPin, int newPin)
+        {
+            CheckIsOff();
+            CheckLockStatus(LockStatus.Locked);
+            CheckPin(currentPin);
+            if (Pin == newPin)
+                throw new ArgumentException("The new pin is equal to the current one.", nameof(Pin));
+
+            Pin = Pin.Create(newPin);
+
+            LastModification_UTC = DateTime.UtcNow;
         }
 
         private void CheckDoorStatus(DoorStatus status)
@@ -57,10 +76,16 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door
                 throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(DoorStatus));
         }
 
-        private void CheckClosedStatus(ClosedStatus closedStatus)
+        public void CheckLockStatus(LockStatus status)
         {
-            if (this.ClosedDoorStatus == closedStatus)
-                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(ClosedDoorStatus));
+            if (this.LockStatus == status)
+                throw new ArgumentException("CCTV is locked.", nameof(LockStatus));
+        }
+
+        public void CheckPin(int pin)
+        {
+            if (this.Pin != pin)
+                throw new ArgumentException("Wrong pin, police has been advised.", nameof(Pin));
         }
     }
 }

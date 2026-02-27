@@ -29,7 +29,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
 
             newThermostat.SetTemperature(28);
 
-            Assert.Equal(28, newThermostat.WorkingTemperature);
+            Assert.Equal(28, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -50,7 +50,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             newThermostat.SetTemperature(28);
             newThermostat.IncreaseTemperature();
 
-            Assert.Equal(28.5, newThermostat.WorkingTemperature);
+            Assert.Equal(28.5, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -71,7 +71,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             newThermostat.SetTemperature(20);
             newThermostat.DecreaseTemperature();
 
-            Assert.Equal(19.5, newThermostat.WorkingTemperature);
+            Assert.Equal(19.5, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -80,7 +80,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             Thermostat newThermostat = new Thermostat("Franco");
             newThermostat.SwitchOff();
             newThermostat.SwitchOn();
-            Assert.Equal(24, newThermostat.WorkingTemperature);
+            Assert.Equal(24, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -160,7 +160,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             Thermostat newThermostat = new Thermostat("Franco");
             newThermostat.ToggleMode();
             newThermostat.AdjustTemperatureByAmbientTemperature(10);
-            Assert.Equal(30, newThermostat.WorkingTemperature);
+            Assert.Equal(30, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -169,7 +169,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             Thermostat newThermostat = new Thermostat("Franco");
             newThermostat.ToggleMode();
             newThermostat.AdjustTemperatureByAmbientTemperature(35);
-            Assert.Equal(18, newThermostat.WorkingTemperature);
+            Assert.Equal(18, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             Thermostat newThermostat = new Thermostat("Franco");
             newThermostat.ToggleMode();
             newThermostat.AdjustTemperatureByAmbientTemperature(26);
-            Assert.Equal(24, newThermostat.WorkingTemperature);
+            Assert.Equal(24, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]
@@ -187,7 +187,7 @@ namespace SmartHouse.Domain.UnitTest.ThermostatTest
             Thermostat newThermostat = new Thermostat("Franco");
             newThermostat.ToggleMode();
             newThermostat.AdjustTemperatureByAmbientTemperature(20);
-            Assert.Equal(24, newThermostat.WorkingTemperature);
+            Assert.Equal(24, newThermostat.WorkingTemperature._temperature);
         }
 
         [Fact]

@@ -1,4 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
 {
@@ -7,12 +8,12 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner
         //Properties
         public AirConditionerMode Mode { get; private set; }
         public AirConditionerPower Power { get; private set; }
-        public double AirTemperature { get; private set; }
+        public Temperature AirTemperature { get; private set; }
 
         //Constants
-        public const double CoolAirTemperature = 16;
-        public const double DryAirTemperature = 22;
-        public const double HotAirTemperature = 28;
+        Temperature CoolAirTemperature { get; init; } = Temperature.Create(16, 16, 28);
+        Temperature DryAirTemperature { get; init; } = Temperature.Create(22, 16, 28);
+        Temperature HotAirTemperature { get; init; } = Temperature.Create(28, 16, 28);
         // public const double StandardStep = 0.5;
 
         //Constructor

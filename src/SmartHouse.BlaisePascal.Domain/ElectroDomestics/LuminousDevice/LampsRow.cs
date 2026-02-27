@@ -1,6 +1,7 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Interfaces;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
 {
@@ -8,7 +9,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
     {
         //Properties
         public List<AbstractLamp> LampList { get; set; } //= new List<AbstractLamp>();
-        public string Name { get; set; }
+        public Name Name { get; set; }
 
 
         //Constructor
@@ -16,7 +17,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             //if (string.IsNullOrWhiteSpace(name))
             //    throw new ArgumentException("Name of the lamps row cannot be null or white spaces.", nameof(name));
-            Name = name;
+            Name = Name.Create(name);
             LampList = new List<AbstractLamp>();
         }
 
@@ -24,7 +25,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         {
             //if (string.IsNullOrWhiteSpace(name))
             //    throw new ArgumentException("Name of the lamps row cannot be null or white spaces.", nameof(name));
-            Name = name;
+            Name = Name.Create(name);
             LampList = lamps;
 
             //if (lamps == null)

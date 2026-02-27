@@ -1,6 +1,6 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat.ValueObjects;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 {
@@ -11,9 +11,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
         public ThermostatMode Mode { get; private set; }
 
         //Constants
-        public Temperature MinTemperature { get; init; } = 18; //Range of temperature the thermostat can work in
-        public Temperature StandardTemperature { get; init; } = 24;
-        public Temperature MaxTemperature { get; init; } = Temperature.Create(30);
+        Temperature MinTemperature { get; init; } = Temperature.Create(18, 18, 30); //Range of temperature the thermostat can work in
+        Temperature StandardTemperature { get; init; } = Temperature.Create(24, 18, 30);
+        Temperature MaxTemperature { get; init; } = Temperature.Create(30, 18, 30);
         public const double StandardStep = 0.5;
 
         //Constructor
@@ -50,7 +50,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 
             CheckMode(ThermostatMode.Automatic);
 
-            WorkingTemperature = Math.Min(MaxTemperature, WorkingTemperature + StandardStep);
+            WorkingTemperature = Temperature.Create(WorkingTemperature + StandardStep, 18, 30);
 
             LastModification_UTC = DateTime.UtcNow;
         }
@@ -62,7 +62,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 
             CheckMode(ThermostatMode.Automatic);
 
-            WorkingTemperature = Math.Max(MinTemperature, WorkingTemperature - StandardStep);
+            WorkingTemperature = Temperature.Create(WorkingTemperature - StandardStep, 18, 30);
 
             LastModification_UTC = DateTime.UtcNow;
         }
@@ -74,7 +74,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Thermostat
 
             CheckMode(ThermostatMode.Automatic);
 
-            WorkingTemperature = newTemperature;
+            WorkingTemperature = Temperature.Create(newTemperature, 18, 30);
 
             LastModification_UTC = DateTime.UtcNow;
         }

@@ -8,9 +8,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Interfaces
         Pin Pin { get; }
         LockStatus LockStatus { get; }
         void ChangePin(int currentPin, int newPin);
-        void Lock(Pin pin);
-        void Unlock(Pin pin);
-        void CheckLocked();
-        void CheckUnlocked();
+        void Lock(int pin);
+        void Unlock(int pin);
+        void CheckLockStatus(LockStatus status);
+        void CheckPin(int pin);
     }
 }
