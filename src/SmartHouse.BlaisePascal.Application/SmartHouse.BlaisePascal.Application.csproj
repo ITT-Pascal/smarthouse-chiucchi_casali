@@ -11,10 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ElectroDomestics\AirConditioner\Mapper\" />
     <Folder Include="ElectroDomestics\AirConditioner\Queries\" />
     <Folder Include="ElectroDomestics\CCTV\Commands\" />
+    <Folder Include="ElectroDomestics\CCTV\Mapper\" />
     <Folder Include="ElectroDomestics\CCTV\Queries\" />
     <Folder Include="ElectroDomestics\Door\Commands\" />
+    <Folder Include="ElectroDomestics\Door\Mapper\" />
     <Folder Include="ElectroDomestics\Door\Queries\" />
     <Folder Include="ElectroDomestics\Thermostat\Commands\" />
     <Folder Include="ElectroDomestics\Thermostat\Queries\" />
