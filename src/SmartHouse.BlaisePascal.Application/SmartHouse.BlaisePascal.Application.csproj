@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ElectroDomestics\AirConditioner\Mapper\" />
     <Folder Include="ElectroDomestics\AirConditioner\Queries\" />
     <Folder Include="ElectroDomestics\CCTV\Commands\" />
     <Folder Include="ElectroDomestics\CCTV\Mapper\" />
