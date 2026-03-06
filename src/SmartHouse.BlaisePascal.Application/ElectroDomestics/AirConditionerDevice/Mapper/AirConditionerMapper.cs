@@ -1,4 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDevice.Dto;
+using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice;
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDevice.Mapper
 {
@@ -10,10 +11,10 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDev
             {
                 Id = airConditioner.Id,
                 Name = airConditioner.Name._name,
-                Status = DeviceStatusMapper.ToDto(AirConditioner airConditioner),
+                Status = DeviceStatusMapper.ToDto(airConditioner.Status),
                 Mode = AirConditionerModeMapper.ToDto(airConditioner.Mode),
                 Power = AirConditionerPowerMapper.ToDto(airConditioner.Power),
-                AirTemperature = airConditioner.AirTemperature,
+                AirTemperature = airConditioner.AirTemperature._temperature,
                 CreationTime_UTC = airConditioner.CreationTime_UTC,
                 LastModification_UTC = airConditioner.LastModification_UTC
             };
@@ -28,6 +29,7 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDev
                 DeviceStatusMapper.ToDomain(dto.Status),
                 AirConditionerModeMapper.ToDomain(dto.Mode),
                 AirConditionerPowerMapper.ToDomain(dto.Power),
+                dto.AirTemperature,
                 dto.CreationTime_UTC,
                 dto.LastModification_UTC
             );

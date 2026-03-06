@@ -1,4 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
 
 namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice
@@ -22,6 +23,17 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice
             Mode = AirConditionerMode.Dry; 
             Power = AirConditionerPower.Normal;
             AirTemperature = DryAirTemperature;
+        }
+
+        public AirConditioner(Guid id, string name, DeviceStatus status, AirConditionerMode mode, AirConditionerPower power, double temperature, DateTime creationTime, DateTime lastModification):base(name)
+        {
+            Id = id;
+            Status = status;
+            Mode = mode;
+            Power = power;
+            AirTemperature = Temperature.Create(temperature, 16, 28);
+            CreationTime_UTC = creationTime;
+            LastModification_UTC = lastModification;
         }
 
         public void SwitchToDryMode()

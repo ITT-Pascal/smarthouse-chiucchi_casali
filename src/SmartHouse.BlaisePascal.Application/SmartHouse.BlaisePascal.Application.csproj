@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ElectroDomestics\AirConditionerDevice\Queries\" />
     <Folder Include="ElectroDomestics\CCTVDevice\Commands\" />
     <Folder Include="ElectroDomestics\CCTVDevice\Mapper\" />
     <Folder Include="ElectroDomestics\CCTVDevice\Queries\" />

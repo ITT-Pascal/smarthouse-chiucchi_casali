@@ -3,18 +3,23 @@ using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice.Repos
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDevice.Commands
 {
-    public class AddAirConditionerCommand
+    public class AirConditionerSwitchOffCommand
     {
         private readonly IAirConditionerRepository _repository;
 
-        public AddAirConditionerCommand(IAirConditionerRepository repository)
+        public AirConditionerSwitchOffCommand(IAirConditionerRepository repository)
         {
             _repository = repository;
         }
 
-        public void Execute(string name)
+        public void Execute(Guid id, AirConditionerPower power)
         {
-            _repository.Add(new AirConditioner(name));
+            var airConditioner = _repository.GetById(id);
+            if (airConditioner != null)
+            {
+                airConditioner.SwitchOff();
+                _repository.Update(airConditioner);
+            }
         }
     }
 }
