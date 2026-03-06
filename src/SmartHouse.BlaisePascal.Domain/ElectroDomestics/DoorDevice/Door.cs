@@ -18,6 +18,17 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice
             Pin = Pin.Create(pin);
         }
 
+        public Door(Guid id, string name, DeviceStatus status, int pin, DoorStatus doorStatus, LockStatus lockStatus, DateTime creationTime, DateTime lastModification):base(name)
+        {
+            Id = id;
+            Status = status;
+            Pin = Pin.Create(pin);
+            DoorStatus = doorStatus;
+            LockStatus = lockStatus;
+            CreationTime_UTC = creationTime;
+            LastModification_UTC = lastModification;
+        }
+
         public void CloseDoor()
         {
             CheckDoorStatus(DoorStatus.Closed);
