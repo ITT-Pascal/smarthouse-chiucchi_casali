@@ -7,19 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
+    <Folder Include="ElectroDomestics\AirConditionerDevice\Queries\" />
+    <Folder Include="ElectroDomestics\CCTVDevice\Commands\" />
+    <Folder Include="ElectroDomestics\CCTVDevice\Mapper\" />
+    <Folder Include="ElectroDomestics\CCTVDevice\Queries\" />
+    <Folder Include="ElectroDomestics\DoorDevice\Commands\" />
+    <Folder Include="ElectroDomestics\DoorDevice\Mapper\" />
+    <Folder Include="ElectroDomestics\DoorDevice\Queries\" />
+    <Folder Include="ElectroDomestics\ThermostatDevice\Commands\" />
+    <Folder Include="ElectroDomestics\ThermostatDevice\Queries\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ElectroDomestics\AirConditioner\Queries\" />
-    <Folder Include="ElectroDomestics\CCTV\Commands\" />
-    <Folder Include="ElectroDomestics\CCTV\Mapper\" />
-    <Folder Include="ElectroDomestics\CCTV\Queries\" />
-    <Folder Include="ElectroDomestics\Door\Commands\" />
-    <Folder Include="ElectroDomestics\Door\Mapper\" />
-    <Folder Include="ElectroDomestics\Door\Queries\" />
-    <Folder Include="ElectroDomestics\Thermostat\Commands\" />
-    <Folder Include="ElectroDomestics\Thermostat\Queries\" />
+    <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
   </ItemGroup>
 
 </Project>

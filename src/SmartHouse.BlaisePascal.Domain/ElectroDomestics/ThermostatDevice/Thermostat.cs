@@ -1,0 +1,260 @@
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Abstractions;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.ValueObjects;
+
+namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.ThermostatDevice
+{
+    public sealed class Thermostat:AbstractDevice
+    {
+        //Property
+        public Temperature WorkingTemperature { get; private set; }
+        public ThermostatMode Mode { get; private set; }
+
+        //Constants
+        Temperature MinTemperature { get; init; } = Temperature.Create(18, 18, 30); //Range of temperature the thermostat can work in
+        Temperature StandardTemperature { get; init; } = Temperature.Create(24, 18, 30);
+        Temperature MaxTemperature { get; init; } = Temperature.Create(30, 18, 30);
+        public const double StandardStep = 0.5;
+
+        //Constructor
+        public Thermostat(string name):base(name) 
+        {
+            WorkingTemperature = StandardTemperature;
+            Status = DeviceStatus.On;
+            Mode = ThermostatMode.Manual;
+        }
+
+        public override void SwitchOn()
+        {
+            base.SwitchOn();
+            WorkingTemperature = StandardTemperature;
+        }
+        public override void SwitchOff()
+        {
+            base.SwitchOff();
+            WorkingTemperature = MinTemperature;
+        }
+
+        public void ToggleMode()
+        {
+            if (Mode == ThermostatMode.Manual)
+                Mode = ThermostatMode.Automatic;
+            else
+                Mode = ThermostatMode.Manual;
+        }
+
+        public void IncreaseTemperature()
+        {
+            if (WorkingTemperature >= MaxTemperature)
+                throw new ArgumentException("Cannot increase more than the max limit.", nameof(WorkingTemperature));
+
+            CheckMode(ThermostatMode.Automatic);
+
+            WorkingTemperature = Temperature.Create(WorkingTemperature + StandardStep, 18, 30);
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void DecreaseTemperature()
+        {
+            if (WorkingTemperature <= MinTemperature)
+                throw new ArgumentException("Cannot decrease more than the limit.", nameof(WorkingTemperature));
+
+            CheckMode(ThermostatMode.Automatic);
+
+            WorkingTemperature = Temperature.Create(WorkingTemperature - StandardStep, 18, 30);
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void SetTemperature(int newTemperature)
+        {
+            if(newTemperature > MaxTemperature || newTemperature < MinTemperature)
+                throw new ArgumentException("New temperature must be between the limits or equal to them.", nameof(WorkingTemperature));
+
+            CheckMode(ThermostatMode.Automatic);
+
+            WorkingTemperature = Temperature.Create(newTemperature, 18, 30);
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void AdjustTemperatureByAmbientTemperature(int ambientTemperature)
+        {
+            CheckIsOff();
+
+            CheckMode(ThermostatMode.Manual);
+
+            if (ambientTemperature <= MinTemperature)
+                WorkingTemperature = MaxTemperature;
+            else if (ambientTemperature < MaxTemperature && ambientTemperature > MinTemperature)
+                WorkingTemperature = StandardTemperature;
+            else if (ambientTemperature >= MaxTemperature)
+                SwitchOff();
+
+            LastModification_UTC = DateTime.UtcNow;
+        }
+
+        public void AutoSwitchOffWhenIsNight()
+        {
+            CheckIsOff();
+
+            CheckMode(ThermostatMode.Manual); 
+
+            int hour = DateTime.Now.Hour;
+            if (hour >= 22 || hour < 6) //Orari convenzionali per la notte 
+                SwitchOff();
+        }
+
+        private void CheckMode(ThermostatMode mode)
+        {
+            if (this.Mode == mode)
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(mode));
+        }
+    }
+
+    //public class Thermostat:AbstractDevice
+    //{
+    //    //Costanti: di temperatura minima e massima a cui si accende il termostato:  17 <= x <= 30
+    //    private const int MinReachingTemperature = 17;
+    //    private const int DefaultReachingTemperature = 22;
+    //    private const int MaxReachingTemperature = 29;
+
+    //    //Temperature notturne
+    //    private const int DefaultNightReachingTemperature = 18;
+    //    public int NightTemperature { get; private set; }
+    //    private bool _isNight;
+
+    //    //Properties
+    //    public Values Power { get; private set; }
+    //    public bool Automatic { get; private set; }
+
+    //    //Temperatura ambientale
+    //    public int AmbientTemperature { get; private set; }
+
+    //    //Temperatura di lavoro attuale
+    //    public int ReachingTemperature { get; private set; }
+
+
+    //    //Costruttore
+    //    public Thermostat(string name) : base(name) { }
+
+    //    //Legge la temperatura ambientale
+    //    public void ReadAmbientTemperature(int ambientTemperature)
+    //    {
+    //        if (Status == DeviceStatus.On)
+    //        {
+    //            AmbientTemperature = ambientTemperature;
+
+    //            LastModification_UTC = DateTime.UtcNow;
+    //        }
+    //    }
+
+    //    //Selezione della modalità di lavoro del termostato => manuale
+    //    public void ManualMode(int newTemperature, Values power, int nightTemperature)
+    //    {
+
+    //        if (Status == DeviceStatus.On)
+    //        {
+    //            if (newTemperature >= MinReachingTemperature && newTemperature <= MaxReachingTemperature)
+    //                ReachingTemperature = newTemperature;
+
+    //            if (nightTemperature >= MinReachingTemperature && nightTemperature <= MaxReachingTemperature)
+    //                NightTemperature = nightTemperature;
+    //        }
+
+    //        Power = power;
+
+    //        LastModification_UTC = DateTime.UtcNow;
+            
+    //        Automatic = false;
+    //    }
+        
+    //    //Selezione della modalità di lavoro del termostato => automatica  
+    //    public void AutomaticMode()
+    //    {
+    //        Automatic = true;
+    //        if (Status == DeviceStatus.On)
+    //        {
+    //            if (_isNight == true)
+    //            {
+    //                IsNight();
+    //                return;
+    //            }
+    //            if (AmbientTemperature <= MinReachingTemperature)
+    //            {
+    //                Power = Values.Four;
+    //                SetReachingTemperature();
+    //            }
+    //            else if(AmbientTemperature <= DefaultReachingTemperature)
+    //            {
+    //                Power = Values.Three;
+    //                SetReachingTemperature();
+    //            }
+    //            else if(AmbientTemperature <= MaxReachingTemperature)
+    //            {
+    //                Power = Values.Two;
+    //                SetReachingTemperature();
+    //            }
+    //            else
+    //            {
+    //                Status = DeviceStatus.Standby;
+    //            }
+    //            LastModification_UTC = DateTime.UtcNow;
+    //        }
+    //    }
+        
+    //    private void SetReachingTemperature() //Setta la temperatura in base alla potenza selezionata
+    //    {
+    //        if (Status == DeviceStatus.On)
+    //        {
+    //            if (Power == Values.One)
+    //            {
+    //                ReachingTemperature = MinReachingTemperature;
+    //            }
+    //            else if (Power == Values.Two)
+    //            {
+    //                ReachingTemperature = MinReachingTemperature + 2;
+    //            }
+    //            else if (Power == Values.Three)
+    //            {
+    //                ReachingTemperature = DefaultReachingTemperature;
+    //            }
+    //            else if (Power == Values.Four)
+    //            {
+    //                ReachingTemperature = DefaultReachingTemperature + 3;
+    //            }
+    //            else
+    //            {
+    //                ReachingTemperature = MaxReachingTemperature;
+    //            }   
+    //        }
+
+    //        if(Automatic == true)
+    //        {
+    //            ReachingTemperature = DefaultReachingTemperature;
+    //        }
+
+    //        LastModification_UTC = DateTime.UtcNow;
+    //    }
+
+    //    public void IsNight()
+    //    {
+    //        int hour = DateTime.Now.Hour;
+
+    //        if (hour >= 22 || hour < 6)//Orari convenzionali per la notte
+    //        {
+    //            _isNight = true;
+
+    //            if (Automatic == true)
+    //            {
+    //                ReachingTemperature = DefaultNightReachingTemperature;
+    //            }
+    //            else
+    //            {
+    //                ReachingTemperature = NightTemperature;
+    //            }
+    //        }
+    //        _isNight = false;
+    //    }
+}
