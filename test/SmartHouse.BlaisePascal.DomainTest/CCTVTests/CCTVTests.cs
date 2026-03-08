@@ -1,5 +1,5 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTV.ValueObjects;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice.ValueObjects;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
 namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
@@ -39,7 +39,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         public void SetFOV_WhenCCTVIsOff_ThrowArgumentException()
         {
             CCTV camera = new CCTV("n", 1234);
-            Assert.Throws<ArgumentException>(() => camera.SetFOV(FOV.Create(40)));
+            Assert.Throws<ArgumentException>(() => camera.SetFOV(40));
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
             CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
             camera.SetFOVToWideAngle();
-            Assert.Throws<ArgumentException>(() => camera.SetFOV(FOV.Create(120)));
+            Assert.Throws<ArgumentException>(() => camera.SetFOV(120));
         }
 
         [Fact]
@@ -168,7 +168,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests
         {
             CCTV camera = new CCTV("n", 1234);
             camera.SwitchOn();
-            camera.SetFOV(FOV.Create(80));
+            camera.SetFOV(80);
             Assert.Equal(80, camera.FOV._fov);
         }
 

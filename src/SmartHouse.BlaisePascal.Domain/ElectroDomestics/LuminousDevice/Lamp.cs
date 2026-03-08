@@ -5,9 +5,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
     public sealed class Lamp: AbstractLamp
     {
         //Defining standards
-        Intensity StandardMin { get; init; } = Intensity.Create(0, 0, 100);
-        Intensity StandardDefault { get; init; } = Intensity.Create(50, 0, 100);
-        Intensity StandardMax { get; init; } = Intensity.Create(100, 0, 100);
+        public Intensity StandardMin { get; init; } = Intensity.Create(0, 0, 100);
+        public Intensity StandardDefault { get; init; } = Intensity.Create(50, 0, 100);
+        public Intensity StandardMax { get; init; } = Intensity.Create(100, 0, 100);
 
         //Abstract properties override
         public override Intensity MinIntensity => StandardMin;

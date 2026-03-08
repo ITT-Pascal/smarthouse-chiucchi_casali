@@ -15,9 +15,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice
         public FOV FOV { get; private set; } //FOV, or Field Of View, is the extent of the observable world visible at any moment, measured in degrees, representing how much of a scene a camera, eye, or device can capture.
         //Constants
         //FOV expressed in degrees (from min of 30° to max of 120°)
-        FOV FocusFOV { get; init; } = FOV.Create(30); //Min
-        FOV StandardFOV { get; init; } = FOV.Create(60);
-        FOV WideAngleFOV { get; init; } = FOV.Create(120); //Max
+        public FOV FocusFOV { get; init; } = FOV.Create(30); //Min
+        public FOV StandardFOV { get; init; } = FOV.Create(60);
+        public FOV WideAngleFOV { get; init; } = FOV.Create(120); //Max
         public const int StandardStep = 1;
 
         //Constructor
@@ -27,6 +27,18 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice
             FOV = StandardFOV;
             LockStatus = LockStatus.Unlocked;
             Pin = Pin.Create(pin);
+        }
+
+        public CCTV(Guid id, string name, DeviceStatus status, int pin, LockStatus lockStatus, CCTVMode mode, int fov, DateTime creationTime, DateTime lastModification):base(name)
+        {
+            Id = id;
+            Status = status;
+            Pin = Pin.Create(pin);
+            LockStatus = lockStatus;
+            Mode = mode;
+            FOV = FOV.Create(fov);
+            CreationTime_UTC = creationTime;
+            LastModification_UTC = lastModification;
         }
 
         //Methods
@@ -94,14 +106,14 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice
             LastModification_UTC = DateTime.UtcNow;
         }
 
-        public void SetFOV(FOV newFOV) //Chiedi se fare int o FOV
+        public void SetFOV(int newFOV) //Chiedi se fare int o FOV
         {
             CheckIsOff();
             CheckLockStatus(LockStatus.Locked);
             //if (newFOV < FocusFOV || newFOV > WideAngleFOV)
             //    throw new ArgumentException("Cannot exceed camera FOV limits.", nameof(newFOV));
-            CheckFOV(newFOV);
-            FOV = newFOV;
+            CheckFOV(FOV.Create(newFOV));
+            FOV = FOV.Create(newFOV);
 
             LastModification_UTC = DateTime.UtcNow;
         }
@@ -184,7 +196,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice
 
         public void CheckFOV(FOV fov)
         {
-            if (FOV.Equals(fov))
+            if (FOV == fov)
                 throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(FOV));
         }
 

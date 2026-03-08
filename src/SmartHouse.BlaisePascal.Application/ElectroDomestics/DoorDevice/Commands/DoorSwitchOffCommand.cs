@@ -1,0 +1,25 @@
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice.Repositories;
+
+namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.DoorDevice.Commands
+{
+    public class DoorSwitchOffCommand
+    {
+        private readonly IDoorRepository _repository;
+
+        public DoorSwitchOffCommand(IDoorRepository repository)
+        {
+            _repository = repository;
+        }
+
+        public void Execute(Guid id)
+        {
+            Door door = _repository.GetById(id);
+            if (door != null)
+            {
+                door.SwitchOff();
+                _repository.Update(door);
+            }
+        }
+    }
+}

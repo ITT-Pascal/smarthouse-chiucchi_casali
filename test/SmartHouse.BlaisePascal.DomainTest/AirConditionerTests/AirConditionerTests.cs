@@ -1,4 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditioner;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
 namespace SmartHouse.BlaisePascal.DomainTest.AirConditionerTests

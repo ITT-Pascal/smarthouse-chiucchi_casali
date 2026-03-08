@@ -1,4 +1,4 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Door;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
 namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
@@ -17,7 +17,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void OpenDoor_WhenDoorIsClosed_StatusSwitchedToOpen()
         {
             Door newDoor = new Door("n", 1234);
-            newDoor.OpenDoor();
+            newDoor.Open();
             Assert.Equal(DoorStatus.Open, newDoor.DoorStatus);
         }
 
@@ -25,8 +25,8 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void OpenDoor_WhenDoorIsOpen_ThrowArgumentException()
         {
             Door newDoor = new Door("n", 1234);
-            newDoor.OpenDoor();
-            Assert.Throws<ArgumentException>(() => newDoor.OpenDoor());
+            newDoor.Open();
+            Assert.Throws<ArgumentException>(() => newDoor.Open());
         }
 
         [Fact]
@@ -35,15 +35,15 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
             Door newDoor = new Door("n", 1234);
             newDoor.SwitchOn();
             newDoor.Lock(1234);
-            Assert.Throws<ArgumentException>(() => newDoor.OpenDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.Open());
         }
 
         [Fact]
         public void CloseDoor_WhenDoorIsOpen_StatusSwitchedToClosed()
         {
             Door newDoor = new Door("n", 1234);
-            newDoor.OpenDoor();
-            newDoor.CloseDoor();
+            newDoor.Open();
+            newDoor.Close();
             Assert.Equal(DoorStatus.Closed, newDoor.DoorStatus);
         }
 
@@ -51,7 +51,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         public void CloseDoor_WhenDoorIsClosed_ThrowArgumentException()
         {
             Door newDoor = new Door("n", 1234);
-            Assert.Throws<ArgumentException>(() => newDoor.CloseDoor());
+            Assert.Throws<ArgumentException>(() => newDoor.Close());
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         {
             Door newDoor = new Door("n", 1234);
             newDoor.SwitchOn();
-            newDoor.OpenDoor();
+            newDoor.Open();
             Assert.Throws<ArgumentException>(() => newDoor.Lock(1234));
         }
 
@@ -118,7 +118,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.DoorTests
         {
             Door newDoor = new Door("n", 1234);
             newDoor.SwitchOn();
-            newDoor.OpenDoor();
+            newDoor.Open();
             Assert.Throws<ArgumentException>(() => newDoor.Unlock(1234));
         }
 

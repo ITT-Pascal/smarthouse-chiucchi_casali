@@ -11,9 +11,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.ThermostatDevice
         public ThermostatMode Mode { get; private set; }
 
         //Constants
-        Temperature MinTemperature { get; init; } = Temperature.Create(18, 18, 30); //Range of temperature the thermostat can work in
-        Temperature StandardTemperature { get; init; } = Temperature.Create(24, 18, 30);
-        Temperature MaxTemperature { get; init; } = Temperature.Create(30, 18, 30);
+        public Temperature MinTemperature { get; init; } = Temperature.Create(18, 18, 30); //Range of temperature the thermostat can work in
+        public Temperature StandardTemperature { get; init; } = Temperature.Create(24, 18, 30);
+        public Temperature MaxTemperature { get; init; } = Temperature.Create(30, 18, 30);
         public const double StandardStep = 0.5;
 
         //Constructor

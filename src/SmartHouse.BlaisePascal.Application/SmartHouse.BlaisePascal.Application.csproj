@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ElectroDomestics\CCTVDevice\Commands\" />
-    <Folder Include="ElectroDomestics\CCTVDevice\Mapper\" />
-    <Folder Include="ElectroDomestics\CCTVDevice\Queries\" />
-    <Folder Include="ElectroDomestics\DoorDevice\Commands\" />
-    <Folder Include="ElectroDomestics\DoorDevice\Queries\" />
     <Folder Include="ElectroDomestics\ThermostatDevice\Commands\" />
     <Folder Include="ElectroDomestics\ThermostatDevice\Queries\" />
   </ItemGroup>

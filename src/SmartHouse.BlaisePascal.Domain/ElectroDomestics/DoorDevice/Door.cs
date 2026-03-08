@@ -29,7 +29,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice
             LastModification_UTC = lastModification;
         }
 
-        public void CloseDoor()
+        public void Close()
         {
             CheckDoorStatus(DoorStatus.Closed);
             DoorStatus = DoorStatus.Closed;
@@ -37,7 +37,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice
             LastModification_UTC = DateTime.Now;
         }
 
-        public void OpenDoor()
+        public void Open()
         {
             CheckDoorStatus(DoorStatus.Open);
             CheckLockStatus(LockStatus.Locked);

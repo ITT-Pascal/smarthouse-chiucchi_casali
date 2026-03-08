@@ -12,9 +12,9 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice
         public Temperature AirTemperature { get; private set; }
 
         //Constants
-        Temperature CoolAirTemperature { get; init; } = Temperature.Create(16, 16, 28);
-        Temperature DryAirTemperature { get; init; } = Temperature.Create(22, 16, 28);
-        Temperature HotAirTemperature { get; init; } = Temperature.Create(28, 16, 28);
+        public Temperature CoolAirTemperature { get; init; } = Temperature.Create(16, 16, 28);
+        public Temperature DryAirTemperature { get; init; } = Temperature.Create(22, 16, 28);
+        public Temperature HotAirTemperature { get; init; } = Temperature.Create(28, 16, 28);
         // public const double StandardStep = 0.5;
 
         //Constructor
