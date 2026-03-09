@@ -11,4 +11,8 @@
     <Folder Include="Repositories\Devices\Lighting\Lamps\Json\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
