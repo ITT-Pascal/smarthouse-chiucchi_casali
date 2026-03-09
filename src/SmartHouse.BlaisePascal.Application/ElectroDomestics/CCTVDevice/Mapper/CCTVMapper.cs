@@ -1,5 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.CCTVDevice.Dto;
-using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared;
+using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared.Mapper;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice;
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.CCTVDevice.Mapper

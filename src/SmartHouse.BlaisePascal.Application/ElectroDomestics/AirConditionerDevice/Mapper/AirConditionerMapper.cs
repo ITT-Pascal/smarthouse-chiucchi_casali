@@ -1,5 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDevice.Dto;
-using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared;
+using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared.Mapper;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice;
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDevice.Mapper
 {

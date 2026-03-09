@@ -1,5 +1,5 @@
 ﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.DoorDevice.Dto;
-using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared;
+using SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared.Mapper;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice;
 

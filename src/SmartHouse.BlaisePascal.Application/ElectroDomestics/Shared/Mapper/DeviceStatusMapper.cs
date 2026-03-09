@@ -1,6 +1,6 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
-namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared
+namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.Shared.Mapper
 {
     public class DeviceStatusMapper
     {

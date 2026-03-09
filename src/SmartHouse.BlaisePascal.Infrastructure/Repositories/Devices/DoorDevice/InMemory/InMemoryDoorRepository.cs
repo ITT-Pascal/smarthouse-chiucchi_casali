@@ -1,7 +1,7 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice.Repositories;
 
-namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.DoorDevice
+namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.DoorDevice.InMemory
 {
     public class InMemoryDoorRepository:IDoorRepository
     {

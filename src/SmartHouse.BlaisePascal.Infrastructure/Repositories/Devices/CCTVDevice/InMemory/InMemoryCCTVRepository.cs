@@ -1,7 +1,7 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice.Repositories;
 
-namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.CCTVDevice
+namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.CCTVDevice.InMemory
 {
     public class InMemoryCCTVRepository:ICCTVRepository
     {

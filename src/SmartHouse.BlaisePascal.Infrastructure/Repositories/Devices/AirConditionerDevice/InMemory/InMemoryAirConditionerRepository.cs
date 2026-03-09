@@ -1,7 +1,7 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice.Repository;
 
-namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.AirConditionerDevice
+namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.AirConditionerDevice.InMemory
 {
     public class InMemoryAirConditionerRepository : IAirConditionerRepository
     {
