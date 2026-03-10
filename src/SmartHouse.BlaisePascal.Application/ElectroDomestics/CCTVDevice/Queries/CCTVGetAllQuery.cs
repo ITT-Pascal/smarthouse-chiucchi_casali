@@ -14,7 +14,7 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.CCTVDevice.Querie
             _repository = repository;
         }
 
-        public List<CCTVDto> Execute(Guid id)
+        public List<CCTVDto> Execute()
         {
             List<CCTVDto> cs = new List<CCTVDto>();
             foreach (CCTV c in _repository.GetAll())

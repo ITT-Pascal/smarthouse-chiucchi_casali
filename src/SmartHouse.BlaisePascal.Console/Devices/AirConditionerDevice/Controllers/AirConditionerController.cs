@@ -17,7 +17,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
         public void AddAirConditioner()
         {
             Write("Insert air conditioner name: ");
-            string name = ReadLine();
+            string? name = ReadLine();
             if (string.IsNullOrEmpty(name))
             {
                 WriteLine("Inserted name is invalid.");
@@ -29,12 +29,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void RemoveAirConditioner()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if(id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 new RemoveAirConditionerCommand(_repository).Execute(id);
@@ -48,12 +46,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SwitchOn()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -72,12 +68,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SwitchOff()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -96,12 +90,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SwitchToDryMode()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -122,12 +114,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SwitchToHotMode()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -148,12 +138,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SwitchToCoolMode()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -174,12 +162,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SetPowerToPowerful()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -200,12 +186,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SetPowerToNormal()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -226,12 +210,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
 
         public void SetPowerToWeak()
         {
-            Guid id = new Guid(SelectAirConditioner());
-            if (id == null)
-            {
-                WriteLine("Selected air conditioner does not exist.");
+            string? ac = SelectAirConditioner();
+            if (string.IsNullOrWhiteSpace(ac))
                 return;
-            }
+            Guid id = new(ac);
             try
             {
                 if (!new AirConditionerCheckIsOnQuery(_repository).Execute(id))
@@ -291,7 +273,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
                 controller.ShowAirConditioners();
                 controller.ShowChoices();
                 Write("Select an option: ");
-                string choice = ReadLine();
+                string? choice = ReadLine();
 
                 WriteLine();
 

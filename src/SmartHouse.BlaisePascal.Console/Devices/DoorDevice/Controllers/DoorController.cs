@@ -17,7 +17,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
         public void AddDoor()
         {
             Write("Insert door name: ");
-            string name = ReadLine();
+            string? name = ReadLine();
             if (string.IsNullOrEmpty(name))
             {
                 WriteLine("Inserted name is invalid.");
@@ -32,12 +32,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void RemoveDoor()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             try
             {
                 new RemoveDoorCommand(_repository).Execute(id);
@@ -51,12 +49,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void SwitchOn()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             try
             {
                 if (new DoorCheckIsOnQuery(_repository).Execute(id))
@@ -75,12 +71,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void SwitchOff()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             try
             {
                 if (!new DoorCheckIsOnQuery(_repository).Execute(id))
@@ -99,12 +93,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void Open()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             try
             {
                 if (!new DoorCheckIsOnQuery(_repository).Execute(id))
@@ -127,12 +119,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void Close()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             try
             {
                 if (!new DoorCheckIsOnQuery(_repository).Execute(id))
@@ -153,12 +143,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void Lock()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             if (!new DoorCheckIsOnQuery(_repository).Execute(id))
             {
                 WriteLine("Selected door is off. To use this function it must be turned on.");
@@ -189,12 +177,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void Unlock()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             if (!new DoorCheckIsOnQuery(_repository).Execute(id))
             {
                 WriteLine("Selected door is off. To use this function it must be turned on.");
@@ -221,12 +207,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
 
         public void ChangePin()
         {
-            Guid id = new Guid(SelectDoor());
-            if (id == null)
-            {
-                WriteLine("Selected door does not exist.");
+            string? door = SelectDoor();
+            if (string.IsNullOrWhiteSpace(door))
                 return;
-            }
+            Guid id = new(door);
             if (!new DoorCheckIsOnQuery(_repository).Execute(id))
             {
                 WriteLine("Selected door is off. To use this function it must be turned on.");
@@ -294,7 +278,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
                 controller.ShowDoors();
                 controller.ShowChoices();
                 Write("Select an option: ");
-                string choice = ReadLine();
+                string? choice = ReadLine();
 
                 WriteLine();
 
