@@ -15,6 +15,7 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
         public Lamp Execute()
         {
 
-            return ;
+            return;
         }
     }
+}
