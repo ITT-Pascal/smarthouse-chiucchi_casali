@@ -13,4 +13,9 @@
     <ProjectReference Include="..\SmartHouse.BlaisePascal.Infrastructure\SmartHouse.BlaisePascal.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Devices\CCTVDevice\Controllers\" />
+    <Folder Include="Devices\ThermostatDevice\Controllers\" />
+  </ItemGroup>
+
 </Project>

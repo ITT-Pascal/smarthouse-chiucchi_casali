@@ -12,7 +12,7 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.AirConditionerDev
             _repository = repository;
         }
 
-        public void Execute(Guid id, AirConditionerPower power)
+        public void Execute(Guid id)
         {
             var airConditioner = _repository.GetById(id);
             if (airConditioner != null)

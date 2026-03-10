@@ -1,30 +1,65 @@
-﻿using static System.Console;
-class program
+﻿using SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controllers;
+using SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice.Repository;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice.Repositories;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
+using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.AirConditionerDevice.InMemory;
+using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.DoorDevice.InMemory;
+using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.Lighting.Lamps.InMemory;
+using static System.Console;
+class Program
 {
     static void Main()
     {
-        ILampRepository repository = new InMemoryLampRepository();
-        ILampRepository repositorytxt = new TxtLampRepository();
-        LampController controller = new LampController(repository);
-
         bool exit = false;
 
         while (!exit)
         {
             Clear();
-            controller.ShowLamps();
-            ShowMenu();
+            Write("\x1b[3J");
+
+            WriteLine("1 - Lamps \n" + 
+                "2 - Air conditioner \n" + 
+                "3 - CCTV \n" + 
+                "4 - Door \n" + 
+                "5 - Thermostat \n" + 
+                "6 - Exit");
 
             Write("Choose an option: ");
             string choice = ReadLine();
 
-            Console.WriteLine();
-
-            switch (choice)
+            switch(choice)
             {
-                case "1"
-                    controller.Add
+                case "1":
+                    ILampRepository lampRepository = new InMemoryLampRepository();
+                    break;
+                case "2":
+                    IAirConditionerRepository airConditionerRepository = new InMemoryAirConditionerRepository();
+                    AirConditionerController airConditionerController = new AirConditionerController(airConditionerRepository);
+                    airConditionerController.ShowMenu(airConditionerController);
+                    break;
+                case "3":
+                    break;
+                case "4":
+                    IDoorRepository doorRepository = new InMemoryDoorRepository();
+                    DoorController doorController = new DoorController(doorRepository);
+                    doorController.ShowMenu(doorController);
+                    break;
+                case "5":
+                    break;
+                case "6":
+                    exit = true;
+                    break;
+                default:
+                    WriteLine("Invalid choice.");
+                    break;
             }
+            //controller.ShowLamps();
+            //ShowMenu();
         }
+        Clear();
+        Write("\x1b[3J");
+        WriteLine("Bye bye! (viva i test!)");
+        Write("\nPress enter to close the menu.");
     }
 }

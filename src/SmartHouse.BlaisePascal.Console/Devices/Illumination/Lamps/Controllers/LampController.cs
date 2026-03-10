@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartHouse.BlaisePascal.Console.Devices.Controllers
+namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 {
-    internal class LampControler
+    internal class LampController
     {
     }
 }

@@ -90,7 +90,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice
         public void CheckLockStatus(LockStatus status)
         {
             if (this.LockStatus == status)
-                throw new ArgumentException("CCTV is locked.", nameof(LockStatus));
+                throw new ArgumentException("Method invocation failed: current value in incompatible state.", nameof(LockStatus));
         }
 
         public void CheckPin(int pin)
