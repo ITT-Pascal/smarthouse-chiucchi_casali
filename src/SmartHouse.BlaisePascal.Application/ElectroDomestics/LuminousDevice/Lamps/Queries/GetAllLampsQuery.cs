@@ -12,10 +12,10 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
             _repository = repository;
         }
 
-        public Lamp Execute()
+        public IEnumerable<Lamp> Execute()
         {
 
-            return;
+            return _repository.GetAll();
         }
     }
 }

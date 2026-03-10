@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ElectroDomestics\ThermostatDevice\Commands\" />
-    <Folder Include="ElectroDomestics\ThermostatDevice\Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
   </ItemGroup>
 

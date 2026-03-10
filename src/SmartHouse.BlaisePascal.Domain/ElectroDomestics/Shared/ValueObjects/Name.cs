@@ -2,6 +2,7 @@
 {
     public sealed record Name
     {
+
         public string _name { get; }
 
         private Name(string name)

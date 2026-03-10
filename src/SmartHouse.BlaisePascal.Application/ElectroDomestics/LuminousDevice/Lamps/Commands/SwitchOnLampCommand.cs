@@ -1,4 +1,5 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Commands
 {
@@ -12,7 +13,7 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
 
         public void Execute(Guid LampId)
         {
-            Lamp lamp = _lampRepository.GetById(LampId);
+            Lamp lamp = _lampRepository.GetById(LampId); //problema avuto anche con tappi....ho messo abstractlamp, cancellato abstract e ora va.. XD
             if(lamp != null)
             {
                 lamp.SwitchOn();
