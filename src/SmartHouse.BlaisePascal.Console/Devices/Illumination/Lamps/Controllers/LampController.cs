@@ -17,17 +17,17 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 
         public void AddLamp()
         {
-            Console.Write("Lamp name: ");
+            Write("Lamp name: ");
             string name = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                Console.WriteLine("Invalid name");
+                WriteLine("Invalid name");
                 return;
             }
 
             new AddLampCommand(_repository).Execute(name);
-            Console.WriteLine("Lamp added!");
+            WriteLine("Lamp added!");
         }
 
         public void RemoveLamp()
@@ -44,11 +44,11 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
             try
             {
                 new RemoveLampCommand(_repository).Execute(id);
-                Console.WriteLine("Lamp removed!");
+                WriteLine("Lamp removed!");
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine($"ERROR: {ex.Message}");
+                WriteLine($"ERROR: {ex.Message}");
             }
         }
 
