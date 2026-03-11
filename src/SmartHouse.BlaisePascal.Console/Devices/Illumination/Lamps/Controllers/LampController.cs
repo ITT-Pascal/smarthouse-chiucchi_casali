@@ -71,7 +71,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
                     WriteLine("Brightness is alredy at it's maximum");
                 else
                 {
-                    new ChangeIntensityCommand(_repository).Execute(id);
+                    new SetIntensityCommand(_repository).Execute(id);
                     WriteLine("Increased lamp brightness!");
                 }
             }
@@ -107,7 +107,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 
             try
             {
-                new ChangeIntensityCommand(_repository).Execute(id, newbrightness);
+                new SetIntensityCommand(_repository).Execute(id, newbrightness);
                 WriteLine("Changed lamp brightness!");
             }
             catch (ArgumentException ex)
@@ -135,7 +135,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
                     WriteLine("Brightness is alredy at it's maximum");
                 else
                 {
-                    new ChangeIntensityCommand(_repository).Execute(id);
+                    new SetIntensityCommand(_repository).Execute(id);
                     WriteLine("Decreased lamp brightness!");
                 }
             }

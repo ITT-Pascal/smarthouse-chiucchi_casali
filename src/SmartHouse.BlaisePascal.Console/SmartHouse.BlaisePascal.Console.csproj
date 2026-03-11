@@ -8,13 +8,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmartHouse.BlaisePascal.Application\SmartHouse.BlaisePascal.Application.csproj" />
-    <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
-    <ProjectReference Include="..\SmartHouse.BlaisePascal.Infrastructure\SmartHouse.BlaisePascal.Infrastructure.csproj" />
+    <Compile Remove="Devices\ThermostatDevice\**" />
+    <EmbeddedResource Remove="Devices\ThermostatDevice\**" />
+    <None Remove="Devices\ThermostatDevice\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Devices\ThermostatDevice\Controllers\" />
+    <ProjectReference Include="..\SmartHouse.BlaisePascal.Application\SmartHouse.BlaisePascal.Application.csproj" />
+    <ProjectReference Include="..\SmartHouse.BlaisePascal.Domain\SmartHouse.BlaisePascal.Domain.csproj" />
+    <ProjectReference Include="..\SmartHouse.BlaisePascal.Infrastructure\SmartHouse.BlaisePascal.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

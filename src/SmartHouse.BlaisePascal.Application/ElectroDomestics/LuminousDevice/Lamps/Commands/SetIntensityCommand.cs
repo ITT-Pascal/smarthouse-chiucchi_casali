@@ -3,11 +3,11 @@ using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositorie
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Commands
 {
-    public class ChangeIntensityCommand
+    public class SetIntensityCommand
     {
         private readonly ILampRepository _repository;
 
-        public ChangeIntensityCommand(ILampRepository repository)
+        public SetIntensityCommand(ILampRepository repository)
         {
             _repository = repository;
         }
