@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.ThermostatDevice.Dto;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.ThermostatDevice.Repositories;
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.ThermostatDevice.Queries
 {
@@ -22,10 +19,10 @@ public class GetAllThermostatsQuery
             return thermostats.Select(t => new ThermostatDto
             {
                 Id = t.Id,
-                Name = t.Name.Value, 
+                Name = t.Name._name, 
                 Status = t.Status.ToString(),
                 Mode = t.Mode.ToString(),
-                WorkingTemperature = t.WorkingTemperature.Celsius, 
+                WorkingTemperature = t.WorkingTemperature._temperature, 
                 LastModificationUtc = t.LastModification_UTC
             });
         }

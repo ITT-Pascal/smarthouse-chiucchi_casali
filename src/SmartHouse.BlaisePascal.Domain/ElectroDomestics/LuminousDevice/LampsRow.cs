@@ -126,22 +126,22 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         }
 
         // ---- SET INTENSITY ----
-        public void SetIntensityForAllLamps(Intensity intensity) //Set intensity for all lamps
+        public void SetIntensityForAllLamps(int intensity) //Set intensity for all lamps
         {
             for (int i = 0; i < LampList.Count; i++)
                 LampList[i].SetIntensity(intensity);
         }
 
-        public void SetIntensityForLamp(Intensity intensity, int position) => LampList[position].SetIntensity(intensity); //Sets ONE lamp's brightness by position
+        public void SetIntensityForLamp(int intensity, int position) => LampList[position].SetIntensity(intensity); //Sets ONE lamp's brightness by position
 
-        public void SetIntensityForLamp(Intensity intensity, string name) //Sets ONE lamp's brightness by name 
+        public void SetIntensityForLamp(int intensity, string name) //Sets ONE lamp's brightness by name 
         {
             for (int i = 0; i < LampList.Count; i++)
                 if (name == LampList[i].Name)
                     LampList[i].SetIntensity(intensity);
         }
 
-        public void SetIntensityForLamp(Intensity intensity, Guid Id) //Sets ONE lamp's brightness by ID 
+        public void SetIntensityForLamp(int intensity, Guid Id) //Sets ONE lamp's brightness by ID 
         {
             for (int i = 0; i < LampList.Count; i++)
                 if (Id == LampList[i].Id)

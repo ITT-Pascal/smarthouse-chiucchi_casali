@@ -235,7 +235,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             for (int i = 0; i < newLampsRow.LampList.Count; i++)
                 Assert.Equal(40, newLampsRow.LampList[i].Intensity._intensity);
         }
@@ -247,7 +247,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             Assert.Equal(40, newLampsRow.LampList[2].Intensity._intensity);
         }
 
@@ -258,7 +258,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), "2");
+            newLampsRow.SetIntensityForLamp(40, "2");
             Assert.Equal(40, newLampsRow.LampList[2].Intensity._intensity);
         }
 
@@ -269,7 +269,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), newLampsRow.LampList[2].Id);
+            newLampsRow.SetIntensityForLamp(40, newLampsRow.LampList[2].Id);
             Assert.Equal(40, newLampsRow.LampList[2].Intensity._intensity);
         }
 
@@ -338,7 +338,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             newLampsRow.DimmerAllLamps(10);
             for (int i = 0; i < newLampsRow.LampList.Count; i++)
                 Assert.Equal(30, newLampsRow.LampList[i].Intensity._intensity);
@@ -350,7 +350,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             LampsRow newLampsRow = new LampsRow("n");
             newLampsRow.AddLamp("giova");
             newLampsRow.AllToggle();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             newLampsRow.DimmerLamp(newLampsRow.LampList[0].Id, 10);
             Assert.Equal(30, newLampsRow.LampList[0].Intensity._intensity);
         }
@@ -361,7 +361,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             LampsRow newLampsRow = new LampsRow("n");
             newLampsRow.AddLamp("giova");
             newLampsRow.AllToggle();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             newLampsRow.DimmerLamp("giova", 10);
             Assert.Equal(30, newLampsRow.LampList[0].Intensity._intensity);
         }
@@ -373,7 +373,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             newLampsRow.DimmerLampInPosition(2, 10);
             Assert.Equal(30, newLampsRow.LampList[2].Intensity._intensity);
         }
@@ -385,7 +385,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             newLampsRow.DimmerLampInPosition("2", 2, 10);
             Assert.Equal(30, newLampsRow.LampList[2].Intensity._intensity);
         }
@@ -397,7 +397,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             newLampsRow.DimmerLampInPosition(newLampsRow.LampList[2].Id, 2, 10);
             Assert.Equal(30, newLampsRow.LampList[2].Intensity._intensity);
         }
@@ -410,7 +410,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             newLampsRow.BrightenAllLamps(10);
             for (int i = 0; i < newLampsRow.LampList.Count; i++)
                 Assert.Equal(50, newLampsRow.LampList[i].Intensity._intensity);
@@ -422,7 +422,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             LampsRow newLampsRow = new LampsRow("n");
             newLampsRow.AddLamp("giova");
             newLampsRow.AllToggle();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             newLampsRow.BrightenLamp(newLampsRow.LampList[0].Id, 10);
             Assert.Equal(50, newLampsRow.LampList[0].Intensity._intensity);
         }
@@ -433,7 +433,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             LampsRow newLampsRow = new LampsRow("n");
             newLampsRow.AddLamp("giova");
             newLampsRow.AllToggle();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(40, 0, 100));
+            newLampsRow.SetIntensityForAllLamps(40);
             newLampsRow.BrightenLamp("giova", 10);
             Assert.Equal(50, newLampsRow.LampList[0].Intensity._intensity);
         }
@@ -445,7 +445,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             newLampsRow.BrightenLampInPosition(2, 10);
             Assert.Equal(50, newLampsRow.LampList[2].Intensity._intensity);
         }
@@ -457,7 +457,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             newLampsRow.BrightenLampInPosition("2", 2, 10);
             Assert.Equal(50, newLampsRow.LampList[2].Intensity._intensity);
         }
@@ -469,7 +469,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             for (int i = 0; i < 5; i++)
                 newLampsRow.AddLamp($"{i}");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), 2);
+            newLampsRow.SetIntensityForLamp(40, 2);
             newLampsRow.BrightenLampInPosition(newLampsRow.LampList[2].Id, 2, 10);
             Assert.Equal(50, newLampsRow.LampList[2].Intensity._intensity);
         }
@@ -484,7 +484,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLampsRow.AddLamp("gianluca");
             newLampsRow.AddLamp("pera");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(70, 0, 100), "gianluca");
+            newLampsRow.SetIntensityForLamp(70, "gianluca");
             Assert.Equal(newLampsRow.LampList[2], newLampsRow.FindLampWithMaxIntensity());
         }
 
@@ -497,8 +497,8 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLampsRow.AddLamp("gianluca");
             newLampsRow.AddLamp("pera");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(70, 0, 100));
-            newLampsRow.SetIntensityForLamp(Intensity.Create(0, 0, 100), "gianluca");
+            newLampsRow.SetIntensityForAllLamps(70);
+            newLampsRow.SetIntensityForLamp(0, "gianluca");
             Assert.Equal(newLampsRow.LampList[2], newLampsRow.FindLampWithMinIntensity());
         }
 
@@ -511,9 +511,9 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLampsRow.AddLamp("gianluca");
             newLampsRow.AddLamp("pera");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForAllLamps(Intensity.Create(10, 0, 100));
-            newLampsRow.SetIntensityForLamp(Intensity.Create(50, 0, 100), "gianluca");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(40, 0, 100), "pio");
+            newLampsRow.SetIntensityForAllLamps(10);
+            newLampsRow.SetIntensityForLamp(50, "gianluca");
+            newLampsRow.SetIntensityForLamp(40, "pio");
             List<AbstractLamp> lampsInRange = [newLampsRow.LampList[1], newLampsRow.LampList[2]];
             Assert.Equal(lampsInRange, newLampsRow.FindLampsByIntensityRange(40, 50));
         }
@@ -578,10 +578,10 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLampsRow.AddLamp("gianluca");
             newLampsRow.AddEcoLamp("pera");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(3, 0, 100), "giorgini");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(5, 0, 70), "pio");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(2, 0, 100), "gianluca");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(4, 0, 70), "pera");
+            newLampsRow.SetIntensityForLamp(3, "giorgini");
+            newLampsRow.SetIntensityForLamp(5, "pio");
+            newLampsRow.SetIntensityForLamp(2, "gianluca");
+            newLampsRow.SetIntensityForLamp(4, "pera");
             List<AbstractLamp> sortedLamps = [newLampsRow.LampList[2], newLampsRow.LampList[0], newLampsRow.LampList[3], newLampsRow.LampList[1]];
             Assert.Equal(sortedLamps, newLampsRow.SortByIntensity(false));
         }
@@ -595,10 +595,10 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             newLampsRow.AddLamp("gianluca");
             newLampsRow.AddEcoLamp("pera");
             newLampsRow.AllSwitchOn();
-            newLampsRow.SetIntensityForLamp(Intensity.Create(3, 0, 100), "giorgini");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(5, 0, 70), "pio");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(2, 0, 100), "gianluca");
-            newLampsRow.SetIntensityForLamp(Intensity.Create(4, 0, 70), "pera");
+            newLampsRow.SetIntensityForLamp(3, "giorgini");
+            newLampsRow.SetIntensityForLamp(5, "pio");
+            newLampsRow.SetIntensityForLamp(2, "gianluca");
+            newLampsRow.SetIntensityForLamp(4, "pera");
             List<AbstractLamp> sortedLamps = [newLampsRow.LampList[1], newLampsRow.LampList[3], newLampsRow.LampList[0], newLampsRow.LampList[2]];
             Assert.Equal(sortedLamps, newLampsRow.SortByIntensity(true));
         }

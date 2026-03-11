@@ -23,17 +23,17 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         public override void SwitchOn() { base.SwitchOn(); Intensity = DefaultIntensity; }
 
         //Virtual methods
-        public virtual void SetIntensity(Intensity newIntensity)
+        public virtual void SetIntensity(int newIntensity)
         {
             if (newIntensity < MinIntensity || newIntensity > MaxIntensity) //Chiedi a pulga se bisogna fare il controllo anche se ho fatto clamp in Intensity
                 throw new ArgumentOutOfRangeException("Brightness must be between min and max value", nameof(Intensity));
 
             CheckIsOff();
 
-            if (newIntensity == MinIntensity)
+            if (MinIntensity == newIntensity)
                 SwitchOff();
             else
-                Intensity = newIntensity;
+                Intensity = Intensity.Create(newIntensity, MinIntensity._intensity, MaxIntensity._intensity);
 
             LastModification_UTC = DateTime.UtcNow;
         }

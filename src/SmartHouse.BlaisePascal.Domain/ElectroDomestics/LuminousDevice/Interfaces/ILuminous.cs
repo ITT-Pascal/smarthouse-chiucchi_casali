@@ -6,7 +6,7 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Interfa
     public interface ILuminous: IDevice
     {
         Intensity Intensity { get; }
-        void SetIntensity(Intensity newIntensity);
+        void SetIntensity(int newIntensity);
         void Dimmer(int amount);
         void Brighten(int amount);
     }

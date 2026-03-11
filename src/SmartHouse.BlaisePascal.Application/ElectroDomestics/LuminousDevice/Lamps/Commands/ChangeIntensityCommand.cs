@@ -1,4 +1,5 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
+﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Commands
 {
@@ -13,10 +14,10 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
 
         public void Execute(Guid lampId, int intensity)
         {
-            var lamp = _repository.GetById(lampId);
+            Lamp lamp = _repository.GetById(lampId);
             if (lamp != null)
             { 
-                lamp.ChangeBrightnessTo(intensity);
+                lamp.SetIntensity(intensity);
                 _repository.Update(lamp);
             }
         }

@@ -38,6 +38,7 @@
 
         public static Intensity operator *(Intensity i, double value) => new Intensity(i._intensity * value);
 
-        public static Intensity operator *(Intensity i, int value) => new Intensity(i._intensity * value);
+        public static bool operator ==(Intensity i, int value) => i._intensity == value;
+        public static bool operator !=(Intensity i, int value) => i._intensity != value;
     }
 }

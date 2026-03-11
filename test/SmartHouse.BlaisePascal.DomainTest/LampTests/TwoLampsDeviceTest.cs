@@ -90,7 +90,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.ToggleOneLamp(lamp1.Id);
-            newLamp.SetOneLampIntensity(lamp1.Id, Intensity.Create(10, 0, 100));
+            newLamp.SetOneLampIntensity(lamp1.Id, 10);
             Assert.Equal(10, newLamp.Lamp1.Intensity._intensity);
         }
         [Fact]
@@ -100,7 +100,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.ToggleOneLamp(lamp2.Id);
-            newLamp.SetOneLampIntensity(lamp2.Id, Intensity.Create(10, 0, 70));
+            newLamp.SetOneLampIntensity(lamp2.Id, 10);
             Assert.Equal(10, newLamp.Lamp2.Intensity._intensity);
         }
         [Fact]
@@ -109,8 +109,8 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp1 = new Lamp("n");
             AbstractLamp lamp2 = new EcoLamp("na");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
-            Assert.Throws<ArgumentException>(() => newLamp.SetOneLampIntensity(lamp1.Id, Intensity.Create(20, 0, 100)));
-            Assert.Throws<ArgumentException>(() => newLamp.SetOneLampIntensity(lamp2.Id, Intensity.Create(10, 0, 70)));
+            Assert.Throws<ArgumentException>(() => newLamp.SetOneLampIntensity(lamp1.Id, 20));
+            Assert.Throws<ArgumentException>(() => newLamp.SetOneLampIntensity(lamp2.Id, 10));
         }
         //[Fact]
         //public void TwoLampsDeviceChangeOneLampBrightness_WhenNewBrightnessIsOutOfRange_ThrowNewArgumentOutOfRangeException()
@@ -131,7 +131,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp2 = new EcoLamp("n");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.TurnOnBothLamps();
-            newLamp.SetBothLampsIntensity(Intensity.Create(10, 0, 100), Intensity.Create(20, 0, 70));
+            newLamp.SetBothLampsIntensity(10, 20);
             Assert.Equal(10, newLamp.Lamp1.Intensity._intensity);
             Assert.Equal(20, newLamp.Lamp2.Intensity._intensity);
         }
@@ -150,7 +150,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp1 = new Lamp("n");
             AbstractLamp lamp2 = new EcoLamp("nn");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
-            Assert.Throws<ArgumentException>(() => newLamp.SetBothLampsIntensity(Intensity.Create(20, 0, 100), Intensity.Create(10, 0, 70)));
+            Assert.Throws<ArgumentException>(() => newLamp.SetBothLampsIntensity(20, 10));
         }
         [Fact]
         public void TwoLampsDeviceChangeBothLampsBrightness_WhenOneLampIsOff_ThrowArgumentException()
@@ -159,7 +159,7 @@ namespace SmartHouse.BlaisePascal.DomainTest.LampTests
             AbstractLamp lamp2 = new EcoLamp("nn");
             TwoLampsDevice newLamp = new TwoLampsDevice(lamp1, lamp2);
             newLamp.ToggleOneLamp(lamp1.Id);
-            Assert.Throws<ArgumentException>(() => newLamp.SetBothLampsIntensity(Intensity.Create(20, 0, 100), Intensity.Create(10, 0, 70)));
+            Assert.Throws<ArgumentException>(() => newLamp.SetBothLampsIntensity(20, 10));
         }
         //Dimmer Tests
         [Fact]

@@ -167,26 +167,26 @@ namespace SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice
         }
 
         // ---- SET INTENSITY ----
-        public void SeIntensity(string name, Intensity newIntensity)
+        public void SeIntensity(string name, int newIntensity)
         {
             foreach (AbstractLamp l in MatrixLamp)
                 if (l.Name == name)
                     l?.SetIntensity(newIntensity);
         }
 
-        public void SeIntensity(Guid id, Intensity newIntensity)
+        public void SeIntensity(Guid id, int newIntensity)
         {
             foreach (AbstractLamp l in MatrixLamp)
                 if (l.Id == id)
                     l?.SetIntensity(newIntensity);
         }
 
-        public void SetIntensityInPosition(int row, int column, Intensity newIntensity)
+        public void SetIntensityInPosition(int row, int column, int newIntensity)
         {
             MatrixLamp[row, column]?.SetIntensity(newIntensity);
         }
 
-        public void SetAllIntensity(Intensity newIntensity)
+        public void SetAllIntensity(int newIntensity)
         {
             foreach (AbstractLamp l in MatrixLamp)
                 l?.SetIntensity(newIntensity);
