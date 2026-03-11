@@ -18,7 +18,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
         public void AddLamp()
         {
             Write("Lamp name: ");
-            string name = Console.ReadLine();
+            string name = ReadLine();
 
             if (string.IsNullOrWhiteSpace(name))
             {
