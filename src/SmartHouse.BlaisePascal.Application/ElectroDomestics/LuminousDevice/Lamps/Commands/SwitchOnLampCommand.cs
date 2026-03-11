@@ -13,7 +13,7 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
 
         public void Execute(Guid LampId)
         {
-            Lamp lamp = _lampRepository.GetById(LampId); //problema avuto anche con tappi....ho messo abstractlamp, cancellato abstract e ora va.. XD
+            Lamp lamp = _lampRepository.GetById(LampId);
             if(lamp != null)
             {
                 lamp.SwitchOn();
