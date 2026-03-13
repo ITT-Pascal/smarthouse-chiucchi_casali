@@ -25,7 +25,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
             }
             Write("Insert new door's PIN: ");
             if (!int.TryParse(ReadLine(), out int pin))
+            {
                 WriteLine("Invalid PIN.");
+                return;
+            }
             new AddDoorCommand(_repository).Execute(name, pin);
             WriteLine("Door added succesfully!");
         }
@@ -163,7 +166,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
             }
             Write("Insert door's PIN: ");
             if (!int.TryParse(ReadLine(), out int currentPin))
+            {
                 WriteLine("Invalid PIN.");
+                return;
+            }
             try
             {
                 new LockDoorCommand(_repository).Execute(id, currentPin);
@@ -193,7 +199,10 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
             }
             Write("Insert door's PIN: ");
             if (!int.TryParse(ReadLine(), out int currentPin))
+            {
                 WriteLine("Invalid PIN.");
+                return;
+            }
             try
             {
                 new UnlockDoorCommand(_repository).Execute(id, currentPin);
@@ -223,10 +232,16 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
             }
             Write("Insert door's current PIN: ");
             if (!int.TryParse(ReadLine(), out int currentPin))
+            {
                 WriteLine("Invalid PIN.");
+                return;
+            }
             Write("Insert door's new PIN: ");
             if (!int.TryParse(ReadLine(), out int newPin))
+            {
                 WriteLine("Invalid PIN.");
+                return;
+            }
             try
             {
                 new DoorChangePinCommand(_repository).Execute(id, currentPin, newPin);

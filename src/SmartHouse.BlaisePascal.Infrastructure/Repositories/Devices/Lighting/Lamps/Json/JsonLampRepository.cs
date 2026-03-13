@@ -2,7 +2,7 @@
 
 namespace SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.Lighting.Lamps.Json
 {
-    public class JsonLampRepository:ILampRepository
+    public class JsonLampRepository//:ILampRepository
     {
         private readonly string _path;
 

@@ -5,7 +5,7 @@ using static System.Console;
 
 namespace SmartHouse.BlaisePascal.Console.Devices.CCTVDevice.Controllers
 {
-    public class CCTVController
+    public class CCTVController //To finish
     {
         private readonly ICCTVRepository _repository;
 

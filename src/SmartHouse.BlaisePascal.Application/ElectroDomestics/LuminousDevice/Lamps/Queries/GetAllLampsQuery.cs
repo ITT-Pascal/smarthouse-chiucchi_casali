@@ -1,4 +1,6 @@
-﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
+﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Commands;
+using SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Mappers;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Queries
@@ -12,10 +14,13 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.La
             _repository = repository;
         }
 
-        public IEnumerable<Lamp> Execute()
+        public List<LampDto> Execute()
         {
-
-            return _repository.GetAll();
+            List<LampDto> lamps = new List<LampDto>();
+            foreach (Lamp lamp in _repository.GetAll())
+                if (lamp != null)
+                    lamps.Add(LampMapper.ToDto(lamp));
+            return lamps;
         }
     }
 }

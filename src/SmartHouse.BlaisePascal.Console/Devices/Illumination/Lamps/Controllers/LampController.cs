@@ -1,8 +1,6 @@
 ﻿using SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Commands;
 using SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Queries;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.ValueObjects;
 using static System.Console;
 namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 {
@@ -17,127 +15,27 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 
         public void AddLamp()
         {
-            Write("Lamp name: ");
-            string name = ReadLine();
-
+            Write("Insert lamp name: ");
+            string? name = ReadLine();
             if (string.IsNullOrWhiteSpace(name))
             {
-                WriteLine("Invalid name");
+                WriteLine("Inserted name is invalid.");
                 return;
             }
-
             new AddLampCommand(_repository).Execute(name);
-            WriteLine("Lamp added!");
+            WriteLine("Lamp added succesfully!");
         }
 
         public void RemoveLamp()
         {
-            string selectedId = SelectLamp();
-
-            if (string.IsNullOrWhiteSpace(selectedId))
-            {
+            string? lamp = SelectLamp();
+            if (string.IsNullOrWhiteSpace(lamp))
                 return;
-            }
-
-            Guid id = new Guid(selectedId);
-
+            Guid id = new Guid(lamp);
             try
             {
                 new RemoveLampCommand(_repository).Execute(id);
-                WriteLine("Lamp removed!");
-            }
-            catch (ArgumentException ex)
-            {
-                WriteLine($"ERROR: {ex.Message}");
-            }
-        }
-
-        public void Brighten()
-        {
-            string selectedId = SelectLamp();
-
-            if (string.IsNullOrWhiteSpace(selectedId))
-            {
-                return;
-            }
-
-            Guid id = new Guid(selectedId);
-
-            try
-            {
-                if (!new LampCheckIsOnQuery(_repository).Execute(id))
-                    WriteLine("Lamp must be turned on!"); //Si potrebbe aggiungere un'accensione automatica della lampada
-                else if (new LampCheckBrightnessIsMaxQuery(_repository).Execute(id))
-                    WriteLine("Brightness is alredy at it's maximum");
-                else
-                {
-                    new SetIntensityCommand(_repository).Execute(id);
-                    WriteLine("Increased lamp brightness!");
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                WriteLine($"ERROR: {ex.Message}");
-            }
-        }
-
-        public void ChangeBrightness()
-        {
-            string selectedId = SelectLamp();
-
-            if (string.IsNullOrWhiteSpace(selectedId))
-            {
-                return;
-            }
-
-            Guid id = new Guid(selectedId);
-
-            if (!new LampCheckIsOnQuery(_repository).Execute(id))
-            {
-                WriteLine("Lamp must be turned on!");
-                return;
-            }
-
-            Write("New brightness: ");
-            if (!int.TryParse(ReadLine(), out int newbrightness))
-            {
-                WriteLine("Invalid brightness");
-                return;
-            }
-
-            try
-            {
-                new SetIntensityCommand(_repository).Execute(id, newbrightness);
-                WriteLine("Changed lamp brightness!");
-            }
-            catch (ArgumentException ex)
-            {
-                WriteLine($"ERROR: {ex.Message}");
-            }
-        }
-
-        public void Dimmer()
-        {
-            string selectedId = SelectLamp();
-
-            if (string.IsNullOrWhiteSpace(selectedId))
-            {
-                return;
-            }
-
-            Guid id = new Guid(selectedId);
-
-            try
-            {
-                if (!new LampCheckIsOnQuery(_repository).Execute(id))
-                    WriteLine("Lamp must be turned on!"); //Si potrebbe aggiungere un'accensione automatica della lampada
-                else if (new LampCheckBrightnessIsMinQuery(_repository).Execute(id))
-                    WriteLine("Brightness is alredy at it's maximum");
-                else
-                {
-                    new SetIntensityCommand(_repository).Execute(id);
-                    WriteLine("Decreased lamp brightness!");
-                }
+                WriteLine("Lamp removed succesfully!");
             }
             catch (ArgumentException ex)
             {
@@ -147,23 +45,18 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 
         public void SwitchOn()
         {
-            string selectedId = SelectLamp();
-
-            if (string.IsNullOrWhiteSpace(selectedId))
-            {
+            string? lamp = SelectLamp();
+            if (string.IsNullOrWhiteSpace(lamp))
                 return;
-            }
-
-            Guid id = new Guid(selectedId);
-
+            Guid id = new Guid(lamp);
             try
             {
                 if (new LampCheckIsOnQuery(_repository).Execute(id))
-                    WriteLine("Lamp is alredy on!");
+                    WriteLine("Selected lamp is alredy on.");
                 else
                 {
-                    new SwitchLampOnCommand(_repository).Execute(id);
-                    WriteLine("Turned lamp on!");
+                    new SwitchOnLampCommand(_repository).Execute(id);
+                    WriteLine("Selected lamp switched on succesfully!");
                 }
             }
             catch (ArgumentException ex)
@@ -174,24 +67,109 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
 
         public void SwitchOff()
         {
-            string selectedId = SelectLamp();
-
-            if (string.IsNullOrWhiteSpace(selectedId))
-            {
+            string? lamp = SelectLamp();
+            if (string.IsNullOrWhiteSpace(lamp))
                 return;
-            }
-
-            Guid id = new Guid(selectedId);
-
+            Guid id = new Guid(lamp);
             try
             {
                 if (!new LampCheckIsOnQuery(_repository).Execute(id))
-                    WriteLine("Lamp is alredy off!");
+                    WriteLine("Selected lamp is alredy off.");
                 else
                 {
                     new SwitchOffLampCommand(_repository).Execute(id);
-                    WriteLine("Turned lamp off!");
+                    WriteLine("Selected lamp switched off succesfully!");
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                WriteLine($"ERROR: {ex.Message}");
+            }
+        }
+
+        public void Brighten()
+        {
+            string? lamp = SelectLamp();
+            if (string.IsNullOrWhiteSpace(lamp))
+                return;
+            Guid id = new Guid(lamp);
+            try
+            {
+                if (!new LampCheckIsOnQuery(_repository).Execute(id))
+                    WriteLine("Selected lamp must be turned on to use this function.");
+                else if (new LampCheckIntensityMaxQuery(_repository).Execute(id))
+                    WriteLine("Selected lamp's intensity is already at maximum.");
+                else
+                {
+                    Write("Insert the amount you want to add to the selected lamp's intensity:");
+                    if(!int.TryParse(ReadLine(), out int amount))
+                    {
+                        WriteLine("Invalid amount.");
+                        return;
+                    }
+                    new BrightenLampCommand(_repository).Execute(id, amount);
+                    WriteLine("Selected lamp's intensity increased by amount.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                WriteLine($"ERROR: {ex.Message}");
+            }
+        }
+
+        public void Dimmer()
+        {
+            string? lamp = SelectLamp();
+            if (string.IsNullOrWhiteSpace(lamp))
+                return;
+            Guid id = new Guid(lamp);
+            try
+            {
+                if (!new LampCheckIsOnQuery(_repository).Execute(id))
+                    WriteLine("Selected lamp must be turned on to use this function.");
+                else if (new LampCheckIntensityMinQuery(_repository).Execute(id))
+                    WriteLine("Selected lamp's intensity is already at minimum.");
+                else
+                {
+                    Write("Insert the amount you want to subtract to the selected lamp's intensity:");
+                    if (!int.TryParse(ReadLine(), out int amount))
+                    {
+                        WriteLine("Invalid amount.");
+                        return;
+                    }
+                    new DimmerLampCommand(_repository).Execute(id, amount);
+                    WriteLine("Selected lamp's intensity decreased by amount.");
+                }
+            }
+            catch (ArgumentException ex)
+            {
+                WriteLine($"ERROR: {ex.Message}");
+            }
+        }
+
+        public void ChangeBrightness()
+        {
+            string? lamp = SelectLamp();
+            if (string.IsNullOrWhiteSpace(lamp))
+                return;
+            Guid id = new Guid(lamp);
+            if (!new LampCheckIsOnQuery(_repository).Execute(id))
+            {
+                WriteLine("Selected lamp must be turned on to use this function.");
+                return;
+            }
+
+            Write("Insert new intensity: ");
+            if (!int.TryParse(ReadLine(), out int newIntensity))
+            {
+                WriteLine("Invalid brightness");
+                return;
+            }
+
+            try
+            {
+                new SetIntensityCommand(_repository).Execute(id, newIntensity);
+                WriteLine("Selected lamp's intensity changed.");
             }
             catch (ArgumentException ex)
             {
@@ -203,12 +181,11 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
         {
             var lamps = new GetAllLampsQuery(_repository).Execute();
 
-            WriteLine("LAMPS:");
-            WriteLine("------------------------------");
+            WriteLine("Lamps: ");
 
             if (lamps.Count == 0)
             {
-                WriteLine("No lamps available");
+                WriteLine("There are no lamps available.");
                 return;
             }
 
@@ -220,37 +197,32 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
         }
         private void ShowChoices()
         {
-            WriteLine("0 - Go back to device selection menu \n" +
-                              "1 - Add lamp \n" +
-                              "2 - Remove lamp \n" +
-                              "3 - Switch On \n" +
-                              "4 - Switch Off \n" +
-                              "5 - Brighten \n" +
-                              "6 - Dimmer \n" +
-                              "7 - Change brightness \n");
+            WriteLine("1 - Add lamp \n" +
+                "2 - Remove lamp \n" +
+                "3 - Switch On \n" +
+                "4 - Switch Off \n" +
+                "5 - Brighten \n" +
+                "6 - Dimmer \n" +
+                "7 - Change brightness \n" +
+                "8 - Return to device selection menu");
         }
 
         public void ShowMenu(LampController controller)
         {
             bool exit = false;
-
             while (!exit)
             {
                 Clear();
                 Write("\x1b[3J");
                 controller.ShowLamps();
                 controller.ShowChoices();
-
-                Write("Choose an option: ");
-                string choice = ReadLine();
+                Write("Select an option: ");
+                string? choice = ReadLine();
 
                 WriteLine();
 
                 switch (choice)
                 {
-                    case "0":
-                        exit = true;
-                        break;
                     case "1":
                         controller.AddLamp();
                         break;
@@ -272,6 +244,9 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
                     case "7":
                         controller.ChangeBrightness();
                         break;
+                    case "8":
+                        exit = true;
+                        break;
                     default:
                         WriteLine("Invalid Choice");
                         break;
@@ -282,26 +257,25 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
             }
         }
 
-        private string SelectLamp()
+        private string? SelectLamp()
         {
             var lamps = new GetAllLampsQuery(_repository).Execute();
-
             if (lamps.Count == 0)
             {
-                WriteLine("No lamps available");
+                WriteLine("There are no lamps available");
                 return null;
             }
 
-            Write("Lamp number: ");
+            Write("Insert lamp number: ");
             if (!int.TryParse(ReadLine(), out int num))
             {
-                Console.WriteLine("Invalid number");
+                WriteLine("Invalid number.");
                 return null;
             }
 
             if (num < 1 || num > lamps.Count)
             {
-                WriteLine("There is no corresponding lamp");
+                WriteLine("Inserted number goes out of range (no corrponding lamp).");
                 return null;
             }
 

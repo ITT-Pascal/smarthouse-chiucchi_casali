@@ -1,23 +1,22 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
 namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.LuminousDevice.Lamps.Queries
 {
-    public  class LampCheckIsOnQuery
+    public class LampCheckIntensityMinQuery
     {
         private readonly ILampRepository _repository;
 
-        public LampCheckIsOnQuery(ILampRepository repository)
+        public LampCheckIntensityMinQuery(ILampRepository repository)
         {
             _repository = repository;
         }
 
         public bool Execute(Guid id)
         {
-            Lamp lamp = _repository.GetById(id);
-            if (lamp != null)
-                if (lamp.Status == DeviceStatus.On)
+            Lamp l = _repository.GetById(id);
+            if (l != null)
+                if (l.Intensity == l.MinIntensity)
                     return true;
             return false;
         }
