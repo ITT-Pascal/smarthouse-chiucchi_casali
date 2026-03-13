@@ -106,7 +106,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.CCTVDevice.Controllers
             for(int i=0; i<cctvs.Count; i++)
             {
                 var cctv = cctvs[i];
-                WriteLine($"{i + 1}) {cctv.Name}\n{cctv}");
+                WriteLine($"{i + 1}) {cctv.Name}\n{cctv}\n");
             }
         }
 
@@ -115,7 +115,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.CCTVDevice.Controllers
             WriteLine("1 - Add CCTV \n" +
                 "2 - Remove CCTV \n" +
                 "3 - Switch on CCTV \n" +
-                "4 - Switch off CCTV" +
+                "4 - Switch off CCTV \n" +
                 "5 - Return to device selection menu");
         }
 

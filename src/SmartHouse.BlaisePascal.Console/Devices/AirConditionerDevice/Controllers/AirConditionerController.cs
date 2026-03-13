@@ -244,7 +244,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controlle
             for(int i=0; i<airConditioners.Count; i++)
             {
                 var ac = airConditioners[i];
-                WriteLine($"{i + 1}) {ac.Name}\n{ac}");
+                WriteLine($"{i + 1}) {ac.Name}\n{ac}\n");
             }
         }
 

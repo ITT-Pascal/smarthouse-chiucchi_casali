@@ -192,7 +192,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers
             for (int i = 0; i < lamps.Count; i++)
             {
                 var l = lamps[i];
-                WriteLine($"{i + 1}. {l.Name}\n{l}");
+                WriteLine($"{i + 1}) {l.Name}\n{l}\n");
             }
         }
         private void ShowChoices()

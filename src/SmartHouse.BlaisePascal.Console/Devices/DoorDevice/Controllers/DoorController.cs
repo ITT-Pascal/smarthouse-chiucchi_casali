@@ -265,7 +265,7 @@ namespace SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers
             for(int i=0; i<doors.Count; i++)
             {
                 var door = doors[i];
-                WriteLine($"{i + 1}) {door.Name}\n{door}");
+                WriteLine($"{i + 1}) {door.Name}\n{door}\n");
             }
         }
 
