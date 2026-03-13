@@ -1,5 +1,4 @@
 ﻿using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice;
-using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice.ValueObjects;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.Shared.Enums;
 
 namespace SmartHouse.BlaisePascal.DomainTest.CCTVTests

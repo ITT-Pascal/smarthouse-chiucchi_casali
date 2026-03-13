@@ -25,10 +25,10 @@ namespace SmartHouse.BlaisePascal.Application.ElectroDomestics.ThermostatDevice.
             return new ThermostatDto
             {
                 Id = thermostat.Id,
-                Name = thermostat.Name,
+                Name = thermostat.Name._name,
                 Status = thermostat.Status.ToString(),
                 Mode = thermostat.Mode.ToString(),
-                WorkingTemperature = thermostat.WorkingTemperature.Celsius,
+                WorkingTemperature = thermostat.WorkingTemperature._temperature,
                 LastModificationUtc = thermostat.LastModification_UTC
             };
         }

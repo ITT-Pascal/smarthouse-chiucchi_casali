@@ -1,9 +1,13 @@
 ﻿using SmartHouse.BlaisePascal.Console.Devices.AirConditionerDevice.Controllers;
+using SmartHouse.BlaisePascal.Console.Devices.CCTVDevice.Controllers;
 using SmartHouse.BlaisePascal.Console.Devices.DoorDevice.Controllers;
+using SmartHouse.BlaisePascal.Console.Devices.Illumination.Lamps.Controllers;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.AirConditionerDevice.Repository;
+using SmartHouse.BlaisePascal.Domain.ElectroDomestics.CCTVDevice.Repositories;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.DoorDevice.Repositories;
 using SmartHouse.BlaisePascal.Domain.ElectroDomestics.LuminousDevice.Repositories;
 using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.AirConditionerDevice.InMemory;
+using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.CCTVDevice.InMemory;
 using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.DoorDevice.InMemory;
 using SmartHouse.BlaisePascal.Infrastructure.Repositories.Devices.Lighting.Lamps.InMemory;
 using static System.Console;
@@ -26,12 +30,14 @@ class Program
                 "6 - Exit");
 
             Write("Choose an option: ");
-            string choice = ReadLine();
+            string? choice = ReadLine();
 
             switch(choice)
             {
                 case "1":
                     ILampRepository lampRepository = new InMemoryLampRepository();
+                    LampController lampController = new LampController(lampRepository);
+                    lampController.ShowMenu(lampController);
                     break;
                 case "2":
                     IAirConditionerRepository airConditionerRepository = new InMemoryAirConditionerRepository();
@@ -39,6 +45,9 @@ class Program
                     airConditionerController.ShowMenu(airConditionerController);
                     break;
                 case "3":
+                    ICCTVRepository cctvRepository = new InMemoryCCTVRepository();
+                    CCTVController cctvController = new CCTVController(cctvRepository);
+                    cctvController.ShowMenu(cctvController);
                     break;
                 case "4":
                     IDoorRepository doorRepository = new InMemoryDoorRepository();
@@ -54,8 +63,6 @@ class Program
                     WriteLine("Invalid choice.");
                     break;
             }
-            //controller.ShowLamps();
-            //ShowMenu();
         }
         Clear();
         Write("\x1b[3J");
